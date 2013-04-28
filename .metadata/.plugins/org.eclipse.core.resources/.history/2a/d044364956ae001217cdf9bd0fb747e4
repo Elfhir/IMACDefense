@@ -1,0 +1,23 @@
+package Towers.Strategy.Shooter;
+
+public class Freeze implements Shooter {
+
+	public Freeze() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void shoot() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,9 @@
+package Towers.TowerTypes;
+
+public class ClasseTest {
+
+	public ClasseTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

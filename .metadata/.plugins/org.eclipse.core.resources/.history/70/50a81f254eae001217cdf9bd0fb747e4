@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+package Towers;
+
+import java.util.Vector;
+import Towers.Strategy.Improvment.Improver;
+
+/**
+ * @author Thaïs
+ *
+ */
+
+
+public class Tower {
+	
+	private Improver improver; /* Ameliorateur */
+	private Shooter shooter; /* Tireur */
+	private int price; // Coût de placement de la tour
+	private int shootSpeed; // Vitesse de tir
+	private int shootPower; // Puissance de tir
+	private int shootRange; // Portée de tir - rayon
+	private Vector position2d; // Position 2D sur la map
+	// private Player ownerPlayer; // Joueur propriétaire
+
+	/**
+	 * 
+	 */
+	public Tower() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
