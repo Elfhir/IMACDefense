@@ -1,0 +1,33 @@
+package agents;
+
+import java.util.Vector;
+
+import basis.Base;
+
+public class Agent {
+
+	protected int id = 0;
+	protected Vector<Object> position2d = new Vector<Object> (); // Position 2D sur la map
+	protected Base target = new Base();
+	// private Player ownerPlayer; // Joueur propriétaire
+	
+	
+	public Agent() {
+		super();
+	}
+	
+	public Agent(Vector<Object> position2d, Base target) {
+		this.position2d = position2d;
+		this.target = target;
+		this.id = this.id + 1;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

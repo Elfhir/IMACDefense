@@ -15,9 +15,6 @@ public class Base {
 	/*
 	 * Getter - setter
 	 */
-	public int getId() {
-		return id;
-	}
 	
 	public int getTime() {
 		return time;
