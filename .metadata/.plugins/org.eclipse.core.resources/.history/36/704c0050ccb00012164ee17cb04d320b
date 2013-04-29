@@ -1,0 +1,26 @@
+package basis;
+
+import java.util.Vector;
+
+public class Basis {
+
+	protected int NbAgentsCreatable;
+	protected int NbAgentsHosted;
+	protected Vector<Object> position2d = new Vector<Object> (); // Position 2D sur la map
+	
+	public Basis() {
+		
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+
+

@@ -1,0 +1,33 @@
+package basis;
+
+import java.util.Vector;
+
+public class Basis {
+
+	protected int nbCreatableAgents = 0; // nb d’agents que la base peut créer (par intervalle régulier)
+	protected int nbHostedAgents = 0; // nb d’agents que la base héberge
+	protected Vector<Object> position2d = new Vector<Object> (); // Position 2D sur la map
+	// private Player ownerPlayer; // Joueur propriétaire
+	
+	/*
+	 * Getter - setter
+	 */
+	
+	public int getNbAgentsCretable
+	
+	public Basis() {
+		
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+
+

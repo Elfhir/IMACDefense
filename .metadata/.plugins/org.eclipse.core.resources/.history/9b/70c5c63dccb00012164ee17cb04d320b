@@ -1,0 +1,26 @@
+package basis;
+
+import java.util.Vector;
+
+public class Basis {
+
+	protected int NbAgentsCreatable;
+	protected int NbAgentsHosted;
+	
+	
+	public Basis() {
+		
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+
+
