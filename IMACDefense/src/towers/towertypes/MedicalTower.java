@@ -1,5 +1,5 @@
 package towers.towertypes;
-import java.util.Vector;
+import java.util.LinkedList;
 
 import towers.*;
 import towers.strategy.shooter.Heal;
@@ -10,7 +10,7 @@ import towers.strategy.shooter.Heal;
 public class MedicalTower extends Tower {
 
 	public MedicalTower(int price, int shootSpeed, int shootPower,
-			int shootRange, Vector<Object> position2d) {
+			int shootRange, LinkedList<Object> position2d) {
 		super(price, shootSpeed, shootPower, shootRange, position2d);
 		// TODO Auto-generated constructor stub
 		this.shooter = new Heal();

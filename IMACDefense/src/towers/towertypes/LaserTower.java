@@ -1,31 +1,28 @@
 package towers.towertypes;
 
-import java.util.Vector;
+import java.util.LinkedList;
 
 import towers.Tower;
 import towers.strategy.shooter.Hurt;
 
-
-
-
 public class LaserTower extends Tower {
 	
-	private Object lastCible;
+	private Object lastTarget;
 	private int currentPower;
 
 	public LaserTower(int price, int shootSpeed, int shootPower,
-			int shootRange, Vector<Object> position2d) {
+			int shootRange, LinkedList<Object> position2d) {
 		super(price, shootSpeed, shootPower, shootRange, position2d);
 		// TODO Auto-generated constructor stub
 		this.shooter = new Hurt();
 	}
 
-	public Object getLastCible() {
-		return lastCible;
+	public Object getLastTarget() {
+		return lastTarget;
 	}
 
-	public void setLastCible(Object lastCible) {
-		this.lastCible = lastCible;
+	public void setLastTarget(Object lastTarget) {
+		this.lastTarget = lastTarget;
 	}
 
 	public int getCurrentPower() {

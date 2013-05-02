@@ -1,6 +1,6 @@
 package towers.towertypes;
 
-import java.util.Vector;
+import java.util.LinkedList;
 
 import towers.Tower;
 import towers.strategy.shooter.Bomb;
@@ -11,7 +11,7 @@ import towers.strategy.shooter.Bomb;
 public class BombTower extends Tower {
 
 	public BombTower(int price, int shootSpeed, int shootPower, int shootRange,
-			Vector<Object> position2d) {
+			LinkedList<Object> position2d) {
 		super(price, shootSpeed, shootPower, shootRange, position2d);
 		// TODO Auto-generated constructor stub
 		this.shooter = new Bomb ();

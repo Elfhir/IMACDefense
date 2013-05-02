@@ -7,7 +7,7 @@ public class Heal implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot() {
+	public void shoot(Object target) {
 		// TODO Auto-generated method stub
 		System.out.println("Healing friend !");
 	}

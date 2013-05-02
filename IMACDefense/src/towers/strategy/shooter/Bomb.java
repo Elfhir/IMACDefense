@@ -7,7 +7,7 @@ public class Bomb implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot() {
+	public void shoot(Object target) {
 		// TODO Auto-generated method stub
 		System.out.println("Putting a bomb now !");
 	}

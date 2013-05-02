@@ -1,5 +1,5 @@
 package towers.strategy.shooter;
 
 public interface ShooterInterface {
-	void shoot ();
+	void shoot (Object target);
 }
