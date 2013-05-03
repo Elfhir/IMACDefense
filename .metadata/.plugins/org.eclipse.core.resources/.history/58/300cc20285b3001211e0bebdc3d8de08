@@ -1,12 +1,9 @@
 package towers.strategy.shooter;
 
 public class Heal implements ShooterInterface {
-	
-	int power = 0;
 
-	public Heal(int power) {
+	public Heal() {
 		// TODO Auto-generated constructor stub
-		this.power = power;
 	}
 
 	@Override

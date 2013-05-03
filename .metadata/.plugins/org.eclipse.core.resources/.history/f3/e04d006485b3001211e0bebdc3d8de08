@@ -20,7 +20,7 @@ import towers.towertypes.*;
 public class Tower {
 	
 	protected ImproverInterface improver = new PowerImprovement(); // Ameliorateur
-	protected ShooterInterface shooter = new Freeze(); // Tireur
+	protected ShooterInterface shooter = new Hurt(); // Tireur
 	protected int price = 0; // Coût de placement de la tour
 	protected int shootSpeed = 0; // Vitesse de tir
 	protected int shootPower = 0; // Puissance de tir

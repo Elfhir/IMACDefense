@@ -3,12 +3,9 @@ package towers.strategy.shooter;
 import towers.Tower;
 
 public class Hurt implements ShooterInterface {
-	
-	int power = 0;
 
-	public Hurt(int power) {
+	public Hurt() {
 		// TODO Auto-generated constructor stub
-		this.power = power;
 	}
 
 	/**
@@ -26,7 +23,7 @@ public class Hurt implements ShooterInterface {
 		{
 			System.out.println("Hurting ennemie tower !");
 			Tower towerTarget = (Tower) target;
-			towerTarget.setLife(towerTarget.getLife() - this.power);
+			towerTarget.setLife(towerTarget.getLife()-1);
 			System.out.println("The ennemie tower life is now ");
 			System.out.println(towerTarget.getLife());
 		}

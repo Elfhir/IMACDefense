@@ -4,7 +4,7 @@ import towers.Tower;
 
 public class Hurt implements ShooterInterface {
 	
-	int power = 0;
+	int power;
 
 	public Hurt(int power) {
 		// TODO Auto-generated constructor stub

@@ -14,6 +14,22 @@ public class LaserTower extends Tower {
 		this.shooter = new IncreasingHurt(this.shootPower);
 	}
 
+	public Object getLastTarget() {
+		return lastTarget;
+	}
+
+	public void setLastTarget(Object lastTarget) {
+		this.lastTarget = lastTarget;
+	}
+
+	public int getCurrentPower() {
+		return currentPower;
+	}
+
+	public void setCurrentPower(int currentPower) {
+		this.currentPower = currentPower;
+	}
+
 	/**
 	 * @param args
 	 */

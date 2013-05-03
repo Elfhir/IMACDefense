@@ -3,15 +3,15 @@ package towers.towertypes;
 import java.util.LinkedList;
 
 import towers.Tower;
-import towers.strategy.shooter.Hurt;
+import towers.strategy.shooter.IncreasingHurt;
 
-public class SubmachineGunTower extends Tower {
+public class LaserTower extends Tower {
 
-	public SubmachineGunTower(int price, int shootSpeed, int shootPower,
+	public LaserTower(int price, int shootSpeed, int shootPower,
 			int shootRange, LinkedList<Object> position2d) {
-		super(price, shootSpeed, shootPower, shootRange, position2d);
+		super(price, shootSpeed, 5, shootRange, position2d);
 		// TODO Auto-generated constructor stub
-		this.shooter = new Hurt (this.shootPower);
+		this.shooter = new IncreasingHurt(this.shootPower);
 	}
 
 	/**

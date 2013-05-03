@@ -13,7 +13,7 @@ public class MedicalTower extends Tower {
 			int shootRange, LinkedList<Object> position2d) {
 		super(price, shootSpeed, shootPower, shootRange, position2d);
 		// TODO Auto-generated constructor stub
-		this.shooter = new Heal(this.shootPower);
+		this.shooter = new Heal();
 	}
 
 	/**
