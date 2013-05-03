@@ -4,9 +4,9 @@ import towers.Tower;
 
 public class IncreasingHurt implements ShooterInterface {
 	
-	private Object lastTarget;
-	private int initialPower = 0;
-	private int currentPower = 0;
+	Object lastTarget;
+	int initialPower = 0;
+	int currentPower = 0;
 
 	public IncreasingHurt(int power) {
 		// TODO Auto-generated constructor stub

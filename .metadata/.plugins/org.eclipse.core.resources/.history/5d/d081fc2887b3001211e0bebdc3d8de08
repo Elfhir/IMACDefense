@@ -1,0 +1,21 @@
+package map;
+
+public class Map {
+	
+	int widthTiles = 20;
+	int heightTiles = 20;
+	LinkedList<Object> Tiles = new LinkedList<Object>();
+
+	public Map() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

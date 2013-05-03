@@ -5,9 +5,6 @@ import java.util.LinkedList;
 import towers.Tower;
 import towers.strategy.shooter.Bomb;
 
-
-
-
 public class BombTower extends Tower {
 
 	public BombTower(int price, int shootSpeed, int shootPower, int shootRange,

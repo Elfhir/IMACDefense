@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import towers.*;
 import towers.strategy.shooter.Heal;
 
+
+
+
 public class MedicalTower extends Tower {
 
 	public MedicalTower(int price, int shootSpeed, int shootPower,
