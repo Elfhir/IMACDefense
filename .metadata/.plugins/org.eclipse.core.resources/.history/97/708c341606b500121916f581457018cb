@@ -1,0 +1,35 @@
+package map;
+
+public class Tile {
+	
+	public static int width = 20;
+	
+	protected String image = "";
+	protected boolean destroyable = false;
+	protected boolean walkable = true;
+	protected boolean constructible = false;
+
+	public Tile() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Tile(String image, boolean destroyable, boolean walkable,
+			boolean constructible) {
+		super();
+		this.image = image;
+		this.destroyable = destroyable;
+		this.walkable = walkable;
+		this.constructible = constructible;
+	}
+
+
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

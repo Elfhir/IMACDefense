@@ -1,27 +1,29 @@
 package map;
 
-public class Tile {
+public enum Tile {
 	
-	public TileType getType() {
-		return type;
+	Field ("", false, true, false),
+	Mountain ("", true, false, false),
+	Buttress ("", false, false, true);
+	
+	public static int width = 20;
+	
+	private String image = "";
+	private boolean destroyable = false;
+	private boolean walkable = true;
+	private boolean constructible = false;
+
+	private Tile(String image, boolean destroyable, boolean walkable,
+			boolean constructible) {
+		this.image = image;
+		this.destroyable = destroyable;
+		this.walkable = walkable;
+		this.constructible = constructible;
 	}
-
-	public void setType(TileType type) {
-		this.type = type;
-	}
-
-	private TileType type = TileType.field;
-
-	public Tile() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	
+	public void print ()
+	{
+		return;
 	}
 
 }

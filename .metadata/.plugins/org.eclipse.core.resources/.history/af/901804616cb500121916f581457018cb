@@ -1,0 +1,43 @@
+package map;
+
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.LinkedList;
+
+public class Mapping {
+	
+	int widthTiles = 20; // Largeur de la map en tiles
+	int heightTiles = 20; // Hauteur de la map en tiles
+	Hashtable<Integer[][],Tile> Tiles = new Hashtable<Integer[][],Tile>();
+
+	public Mapping(int widthTiles, int heightTiles) {
+		// TODO Auto-generated constructor stub
+		this.widthTiles = widthTiles;
+		this.heightTiles = heightTiles;
+		this.Tiles.put(new Integer[][] = {0,1}, Tile.Field);
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public void readTextFile (InputStream input)
+	{
+		return;
+	}
+	
+	public void readImageFile ()
+	{
+		return;
+	}
+	
+	public void print ()
+	{
+		return;
+	}
+
+}

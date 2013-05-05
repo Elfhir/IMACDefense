@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<typeInfo handle="=IMACDefense/src&lt;towers.strategy.improvement{ImproverInterface.java[ImproverInterface" modifiers="513" timestamp="1366970375747"/>
+<typeInfo handle="=IMACDefense/src&lt;towers.strategy.improvement{ImproverInterface.java[ImproverInterface" modifiers="513" timestamp="1367187872886"/>
+<typeInfo handle="=IMACDefense/src&lt;towers.strategy.shooter{ShooterInterface.java[ShooterInterface" modifiers="513" timestamp="1367538649095"/>
 </typeInfoHistroy>

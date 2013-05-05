@@ -1,0 +1,34 @@
+package map;
+
+public enum Tile {
+	
+	public static int width = 20;
+	
+	protected String image = "";
+	protected boolean destroyable = false;
+	protected boolean walkable = true;
+	protected boolean constructible = false;
+
+	private Tile(String image, boolean destroyable, boolean walkable,
+			boolean constructible) {
+		super();
+		this.image = image;
+		this.destroyable = destroyable;
+		this.walkable = walkable;
+		this.constructible = constructible;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public void print ()
+	{
+		return;
+	}
+
+}
