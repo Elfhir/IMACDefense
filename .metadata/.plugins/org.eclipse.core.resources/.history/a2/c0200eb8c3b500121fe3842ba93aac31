@@ -1,0 +1,95 @@
+package map;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Hashtable;
+
+public class Mapping {
+	
+	int widthTiles = 20; // Largeur de la map en tiles
+	int heightTiles = 20; // Hauteur de la map en tiles
+	Hashtable<Integer,Hashtable<Integer, Tile>> Tiles = new Hashtable<Integer,Hashtable<Integer, Tile>>();
+
+	public Mapping(int widthTiles, int heightTiles) {
+		// TODO Auto-generated constructor stub
+		this.widthTiles = widthTiles;
+		this.heightTiles = heightTiles;
+		Hashtable<Integer,Tile> LineOfTiles = new Hashtable<Integer,Tile>();
+		LineOfTiles.put(0, Tile.Field);
+		LineOfTiles.put(1, Tile.Buttress);
+		LineOfTiles.put(2, Tile.Mountain);
+		this.Tiles.put(0, LineOfTiles);
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Mapping mapping = new Mapping (20, 20);
+		BufferedInputStream input = null;
+		try {
+			String filename = "map1.txt";
+			String finalfile = "";
+			String workingDir = System.getProperty("user.dir");
+	 
+			finalfile = workingDir + File.separator + "data" + File.separator + filename;
+			System.out.println(finalfile);
+			
+			// Ouverture du fichier
+			input = new BufferedInputStream(new FileInputStream (finalfile));
+			
+			mapping.readTextFile (input);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			// Fermeture du fichier
+			try {
+				if (input != null)
+					input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void readTextFile (BufferedInputStream input)
+	{
+		try {
+			int counter = 0;
+			byte buffer[] = new byte[8];
+			int n = 0;
+			while ((n = input.read(buffer)) >= 0)
+			{
+				for (byte i : buffer)
+				{
+					System.out.print((char)i);
+				}
+			}
+			//System.out.println(counter);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void readImageFile ()
+	{
+		return;
+	}
+	
+	public void print ()
+	{
+		return;
+	}
+
+}

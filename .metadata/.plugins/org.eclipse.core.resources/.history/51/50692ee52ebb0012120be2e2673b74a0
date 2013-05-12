@@ -1,0 +1,27 @@
+package map.tiles;
+
+import map.Zone;
+
+public class Tile {
+	
+	private TileType type = TileType.Field;
+	private Zone zone = null;
+
+	public TileType getType() {
+		return type;
+	}
+
+	public Tile ()
+	{
+		super ();
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

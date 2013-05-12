@@ -1,0 +1,25 @@
+package map;
+
+import org.jdom2.*;
+
+public class XMLParser {
+	
+	static org.jdom2.Document document;
+	static Element racine;
+
+	public XMLParser(String filename) {
+		// TODO Auto-generated constructor stub
+		super();
+		String finalfile = "";
+		String workingDir = System.getProperty("user.dir");
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

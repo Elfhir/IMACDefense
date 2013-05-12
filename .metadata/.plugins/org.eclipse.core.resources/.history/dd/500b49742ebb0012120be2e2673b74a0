@@ -1,0 +1,30 @@
+package map.tiles;
+
+import map.Zone;
+
+public class Mountain extends Tile {
+	
+	protected static String image = "";
+	protected static boolean destroyable = true;
+	protected static boolean walkable = false;
+	protected static boolean constructible = false;
+
+	public Mountain() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@ Override
+	public String toString ()
+	{
+		return "mountain";
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
