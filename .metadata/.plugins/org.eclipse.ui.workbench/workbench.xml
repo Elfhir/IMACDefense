@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="28" version="2.0">
+<workbench progressCount="29" version="2.0">
 <workbenchAdvisor/>
-<window height="728" width="1024" x="125" y="0">
+<window height="728" maximized="true" width="1024" x="125" y="0">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="130" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="99" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="99" y="22"/>
@@ -36,17 +36,17 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Mapping.java" partName="Mapping.java" path="C:/Users/Mathos/Documents/GitHub/IMACDefense/IMACDefense/src/map/Mapping.java" title="Mapping.java" tooltip="IMACDefense/src/map/Mapping.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/IMACDefense/src/map/Mapping.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="43" selectionTopPixel="0"/>
-</editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tower.java" partName="Tower.java" path="C:/Users/Mathos/Documents/GitHub/IMACDefense/IMACDefense/src/towers/Tower.java" title="Tower.java" tooltip="IMACDefense/src/towers/Tower.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/IMACDefense/src/towers/Tower.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="40" selectionOffset="2212" selectionTopPixel="1465"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Window.java" partName="Window.java" path="C:/Users/Mathos/Documents/GitHub/IMACDefense/IMACDefense/src/window/Window.java" title="Window.java" tooltip="IMACDefense/src/window/Window.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/IMACDefense/src/window/Window.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="47" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GraphicalInterface.java" partName="GraphicalInterface.java" path="C:/Users/Mathos/Documents/GitHub/IMACDefense/IMACDefense/src/window/GraphicalInterface.java" title="GraphicalInterface.java" tooltip="IMACDefense/src/window/GraphicalInterface.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/IMACDefense/src/window/GraphicalInterface.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="699" selectionTopPixel="54"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GameEngine.java" partName="GameEngine.java" path="C:/Users/Mathos/Documents/GitHub/IMACDefense/IMACDefense/src/gameengine/GameEngine.java" title="GameEngine.java" tooltip="IMACDefense/src/gameengine/GameEngine.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/IMACDefense/src/gameengine/GameEngine.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="488" selectionTopPixel="1"/>
 </editor>
 </editors>
 <views>
@@ -54,6 +54,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
+<category IMemento.internal.id="Warnings"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="64" org.eclipse.ui.ide.markerType="94" org.eclipse.ui.ide.pathField="124" org.eclipse.ui.ide.resourceField="94" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
@@ -117,7 +118,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.PackageExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -246,121 +247,162 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/map/Mapping.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/window/Interface_H_M.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/window/JFrame.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/window/Window.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/towers/Tower.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/window/Window.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/towers/Tower.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/window/GraphicalInterface.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/IMACDefense/src/gameengine/GameEngine.java"/>
 </editors>
 <item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Interface_H_M.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Interface_H_M.java" index="1">
-<position info="not_deleted" x="621" y="0"/>
-</item>
-<item historyLabel="Interface_H_M.java" index="1">
-<position info="not_deleted" x="110" y="0"/>
-</item>
-<item historyLabel="Interface_H_M.java" index="1">
-<position info="not_deleted" x="218" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="JFrame.java" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="JFrame.java" index="2">
-<position info="not_deleted" x="32" y="6"/>
-</item>
-<item historyLabel="JFrame.java" index="2">
-<position info="not_deleted" x="8" y="6"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="219" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="820" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="820" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="820" y="0"/>
-</item>
-<item historyLabel="Tower.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Tower.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="820" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
 <position info="not_deleted" x="0" y="12"/>
 </item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="17" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="12"/>
-</item>
-<item historyLabel="Tower.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="17" y="0"/>
-</item>
-<item historyLabel="Tower.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="47" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="12"/>
-</item>
-<item historyLabel="Tower.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="0" y="12"/>
-</item>
-<item historyLabel="Tower.java" index="4">
+<item historyLabel="Tower.java" index="2">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="Mapping.java" index="0">
 <position info="not_deleted" x="43" y="0"/>
 </item>
+<item historyLabel="Tower.java" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="1">
+<position info="not_deleted" x="47" y="0"/>
+</item>
+<item historyLabel="Mapping.java" index="0">
+<position info="not_deleted" x="43" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position/>
+</item>
+<item historyLabel="Mapping.java" index="0">
+<position info="not_deleted" x="43" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position/>
+</item>
+<item historyLabel="Mapping.java" index="0">
+<position info="not_deleted" x="43" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="62" y="13"/>
+</item>
+<item historyLabel="Mapping.java" index="0">
+<position info="not_deleted" x="43" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="8" y="0"/>
+</item>
 <item historyLabel="Tower.java" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="Window.java" index="3">
-<position info="not_deleted" x="47" y="0"/>
+<position info="not_deleted" x="821" y="0"/>
 </item>
-<item active="true" historyLabel="Mapping.java" index="0">
-<position info="not_deleted" x="43" y="0"/>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="881" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="15" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="15" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="881" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="121" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Window.java" index="3">
+<position info="not_deleted" x="121" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="14" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="80" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="153" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="103" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="103" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="687" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="2212" y="40"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="680" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="2212" y="40"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="480" y="0"/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="488" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="308" y="0"/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="488" y="0"/>
+</item>
+<item historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="699" y="0"/>
+</item>
+<item historyLabel="GameEngine.java" index="6">
+<position info="not_deleted" x="488" y="0"/>
+</item>
+<item historyLabel="Tower.java" index="4">
+<position info="not_deleted" x="2212" y="40"/>
+</item>
+<item active="true" historyLabel="GraphicalInterface.java" index="5">
+<position info="not_deleted" x="699" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -379,11 +421,17 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Window.java" tooltip="IMACDefense/src/window/Window.java">
-<persistable path="/IMACDefense/src/window/Window.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GameEngine.java" tooltip="IMACDefense/src/gameengine/GameEngine.java">
+<persistable path="/IMACDefense/src/gameengine/GameEngine.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GraphicalInterface.java" tooltip="IMACDefense/src/window/GraphicalInterface.java">
+<persistable path="/IMACDefense/src/window/GraphicalInterface.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tower.java" tooltip="IMACDefense/src/towers/Tower.java">
 <persistable path="/IMACDefense/src/towers/Tower.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Window.java" tooltip="IMACDefense/src/window/Window.java">
+<persistable path="/IMACDefense/src/window/Window.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Mapping.java" tooltip="IMACDefense/src/map/Mapping.java">
 <persistable path="/IMACDefense/src/map/Mapping.java"/>

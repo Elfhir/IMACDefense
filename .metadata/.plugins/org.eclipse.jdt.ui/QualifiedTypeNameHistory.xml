@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="java.util.Vector"/>
 <fullyQualifiedTypeName name="towers.Tower"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
 </qualifiedTypeNameHistroy>
