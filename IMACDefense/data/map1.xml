@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map width="3" height="3" name="Le champ de bataille">
+	<buttress>
+		<zone id="0" player="1">
+			<tower type="laser" x="0" y="0" />
+			<basis id="1" capacity="50" x="0" y="3" />
+			<tile x="0" y="0" />
+			<tile x="0" y="1" />
+			<tile x="0" y="2" />
+		</zone>
+		<zone id="1" player="2">
+			<tower type="medical" x="1" y="0" />
+			<basis id="2" capacity="30" x="1" y="3" />
+			<tile x="1" y="0" />
+			<tile x="1" y="1" />
+			<tile x="1" y="2" />
+		</zone>
+	</buttress>
+	<mountain>
+		<tile x="2" y="0" />
+		<tile x="2" y="1" />
+		<tile x="2" y="2" />
+	</mountain>
+</map>

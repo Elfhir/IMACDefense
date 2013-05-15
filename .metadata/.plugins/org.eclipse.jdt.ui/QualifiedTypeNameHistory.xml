@@ -17,6 +17,7 @@
 <fullyQualifiedTypeName name="java.io.DataInputStream"/>
 <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
+<<<<<<< HEAD
 <fullyQualifiedTypeName name="org.jdom2.input.SAXBuilder"/>
 <fullyQualifiedTypeName name="org.jdom2.Element"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -27,4 +28,7 @@
 <fullyQualifiedTypeName name="map.tiles.Tile"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.jdom2.filter.ElementFilter"/>
+=======
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+>>>>>>> origin/Thais
 </qualifiedTypeNameHistroy>

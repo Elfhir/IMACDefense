@@ -1,0 +1,28 @@
+package map;
+
+import java.io.File;
+
+import org.jdom2.*;
+
+public class XMLParser {
+	
+	static org.jdom2.Document document;
+	static Element racine;
+
+	public XMLParser(String filename) {
+		// TODO Auto-generated constructor stub
+		super();
+		String workingDir = System.getProperty("user.dir");
+		String finalfile = workingDir + File.separator + "data" + File.separator + filename;
+		
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

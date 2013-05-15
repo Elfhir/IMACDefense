@@ -1,0 +1,79 @@
+package map;
+
+import java.util.ArrayList;
+
+public class Mapping {
+	
+	private String name = "";
+	private int widthTiles = 20; // Largeur de la map en tiles
+	private int heightTiles = 20; // Hauteur de la map en tiles
+	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
+	
+	public Mapping ()
+	{
+		super ();
+	}
+
+	public Mapping(String name, int widthTiles, int heightTiles) {
+		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.widthTiles = widthTiles;
+		this.heightTiles = heightTiles;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Mapping map = new Mapping ();
+		map.readXMLFile ("map1.xml");
+		System.out.println(map.getName());
+		System.out.println(map.getWidth());
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getWidthTiles() {
+		return widthTiles;
+	}
+
+	public void setWidthTiles(int widthTiles) {
+		this.widthTiles = widthTiles;
+	}
+
+	public int getHeightTiles() {
+		return heightTiles;
+	}
+
+	public void setHeightTiles(int heightTiles) {
+		this.heightTiles = heightTiles;
+	}
+
+	public ArrayList<ArrayList<Tile>> getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(ArrayList<ArrayList<Tile>> tiles) {
+		this.tiles = tiles;
+	}
+
+	public void readXMLFile (String filename)
+	{
+		XMLParser parser = new XMLParser (filename);
+		this.name = parser.getMapName();
+		this.widthTiles = Integer.parseInt(parser.getRacine().getAttributeValue("width"));
+	}
+	
+	public void print ()
+	{
+		return;
+	}
+
+}

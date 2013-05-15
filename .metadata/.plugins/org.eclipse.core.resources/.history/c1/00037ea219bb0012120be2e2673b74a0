@@ -1,0 +1,59 @@
+package map;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Mapping {
+	
+	private String name = "";
+	private int widthTiles = 20; // Largeur de la map en tiles
+	private int heightTiles = 20; // Hauteur de la map en tiles
+	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
+
+	public Mapping(String name, int widthTiles, int heightTiles) {
+		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.widthTiles = widthTiles;
+		this.heightTiles = heightTiles;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Mapping mapping = new Mapping (20, 20);
+	}
+	
+	public void readTextFile (BufferedInputStream input)
+	{
+		try {
+			int counter = 0;
+			byte buffer[] = new byte[8];
+			int n = 0;
+			while ((n = input.read(buffer)) >= 0)
+			{
+				for (byte i : buffer)
+				{
+					System.out.print((char)i);
+				}
+			}
+			System.out.println(counter);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void readImageFile ()
+	{
+		return;
+	}
+	
+	public void print ()
+	{
+		return;
+	}
+
+}
