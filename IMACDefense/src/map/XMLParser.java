@@ -113,24 +113,7 @@ public class XMLParser {
 			/* Selon le type de tile, dont la balise est contenue dans l'élément currentParent
 			 * On actualise le type du tile.
 			 */
-			switch (currentParent.getName())
-			{
-				case "buttress" :
-				{
-					tile.setType(TileType.Buttress);
-					break;
-				}
-				case "mountain" :
-				{
-					tile.setType(TileType.Mountain);
-					break;
-				}
-				default :
-				{
-					tile.setType(TileType.Field);
-					break;
-				}
-			}
+			tile.setType(TileType.convertStringToTileType(currentParent.getName()));
 			
 			/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
 			 * ligne et colonne
