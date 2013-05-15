@@ -21,6 +21,25 @@ public enum TileType {
 		this.constructible = constructible;
 	}
 	
+	static public TileType convertStringToTileType (String type)
+	{
+		switch (type)
+		{
+			case "buttress" :
+			{
+				return TileType.Buttress;
+			}
+			case "mountain" :
+			{
+				return TileType.Mountain;
+			}
+			default :
+			{
+				return TileType.Buttress;
+			}
+		}
+	}
+	
 	public void print ()
 	{
 		System.out.println(this);
