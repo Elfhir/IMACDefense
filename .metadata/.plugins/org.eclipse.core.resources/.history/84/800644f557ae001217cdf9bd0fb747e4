@@ -1,5 +1,0 @@
-package towers.Strategy.Shooter;
-
-public interface ShooterInterface {
-	void shoot ();
-}

@@ -1,5 +1,0 @@
-package towers.Strategy.Improvement;
-
-public interface ImproverInterface {
-	void improve();
-}
