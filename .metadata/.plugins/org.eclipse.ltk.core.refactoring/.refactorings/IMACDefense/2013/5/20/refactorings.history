@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;window.Window.java&apos; to &apos;GraphicalInterface.java&apos;&#x0D;&#x0A;- Original project: &apos;IMACDefense&apos;&#x0D;&#x0A;- Original element: &apos;window.Window.java&apos;&#x0D;&#x0A;- Renamed element: &apos;window.GraphicalInterface.java&apos;" description="Rename compilation unit &apos;Window.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;window{Window.java" name="GraphicalInterface.java" references="false" stamp="1368649120860" version="1.0"/>
-</session>
