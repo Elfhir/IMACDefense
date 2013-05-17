@@ -43,16 +43,16 @@ public class Agent {
 	
 	public Vector<Object> moveAgent(int direction) {
 		if(direction == 0) { // up
-			this.position2d.lastElement() += SQUARE_LENGTH; //l'ordonnée augmente d'un carré
+			//this.position2d.lastElement() += SQUARE_LENGTH; //l'ordonnée augmente d'un carré
 		} //ne fonctionne pas car lastelement() ne peut pas être modifié. Il faudrait en fait utiliser la structure du vecteur mais je sais pas comment (où ?) on la définit
 		if(direction == 1) { // right
-			this.position2d.firstElement() += SQUARE_LENGTH; //l'abscisse augment d'un carré
+			//this.position2d.firstElement() += SQUARE_LENGTH; //l'abscisse augment d'un carré
 		}
 		if(direction == 2) { // down
-			this.position2d.lastElement() -= SQUARE_LENGTH; //l'ordonnée diminue d'un carré
+			//this.position2d.lastElement() -= SQUARE_LENGTH; //l'ordonnée diminue d'un carré
 		}
 		if(direction == 3) { // left
-			this.position2d.firstElement() -= SQUARE_LENGTH; //l'abscisse diminue d'un carré
+			//this.position2d.firstElement() -= SQUARE_LENGTH; //l'abscisse diminue d'un carré
 		}
 		return position2d;
 	}
