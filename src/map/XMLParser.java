@@ -179,8 +179,6 @@ public class XMLParser {
 				{
 					width -= (width + Integer.parseInt(current.getAttributeValue("x"))) - this.getMapWidth();
 				}
-				System.out.println("height = " + height);
-				System.out.println("Width = " + width);
 				
 				for (i = 0; i < width; ++i)
 				{
