@@ -87,52 +87,56 @@ public class XMLParser {
 			Element current = it.next();
 			Tile tile = new Field ();
 			
-			/* On récupère l'élément parent à la balise tile */
-			Element currentParent = current.getParentElement();
-			
-			/* Si l'élément parent représente une zone : */
-			if (currentParent.getName() == "zone")
+			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
+			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
 			{
-				/* Si la zone n'existe pas encore, on la crée */
-				if (zone == null || Integer.parseInt(currentParent.getAttributeValue("id")) != zone.getId())
+				/* On récupère l'élément parent à la balise tile */
+				Element currentParent = current.getParentElement();
+				
+				/* Si l'élément parent représente une zone : */
+				if (currentParent.getName() == "zone")
 				{
-					zone = new Zone (Integer.parseInt(currentParent.getAttributeValue("id")));
+					/* Si la zone n'existe pas encore, on la crée */
+					if (zone == null || Integer.parseInt(currentParent.getAttributeValue("id")) != zone.getId())
+					{
+						zone = new Zone (Integer.parseInt(currentParent.getAttributeValue("id")));
+					}
+					
+					/* Le tile appartient à cette zone : on met la zone en attribut. */
+					/* On sait aussi que le Tile est de type Buttress. */
+					tile = new Buttress (zone);
+					
+					/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
+					currentParent = currentParent.getParentElement();
 				}
 				
-				/* Le tile appartient à cette zone : on met la zone en attribut. */
-				/* On sait aussi que le Tile est de type Buttress. */
-				tile = new Buttress (zone);
+				/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
+				else
+				{
+					zone = null;
+					switch (currentParent.getName())
+					{
+						case "mountain" :
+						{
+							tile = new Mountain ();
+							break;
+						}
+						default :
+						{
+							break;
+						}
+					}
+				}			
 				
-				/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
-				currentParent = currentParent.getParentElement();
+				/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
+				 * ligne et colonne
+				 */
+				int column = Integer.parseInt(current.getAttributeValue("x"));
+				int line = Integer.parseInt(current.getAttributeValue("y"));
+				
+				/* Le tile est sauvegardé dans le tableau-liste retourné. */
+				tilesTable.get(line).set(column, tile);
 			}
-			
-			/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
-			else
-			{
-				zone = null;
-				switch (currentParent.getName())
-				{
-					case "mountain" :
-					{
-						tile = new Mountain ();
-						break;
-					}
-					default :
-					{
-						break;
-					}
-				}
-			}			
-			
-			/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
-			 * ligne et colonne
-			 */
-			int column = Integer.parseInt(current.getAttributeValue("x"));
-			int line = Integer.parseInt(current.getAttributeValue("y"));
-			
-			/* Le tile est sauvegardé dans le tableau-liste retourné. */
-			tilesTable.get(line).set(column, tile);
 		}
 		
 		/* On retourne le tableau-liste construit. */

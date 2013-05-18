@@ -21,7 +21,7 @@ public class Buttress extends Tile {
 		Right ("SandRoad.bmp", 80, 41),
 		Top ("SandRoad.bmp", 40, 1),
 		Bottom ("SandRoad.bmp", 40, 81),
-		Center ("SandRoad.bmp", 40, 41);
+		Center ("SandRoad.bmp", 0, 121);
 		
 		private String imageName = "";
 		private int subX = 0;

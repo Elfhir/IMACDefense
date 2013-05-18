@@ -7,20 +7,28 @@
 			<tile x="0" y="0" />
 			<tile x="0" y="1" />
 			<tile x="0" y="2" />
+			<tile x="1" y="0" />
+			<tile x="1" y="1" />
+			<tile x="1" y="2" />
+			<tile x="2" y="0" />
+			<tile x="2" y="1" />
 		</zone>
 		<zone id="1" player="2">
 			<tower type="medical" x="1" y="0" />
 			<basis id="2" capacity="30" x="1" y="3" />
-			<tile x="1" y="0" />
-			<tile x="1" y="1" />
-			<tile x="1" y="2" />
+			<tile x="19" y="0" />
+			<tile x="19" y="1" />
+			<tile x="19" y="2" />
+			<tile x="18" y="0" />
+			<tile x="18" y="1" />
+			<tile x="18" y="2" />
+			<tile x="17" y="0" />
+			<tile x="17" y="1" />
 		</zone>
 	</buttress>
 	<mountain>
 		<group width="2" height="3" x="0" y="0">
 		</group>
-		<tile x="2" y="1" />
-		<tile x="2" y="2" />
 		<tile x="3" y="1" />
 		<tile x="3" y="2" />
 		<tile x="4" y="2" />
