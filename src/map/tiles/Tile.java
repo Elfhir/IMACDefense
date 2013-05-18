@@ -1,15 +1,9 @@
 package map.tiles;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import map.Zone;
-
 public class Tile {
 	
 	private static int width = 20;
 	private static int height = 20;
-	private TileType type = TileType.Field;
 	private int x = 0;
 	private int y = 0;
 
@@ -36,20 +30,6 @@ public class Tile {
 	public Tile ()
 	{
 		super ();
-	}
-	
-	public Tile (TileType type)
-	{
-		super ();
-		this.type = type;
-	}
-
-	public void setType(TileType type) {
-		this.type = type;
-	}
-
-	public TileType getType() {
-		return type;
 	}
 
 	public static int getWidth() {
