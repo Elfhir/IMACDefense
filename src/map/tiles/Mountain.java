@@ -53,11 +53,6 @@ public class Mountain extends Tile {
 		super ();
 	}
 	
-	public Mountain(Mountain.GroupPosition pos) {
-		super ();
-		this.pos = pos;
-	}
-	
 	@Override
 	public int getSubImageX ()
 	{

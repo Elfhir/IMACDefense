@@ -3,6 +3,7 @@ package map;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import map.tiles.Buttress;
 import map.tiles.Field;
 import map.tiles.Mountain;
 import map.tiles.Tile;
@@ -72,10 +73,10 @@ public class Mapping {
 		this.height = parser.getMapHeight();
 		this.initializeTiles();
 		this.tiles = parser.getMapTiles();
-		this.setCorrectMountainImages();
+		this.setCorrectImages();
 	}
 	
-	public void setCorrectMountainImages ()
+	public void setCorrectImages ()
 	{
 		Iterator<ArrayList<Tile>> line = this.tiles.iterator();
 		int i = 0; int j = 0;
@@ -86,30 +87,35 @@ public class Mapping {
         	while(column.hasNext())
         	{
         		Tile currentTile = (Tile) column.next();
-        		if (currentTile instanceof Mountain)
+        		if (currentTile instanceof Mountain || currentTile instanceof Buttress)
         		{
         			boolean left = false;
         			boolean right = false;
         			boolean top = false;
         			boolean bottom = false;
         			
-        			// Si le tile en haut est Mountain
-    				if (i > 0 && (Tile)this.tiles.get(i-1).get(j) instanceof Mountain)
-                    	top = true;
+        			currentTile.getClass().equals(currentTile.getClass());
         			
+        			// Si le tile en haut est Mountain
+    				if (i > 0 && ((Tile) this.tiles.get(i-1).get(j)).getClass().equals(currentTile.getClass()))
+                    	top = true;
+    				
         			// Si le tile à gauche est Mountain
-        			if (j > 0 && (Tile) (Tile)this.tiles.get(i).get(j-1) instanceof Mountain)
+        			if (j > 0 && ((Tile) this.tiles.get(i).get(j-1)).getClass().equals(currentTile.getClass()))
         				left = true;
         			
         			// Si le tile en bas est Mountain
-            		if (i < this.width - 1 && (Tile)this.tiles.get(i+1).get(j) instanceof Mountain)
+            		if (i < this.width - 1 && ((Tile)this.tiles.get(i+1).get(j)).getClass().equals(currentTile.getClass()))
             			bottom = true;
     				
     				// Si le tile à droite est Mountain
-					if (j < this.width - 1 && (Tile)this.tiles.get(i).get(j+1) instanceof Mountain)
+					if (j < this.width - 1 && ((Tile)this.tiles.get(i).get(j+1)).getClass().equals(currentTile.getClass()))
 						right = true;
 					
-					((Mountain) currentTile).findPos (top, left, bottom, right);
+					if (currentTile instanceof Mountain)
+						((Mountain) currentTile).findPos (top, left, bottom, right);
+					else
+						((Buttress) currentTile).findPos (top, left, bottom, right);
 					
         		}
         		++j;

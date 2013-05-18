@@ -101,7 +101,6 @@ public class XMLParser {
 				
 				/* Le tile appartient à cette zone : on met la zone en attribut. */
 				/* On sait aussi que le Tile est de type Buttress. */
-				//tile.setZone(zone);
 				tile = new Buttress (zone);
 				
 				/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
@@ -124,19 +123,13 @@ public class XMLParser {
 						break;
 					}
 				}
-			}
-			
-			/* Selon le type de tile, dont la balise est contenue dans l'élément currentParent
-			 * On actualise le type du tile.
-			 */
-			//tile.setType(TileType.convertStringToTileType(currentParent.getName()));
-			
+			}			
 			
 			/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
 			 * ligne et colonne
 			 */
-			int line = Integer.parseInt(current.getAttributeValue("x"));
-			int column = Integer.parseInt(current.getAttributeValue("y"));
+			int column = Integer.parseInt(current.getAttributeValue("x"));
+			int line = Integer.parseInt(current.getAttributeValue("y"));
 			
 			/* Le tile est sauvegardé dans le tableau-liste retourné. */
 			tilesTable.get(line).set(column, tile);
