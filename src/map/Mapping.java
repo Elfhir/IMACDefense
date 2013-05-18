@@ -93,27 +93,47 @@ public class Mapping {
         			boolean right = false;
         			boolean top = false;
         			boolean bottom = false;
+        			boolean topLeftCorner = false;
+        			boolean topRightCorner = false;
+        			boolean bottomLeftCorner = false;
+        			boolean bottomRightCorner = false;
         			
         			currentTile.getClass().equals(currentTile.getClass());
         			
-        			// Si le tile en haut est Mountain
-    				if (i > 0 && ((Tile) this.tiles.get(i-1).get(j)).getClass().equals(currentTile.getClass()))
+        			// Si le tile en haut est Mountain ou si on se trouve en haut de la map
+    				if (i == 0 || (i > 0 && ((Tile) this.tiles.get(i-1).get(j)).getClass().equals(currentTile.getClass())))
                     	top = true;
     				
-        			// Si le tile à gauche est Mountain
-        			if (j > 0 && ((Tile) this.tiles.get(i).get(j-1)).getClass().equals(currentTile.getClass()))
+        			// Si le tile à gauche est Mountain ou si on se trouve à gauche de la map
+        			if (j == 0 || (j > 0 && ((Tile) this.tiles.get(i).get(j-1)).getClass().equals(currentTile.getClass())))
         				left = true;
         			
-        			// Si le tile en bas est Mountain
-            		if (i < this.width - 1 && ((Tile)this.tiles.get(i+1).get(j)).getClass().equals(currentTile.getClass()))
+        			// Si le tile en bas est Mountain ou si on se trouve en bas de la map
+            		if (i == this.height - 1 || (i < this.height - 1 && ((Tile)this.tiles.get(i+1).get(j)).getClass().equals(currentTile.getClass())))
             			bottom = true;
     				
-    				// Si le tile à droite est Mountain
-					if (j < this.width - 1 && ((Tile)this.tiles.get(i).get(j+1)).getClass().equals(currentTile.getClass()))
+    				// Si le tile à droite est Mountain ou si on se trouve à droite de la map
+					if (j == this.width - 1 || (j < this.width - 1 && ((Tile)this.tiles.get(i).get(j+1)).getClass().equals(currentTile.getClass())))
 						right = true;
 					
+					// Si le tile en diagonale haut et gauche est Mountain ou si le tile est au bord gauche et/ou haut
+        			if ((i == 0) || (j == 0) || (i > 0 && j > 0 && ((Tile) this.tiles.get(i-1).get(j-1)).getClass().equals(currentTile.getClass())))
+        				topLeftCorner = true;
+        			
+        			// Si le tile en diagonale haut et droite est Mountain ou si le tile est au bord droit et/ou haut
+					if ((i == 0) || (j == this.width - 1) || (i > 0 && j < this.width - 1 && ((Tile)this.tiles.get(i-1).get(j+1)).getClass().equals(currentTile.getClass())))
+						topRightCorner = true;
+					
+					// Si le tile en diagonale bas et gauche est Mountain ou si le tile est au bord gauche et/ou bas
+        			if ((i == this.height - 1) || (j == 0) || (i < this.height - 1 && j > 0 && ((Tile) this.tiles.get(i+1).get(j-1)).getClass().equals(currentTile.getClass())))
+        				bottomLeftCorner = true;
+        			
+        			// Si le tile en diagonale bas et droite est Mountain ou si le tile est au bord droit et/ou bas
+        			if ((i == this.height - 1) || (j == this.width - 1) || (i < this.height - 1 && j < this.width - 1 && ((Tile) this.tiles.get(i+1).get(j+1)).getClass().equals(currentTile.getClass())))
+        				bottomRightCorner = true;
+					
 					if (currentTile instanceof Mountain)
-						((Mountain) currentTile).findPos (top, left, bottom, right);
+						((Mountain) currentTile).findPos (top, left, bottom, right, topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner);
 					else
 						((Buttress) currentTile).findPos (top, left, bottom, right);
 					

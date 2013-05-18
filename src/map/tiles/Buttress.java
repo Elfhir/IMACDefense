@@ -21,7 +21,11 @@ public class Buttress extends Tile {
 		Right ("SandRoad.bmp", 80, 41),
 		Top ("SandRoad.bmp", 40, 1),
 		Bottom ("SandRoad.bmp", 40, 81),
-		Center ("SandRoad.bmp", 0, 121);
+		Center ("SandRoad.bmp", 0, 121),
+		AloneBottom ("SandRoad.bmp", 160, 41),
+		AloneRight ("SandRoad.bmp", 200, 81),
+		AloneTop ("SandRoad.bmp", 160, 81),
+		AloneLeft ("SandRoad.bmp", 200, 41);
 		
 		private String imageName = "";
 		private int subX = 0;
@@ -108,6 +112,22 @@ public class Buttress extends Tile {
 		// Si tout est vrai sauf bottom et right : alors le tile est de type "BottomLeftCorner"
 		else if (top && left && !bottom && !right)
 			this.pos = Buttress.GroupPosition.BottomRightCorner;
+		
+		// Si tout est faux sauf top : alors le tile est de type "AloneBottom"
+		else if (top && !left && !bottom && !right)
+			this.pos = Buttress.GroupPosition.AloneBottom;
+		
+		// Si tout est faux sauf left : alors le tile est de type "AloneRight"
+		else if (!top && left && !bottom && !right)
+			this.pos = Buttress.GroupPosition.AloneRight;
+		
+		// Si tout est faux sauf bottom : alors le tile est de type "AloneTop"
+		else if (!top && !left && bottom && !right)
+			this.pos = Buttress.GroupPosition.AloneTop;
+		
+		// Si tout est faux sauf right : alors le tile est de type "AloneLeft"
+		else if (!top && !left && !bottom && right)
+			this.pos = Buttress.GroupPosition.AloneLeft;
 		
 		// Si aucune des conditions précédentes n'est vraie, alors on a un tile "solitaire" ou au centre : "Center"
 		else

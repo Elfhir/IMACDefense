@@ -59,6 +59,58 @@ public class XMLParser {
 	
 	/* Données de tiles */
 	
+	public Tile readMapTile (Element tileElement, Zone zone)
+	{
+		if (tileElement.getName() != "tile" && tileElement.getName() != "group") return null;
+		
+		Tile tile = new Field ();
+		
+		// Les coordonnées du tile ne peuvent être en dehors de la taille de la map demandée.
+		if (Integer.parseInt(tileElement.getAttributeValue("x")) < 0 && Integer.parseInt(tileElement.getAttributeValue("x")) >= this.getMapWidth() && Integer.parseInt(tileElement.getAttributeValue("y")) < 0 && Integer.parseInt(tileElement.getAttributeValue("y")) >= this.getMapHeight())
+		{
+			return null;
+		}
+		/* On récupère l'élément parent à la balise tile */
+		Element parent = tileElement.getParentElement();
+		
+		/* Si l'élément parent représente une zone : */
+		if (parent.getName() == "zone")
+		{
+			/* Si la zone n'existe pas encore, on la crée */
+			if (zone == null || Integer.parseInt(parent.getAttributeValue("id")) != zone.getId())
+			{
+				zone = new Zone (Integer.parseInt(parent.getAttributeValue("id")));
+			}
+			
+			/* Le tile appartient à cette zone : on met la zone en attribut. */
+			/* On sait aussi que le Tile est de type Buttress. */
+			tile = new Buttress (zone);
+			
+			/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
+			parent = parent.getParentElement();
+		}
+		
+		/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
+		else
+		{
+			zone = null;
+			switch (parent.getName())
+			{
+				case "mountain" :
+				{
+					tile = new Mountain ();
+					break;
+				}
+				default :
+				{
+					break;
+				}
+			}
+		}
+		
+		return tile;
+	}
+	
 	public ArrayList<ArrayList<Tile>> getMapTiles ()
 	{
 		/* Initialisation de tilesTable :
@@ -89,53 +141,67 @@ public class XMLParser {
 			
 			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
 			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
-			{
-				/* On récupère l'élément parent à la balise tile */
-				Element currentParent = current.getParentElement();
-				
-				/* Si l'élément parent représente une zone : */
-				if (currentParent.getName() == "zone")
+			{					
+				tile = readMapTile (current, zone);
+				if (tile != null)
 				{
-					/* Si la zone n'existe pas encore, on la crée */
-					if (zone == null || Integer.parseInt(currentParent.getAttributeValue("id")) != zone.getId())
-					{
-						zone = new Zone (Integer.parseInt(currentParent.getAttributeValue("id")));
-					}
+					/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
+					 * ligne et colonne
+					 */
+					int column = Integer.parseInt(current.getAttributeValue("x"));
+					int line = Integer.parseInt(current.getAttributeValue("y"));
 					
-					/* Le tile appartient à cette zone : on met la zone en attribut. */
-					/* On sait aussi que le Tile est de type Buttress. */
-					tile = new Buttress (zone);
-					
-					/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
-					currentParent = currentParent.getParentElement();
+					/* Le tile est sauvegardé dans le tableau-liste retourné. */
+					tilesTable.get(line).set(column, tile);
 				}
-				
-				/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
-				else
+			}
+		}
+		
+		/* Parcours des balises group contenues dans le document avec un itérateur */	
+		it = (Iterator<Element>) racine.getDescendants(new ElementFilter ("group"));
+		zone = null;
+		while (it.hasNext())
+		{
+			Element current = it.next();
+			Tile tile = new Field ();
+			
+			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
+			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
+			{
+				// On veille à ce que le groupe de tiles ne dépasse pas la map.
+				int height = Integer.parseInt(current.getAttributeValue("height"));
+				int width = Integer.parseInt(current.getAttributeValue("width"));
+				if (height + Integer.parseInt(current.getAttributeValue("y")) >= this.getMapHeight())
 				{
-					zone = null;
-					switch (currentParent.getName())
+					height -= (height + Integer.parseInt(current.getAttributeValue("y"))) - this.getMapHeight();
+				}
+				if (width + Integer.parseInt(current.getAttributeValue("x")) >= this.getMapWidth())
+				{
+					width -= (width + Integer.parseInt(current.getAttributeValue("x"))) - this.getMapWidth();
+				}
+				System.out.println("height = " + height);
+				System.out.println("Width = " + width);
+				
+				for (i = 0; i < width; ++i)
+				{
+					for (j = 0; j < height; ++j)
 					{
-						case "mountain" :
+						tile = readMapTile(current, zone);
+						
+						if (tile != null)
 						{
-							tile = new Mountain ();
-							break;
-						}
-						default :
-						{
-							break;
+							/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
+							 * ligne et colonne
+							 */
+							
+							int column = Integer.parseInt(current.getAttributeValue("x")) + i;
+							int line = Integer.parseInt(current.getAttributeValue("y")) + j;
+							
+							/* Le tile est sauvegardé dans le tableau-liste retourné. */
+							tilesTable.get(line).set(column, tile);
 						}
 					}
-				}			
-				
-				/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
-				 * ligne et colonne
-				 */
-				int column = Integer.parseInt(current.getAttributeValue("x"));
-				int line = Integer.parseInt(current.getAttributeValue("y"));
-				
-				/* Le tile est sauvegardé dans le tableau-liste retourné. */
-				tilesTable.get(line).set(column, tile);
+				}
 			}
 		}
 		
@@ -150,6 +216,7 @@ public class XMLParser {
 		// TODO Auto-generated method stub
 		XMLParser parser = new XMLParser ("map1.xml");
 		System.out.println(parser.getMapName());
+		parser.getMapTiles();
 	}
 
 }

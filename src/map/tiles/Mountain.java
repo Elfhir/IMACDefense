@@ -20,7 +20,15 @@ public class Mountain extends Tile {
 		Top ("Sand.bmp", 40, 1),
 		Bottom ("Sand.bmp", 40, 81),
 		Center ("Sand.bmp", 40, 41),
-		Alone ("SandMisc.bmp", 160, 81);
+		InternTopLeftCorner ("Sand.bmp", 40, 121),
+		InternTopRightCorner ("Sand.bmp", 80, 121),
+		InternBottomLeftCorner ("Sand.bmp", 40, 161),
+		InternBottomRightCorner ("Sand.bmp", 80, 161),
+		Alone ("SandMisc.bmp", 160, 81),
+		AloneRight ("Sand.bmp", 0, 121),
+		AloneBottom ("Sand.bmp", 39, 160),
+		AloneLeft ("Sand.bmp", 0, 161),
+		AloneTop ("Sand.bmp", 39, 120);
 		
 		private String imageName = "";
 		private int subX = 0;
@@ -59,10 +67,37 @@ public class Mountain extends Tile {
 		return this.pos.getSubX();
 	}
 	
-	public void findPos(boolean top, boolean left, boolean bottom, boolean right) {
+	public void findPos(boolean top, boolean left, boolean bottom, boolean right, boolean topLeftCorner, boolean topRightCorner, boolean bottomLeftCorner, boolean bottomRightCorner) {
+		// Si tout est faux sauf top : alors le tile est de type "AloneBottom"
+		if (top && !left && !bottom && !right)
+			this.pos = Mountain.GroupPosition.AloneBottom;
+		
+		// Si tout est faux sauf left : alors le tile est de type "AloneRight"
+		else if (!top && left && !bottom && !right)
+			this.pos = Mountain.GroupPosition.AloneRight;
+		
+		// Si tout est faux sauf bottom : alors le tile est de type "AloneTop"
+		else if (!top && !left && bottom && !right)
+			this.pos = Mountain.GroupPosition.AloneTop;
+		
+		// Si tout est faux sauf right : alors le tile est de type "AloneLeft"
+		else if (!top && !left && !bottom && right)
+			this.pos = Mountain.GroupPosition.AloneLeft;
+		
 		// Si tout est vrai : alors le tile est de type "Center" : il est au centre d'une colline.
-		if (top && left && bottom && right)
-			this.pos = Mountain.GroupPosition.Center;
+		else if (top && left && bottom && right)
+		{
+			if (!topLeftCorner && topRightCorner)
+				this.pos = Mountain.GroupPosition.InternTopLeftCorner;
+			else if (!topRightCorner && topLeftCorner)
+				this.pos = Mountain.GroupPosition.InternTopRightCorner;
+			else if (!bottomLeftCorner && bottomRightCorner)
+				this.pos = Mountain.GroupPosition.InternBottomLeftCorner;
+			else if (!bottomRightCorner && bottomLeftCorner)
+				this.pos = Mountain.GroupPosition.InternBottomRightCorner;
+			else
+				this.pos = Mountain.GroupPosition.Center;
+		}
 		
 		// Si tout est vrai sauf top : alors le tile est de type "Top" : il est en haut au centre de la colline.
 		else if (!top && left && bottom && right)
@@ -92,6 +127,10 @@ public class Mountain extends Tile {
 		else if (top && !left && !bottom && right)
 			this.pos = Mountain.GroupPosition.BottomLeftCorner;
 			
+		// Si tout est vrai sauf bottom et right : alors le tile est de type "BottomLeftCorner"
+		else if (top && left && !bottom && !right)
+			this.pos = Mountain.GroupPosition.BottomRightCorner;
+		
 		// Si tout est vrai sauf bottom et right : alors le tile est de type "BottomLeftCorner"
 		else if (top && left && !bottom && !right)
 			this.pos = Mountain.GroupPosition.BottomRightCorner;
