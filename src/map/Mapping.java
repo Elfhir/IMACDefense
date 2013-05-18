@@ -3,8 +3,9 @@ package map;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import map.tiles.Field;
+import map.tiles.Mountain;
 import map.tiles.Tile;
-import map.tiles.TileType;
 
 public class Mapping {
 	
@@ -35,12 +36,12 @@ public class Mapping {
 	public void initializeTiles ()
 	{
 		int i = 0, j = 0;
-		for (i = 0; i < this.width; ++i)
+		for (i = 0; i < this.height; ++i)
 		{
 			ArrayList<Tile> newLine = new ArrayList<Tile>();
-			for (j = 0; j < this.height; ++j)
+			for (j = 0; j < this.width; ++j)
 			{
-				newLine.add(new Tile (TileType.Field));
+				newLine.add(new Field ());
 			}
 			this.tiles.add(newLine);
 		}
@@ -71,11 +72,56 @@ public class Mapping {
 		this.height = parser.getMapHeight();
 		this.initializeTiles();
 		this.tiles = parser.getMapTiles();
+		this.setCorrectMountainImages();
+	}
+	
+	public void setCorrectMountainImages ()
+	{
+		Iterator<ArrayList<Tile>> line = this.tiles.iterator();
+		int i = 0; int j = 0;
+		while(line.hasNext())
+        {
+			ArrayList<Tile> currentLine = (ArrayList<Tile>) line.next();
+        	Iterator<Tile> column = currentLine.iterator();
+        	while(column.hasNext())
+        	{
+        		Tile currentTile = (Tile) column.next();
+        		if (currentTile instanceof Mountain)
+        		{
+        			boolean left = false;
+        			boolean right = false;
+        			boolean top = false;
+        			boolean bottom = false;
+        			
+        			// Si le tile en haut est Mountain
+    				if (i > 0 && (Tile)this.tiles.get(i-1).get(j) instanceof Mountain)
+                    	top = true;
+        			
+        			// Si le tile à gauche est Mountain
+        			if (j > 0 && (Tile) (Tile)this.tiles.get(i).get(j-1) instanceof Mountain)
+        				left = true;
+        			
+        			// Si le tile en bas est Mountain
+            		if (i < this.width - 1 && (Tile)this.tiles.get(i+1).get(j) instanceof Mountain)
+            			bottom = true;
+    				
+    				// Si le tile à droite est Mountain
+					if (j < this.width - 1 && (Tile)this.tiles.get(i).get(j+1) instanceof Mountain)
+						right = true;
+					
+					((Mountain) currentTile).findPos (top, left, bottom, right);
+					
+        		}
+        		++j;
+        	}
+        	++i;
+        	j = 0;
+        }
 	}
 	
 	/* Affichage */
 	
-	public void print ()
+	/*public void print ()
 	{
 		Iterator<ArrayList<Tile>> line = this.tiles.iterator();
 		while(line.hasNext())
@@ -89,8 +135,12 @@ public class Mapping {
         	}
         }
 		return;
-	}
+	}*/
 	
+	public ArrayList<ArrayList<Tile>> getTiles() {
+		return tiles;
+	}
+
 	/**
 	 * @param args
 	 */
@@ -100,6 +150,6 @@ public class Mapping {
 		System.out.println(map.getName());
 		System.out.println(map.getWidth());
 		System.out.println(map.getHeight());
-		map.print();
+		//map.print();
 	}
 }

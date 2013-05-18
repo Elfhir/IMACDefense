@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map width="3" height="3" name="Le champ de bataille">
+<map width="20" height="20" name="Le champ de bataille">
 	<buttress>
 		<zone id="0" player="1">
 			<tower type="laser" x="0" y="0" />
@@ -17,8 +17,13 @@
 		</zone>
 	</buttress>
 	<mountain>
-		<tile x="2" y="0" />
+		<group width="2" height="3" x="0" y="0">
+		</group>
 		<tile x="2" y="1" />
 		<tile x="2" y="2" />
+		<tile x="3" y="1" />
+		<tile x="3" y="2" />
+		<tile x="4" y="2" />
+		<tile x="4" y="1" />
 	</mountain>
 </map>

@@ -3,9 +3,11 @@ package map;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import map.tiles.Tile;
-import map.tiles.TileType;
 
+import map.tiles.Buttress;
+import map.tiles.Field;
+import map.tiles.Mountain;
+import map.tiles.Tile;
 import org.jdom2.Element;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
@@ -66,12 +68,12 @@ public class XMLParser {
 		ArrayList<ArrayList<Tile>> tilesTable = new ArrayList<ArrayList<Tile>>();
 		
 		int i = 0, j = 0;
-		for (i = 0; i < getMapWidth(); ++i)
+		for (i = 0; i < getMapHeight(); ++i)
 		{
 			ArrayList<Tile> newLine = new ArrayList<Tile>();
-			for (j = 0; j < getMapHeight(); ++j)
+			for (j = 0; j < getMapWidth(); ++j)
 			{
-				newLine.add(new Tile (TileType.Field));
+				newLine.add(new Field ());
 			}
 			tilesTable.add(newLine);
 		}
@@ -83,7 +85,7 @@ public class XMLParser {
 		while (it.hasNext())
 		{
 			Element current = it.next();
-			Tile tile = new Tile (TileType.Field);
+			Tile tile = new Field ();
 			
 			/* On récupère l'élément parent à la balise tile */
 			Element currentParent = current.getParentElement();
@@ -98,7 +100,9 @@ public class XMLParser {
 				}
 				
 				/* Le tile appartient à cette zone : on met la zone en attribut. */
-				tile.setZone(zone);
+				/* On sait aussi que le Tile est de type Buttress. */
+				//tile.setZone(zone);
+				tile = new Buttress (zone);
 				
 				/* On récupère le parent de la zone, qui est obligatoirement un type de tile (si le document XML est bien construit). */
 				currentParent = currentParent.getParentElement();
@@ -108,12 +112,25 @@ public class XMLParser {
 			else
 			{
 				zone = null;
+				switch (currentParent.getName())
+				{
+					case "mountain" :
+					{
+						tile = new Mountain ();
+						break;
+					}
+					default :
+					{
+						break;
+					}
+				}
 			}
 			
 			/* Selon le type de tile, dont la balise est contenue dans l'élément currentParent
 			 * On actualise le type du tile.
 			 */
-			tile.setType(TileType.convertStringToTileType(currentParent.getName()));
+			//tile.setType(TileType.convertStringToTileType(currentParent.getName()));
+			
 			
 			/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
 			 * ligne et colonne

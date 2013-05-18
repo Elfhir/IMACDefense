@@ -1,7 +1,6 @@
 package gameengine;
 
 import javax.swing.SwingUtilities;
-
 import window.GraphicalInterface;
 
 public class GameEngine {
@@ -13,12 +12,10 @@ public class GameEngine {
 		// TODO Auto-generated method stub
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				//On crée une nouvelle instance de notre JDialog
+				// On crée une nouvelle instance de notre JDialog
 				GraphicalInterface window = new GraphicalInterface();
-				window.setVisible(true);//On la rend visible
+				window.setVisible(true); //On la rend visible
 			}
 		});
-
 	}
-
 }
