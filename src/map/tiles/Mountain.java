@@ -8,40 +8,32 @@ public class Mountain extends Tile {
 	private boolean walkable = false;
 	private boolean constructible = false;
 	private GroupPosition pos = GroupPosition.Alone;
+	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "terrain.png";
 	
 	public enum GroupPosition
 	{
-		TopLeftCorner ("Sand.bmp", 0, 1),
-		BottomLeftCorner ("Sand.bmp", 0, 81),
-		TopRightCorner ("Sand.bmp", 80, 1),
-		BottomRightCorner ("Sand.bmp", 80, 81),
-		Left ("Sand.bmp", 0, 41),
-		Right ("Sand.bmp", 80, 41),
-		Top ("Sand.bmp", 40, 1),
-		Bottom ("Sand.bmp", 40, 81),
-		Center ("Sand.bmp", 40, 41),
-		InternTopLeftCorner ("Sand.bmp", 40, 121),
-		InternTopRightCorner ("Sand.bmp", 80, 121),
-		InternBottomLeftCorner ("Sand.bmp", 40, 161),
-		InternBottomRightCorner ("Sand.bmp", 80, 161),
-		Alone ("SandMisc.bmp", 160, 81);
-		
-		private String imageName = "";
+		TopLeftCorner (0, 0),
+		Top (20, 0),
+		TopRightCorner (40, 0),
+		Left (0, 20),
+		Center (20, 20),
+		Right (40, 20),
+		BottomLeftCorner (0, 40),
+		Bottom (20, 40),
+		BottomRightCorner (40, 40),
+		InternBottomRightCorner (60, 0),
+		InternBottomLeftCorner (80, 0),
+		InternTopRightCorner (60, 20),
+		InternTopLeftCorner (80, 20),
+		Alone (60, 40);
+
 		private int subX = 0;
 		private int subY = 0;
 		
-		private GroupPosition (String imageName, int subX, int subY)
-		{
-			String workingDir = System.getProperty("user.dir");
-			String filepath = workingDir + File.separator + "img" + File.separator + "HardVaccum_Tileset" + File.separator + "Terrain Tiles" + File.separator;
-			this.imageName = filepath + imageName;
-			
+		private GroupPosition (int subX, int subY)
+		{			
 			this.subX = subX;
 			this.subY = subY;
-		}
-
-		public String getImageName() {
-			return imageName;
 		}
 
 		public int getSubX() {
@@ -128,7 +120,7 @@ public class Mountain extends Tile {
 
 	@Override
 	public String getImageName() {
-		return this.pos.getImageName();
+		return this.imageName;
 	}
 
 	/**

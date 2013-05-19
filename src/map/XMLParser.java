@@ -80,6 +80,7 @@ public class XMLParser {
 			if (zone == null || Integer.parseInt(parent.getAttributeValue("id")) != zone.getId())
 			{
 				zone = new Zone (Integer.parseInt(parent.getAttributeValue("id")));
+				zone.setPlayer (Integer.parseInt(parent.getAttributeValue("player")));
 			}
 			
 			/* Le tile appartient à cette zone : on met la zone en attribut. */

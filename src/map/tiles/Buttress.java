@@ -10,39 +10,31 @@ public class Buttress extends Tile {
 	private boolean walkable = false;
 	private boolean constructible = true;
 	private GroupPosition pos = GroupPosition.Center;
+	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "Buttress.png";
 	
 	public enum GroupPosition
 	{
-		TopLeftCorner ("SandRoad.bmp", 0, 1),
-		BottomLeftCorner ("SandRoad.bmp", 0, 81),
-		TopRightCorner ("SandRoad.bmp", 80, 1),
-		BottomRightCorner ("SandRoad.bmp", 80, 81),
-		Left ("SandRoad.bmp", 0, 41),
-		Right ("SandRoad.bmp", 80, 41),
-		Top ("SandRoad.bmp", 40, 1),
-		Bottom ("SandRoad.bmp", 40, 81),
-		Center ("SandRoad.bmp", 0, 121),
-		AloneBottom ("SandRoad.bmp", 160, 41),
-		AloneRight ("SandRoad.bmp", 200, 81),
-		AloneTop ("SandRoad.bmp", 160, 81),
-		AloneLeft ("SandRoad.bmp", 200, 41);
-		
-		private String imageName = "";
+		TopLeftCorner (0, 0),
+		Top (20, 0),
+		TopRightCorner (40, 0),
+		Left (0, 20),
+		Center (20, 20),
+		Right (40, 20),
+		BottomLeftCorner (0, 40),
+		Bottom (20, 40),
+		BottomRightCorner (40, 40),
+		AloneTop (60, 0),
+		AloneLeft (80, 0),
+		AloneBottom (60, 20),
+		AloneRight (80, 20);
+
 		private int subX = 0;
 		private int subY = 0;
 		
-		private GroupPosition (String imageName, int subX, int subY)
-		{
-			String workingDir = System.getProperty("user.dir");
-			String filepath = workingDir + File.separator + "img" + File.separator + "HardVaccum_Tileset" + File.separator + "Terrain Tiles" + File.separator;
-			this.imageName = filepath + imageName;
-			
+		private GroupPosition (int subX, int subY)
+		{			
 			this.subX = subX;
 			this.subY = subY;
-		}
-
-		public String getImageName() {
-			return imageName;
 		}
 
 		public int getSubX() {
@@ -53,8 +45,7 @@ public class Buttress extends Tile {
 			return subY;
 		}
 	};
-	
-	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "HardVaccum_Tileset" + File.separator + "Terrain Tiles" + File.separator + "SandRoad.bmp";
+
 	private int subImageX = 80;
 	private int subImageY = 41;
 	
@@ -63,6 +54,7 @@ public class Buttress extends Tile {
 	public Buttress(Zone zone) {
 		// TODO Auto-generated constructor stub
 		this.zone = zone;
+		this.setButtressColor();
 	}
 
 	/**
@@ -142,6 +134,11 @@ public class Buttress extends Tile {
 
 	@Override
 	public String getImageName() {
-		return this.pos.getImageName();
+		return this.imageName;
+	}
+	
+	public void setButtressColor ()
+	{
+		this.imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "Buttress" + this.zone.getPlayer() + ".png";
 	}
 }
