@@ -1,5 +1,9 @@
 package window;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,7 +19,9 @@ public class GraphicalInterface extends JFrame
  
 	private void build(){
 		Mapping map = new Mapping ("map1.xml");
-		setTitle("IMACDefense"); // On donne un titre à l'application
+		Image icone = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif");
+		setIconImage(icone);
+		setTitle("IMACDefense - " + map.getName()); // On donne un titre à l'application
 		setSize(map.getWidth()*Tile.getWidth() + 6,map.getHeight()*Tile.getHeight() + 28); // On donne une taille à notre fenêtre
 		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		setResizable(false); // On interdit le redimensionnement de la fenêtre
