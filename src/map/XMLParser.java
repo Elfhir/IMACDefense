@@ -4,20 +4,23 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import map.tiles.Buttress;
-import map.tiles.Field;
-import map.tiles.Mountain;
-import map.tiles.Tile;
+/* ----- IMPORTS LECTURE XML ----- */
 import org.jdom2.Element;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
+
+/* ----- IMPORTS TILES ----- */
+import map.tiles.Tile;
+import map.tiles.Buttress;
+import map.tiles.Field;
+import map.tiles.Mountain;
 
 public class XMLParser {
 	
 	private org.jdom2.Document document;
 	private Element racine;
 	
-	/* Constructeur */
+	/* ----- CONSTRUCTEUR ----- */
 
 	public XMLParser(String filename) {
 		// TODO Auto-generated constructor stub
@@ -40,7 +43,7 @@ public class XMLParser {
 		}
 	}
 	
-	/* Données de la map */
+	/* ----- DONNEES DE LA MAP ----- */
 	
 	public String getMapName ()
 	{
@@ -57,7 +60,7 @@ public class XMLParser {
 		return Integer.parseInt(racine.getAttributeValue("height"));
 	}
 	
-	/* Données de tiles */
+	/* ----- DONNEES DE TILES ----- */
 	
 	public Tile readMapTile (Element tileElement, Zone zone)
 	{
@@ -207,15 +210,4 @@ public class XMLParser {
 		/* On retourne le tableau-liste construit. */
 		return tilesTable;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		XMLParser parser = new XMLParser ("map1.xml");
-		System.out.println(parser.getMapName());
-		parser.getMapTiles();
-	}
-
 }

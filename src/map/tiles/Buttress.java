@@ -57,6 +57,10 @@ public class Buttress extends Tile {
 		this.setButtressColor();
 	}
 
+	public Zone getZone() {
+		return zone;
+	}
+
 	/**
 	 * @param args
 	 */

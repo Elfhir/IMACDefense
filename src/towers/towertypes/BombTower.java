@@ -1,25 +1,40 @@
 package towers.towertypes;
 
-import java.util.LinkedList;
+import java.io.File;
 
 import towers.Tower;
 import towers.strategy.shooter.Bomb;
 
 public class BombTower extends Tower {
+	
+	protected int width = 2; // Largeur en tiles
+	protected int height = 2; // Hauteur en tiles
 
-	public BombTower(int price, int shootSpeed, int shootPower, int shootRange,
-			LinkedList<Object> position2d) {
-		super(price, shootSpeed, shootPower, shootRange, position2d);
+	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "bombtower.png";
+	
+	private static int price = 5000;
+	private static int shootSpeed = 4;
+	private static int shootPower = 0;
+	private static int shootRange = 5;
+
+	public BombTower(int x, int y) {
+		super(x, y);
 		// TODO Auto-generated constructor stub
 		this.shooter = new Bomb ();
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	@Override
+	public int getWidth() {
+		return width;
 	}
 
+	@Override
+	public int getHeight() {
+		return height;
+	}
+
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
 }

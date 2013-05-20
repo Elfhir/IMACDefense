@@ -28,7 +28,7 @@ public class GraphicalInterface extends JFrame
 		
 		/* Curseur Cible */
 		Image cursorImage = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "cursor.png");
-		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(1, 1), "Cursor");
+		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(7, 7), "Cursor");
 		setCursor(cursor);		
 		
 		setTitle("IMACDefense - " + map.getName()); // On donne un titre à l'application
@@ -38,7 +38,7 @@ public class GraphicalInterface extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // On dit à l'application de se fermer lors du clic sur la croix
 
 		//Instanciation d'un objet JPanel
-	    JPanel pan = new Panel(map);
+	    JPanel pan = new PanMap(map);
 	    //On prévient notre JFrame que notre JPanel sera son content pane
 	    this.setContentPane(pan);
 	    

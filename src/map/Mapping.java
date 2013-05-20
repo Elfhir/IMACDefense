@@ -2,18 +2,22 @@ package map;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import towers.Tower;
+import towers.towertypes.*;
 
+/* ----- IMPORTS TILES ----- */
+import map.tiles.Tile;
 import map.tiles.Buttress;
 import map.tiles.Field;
 import map.tiles.Mountain;
-import map.tiles.Tile;
 
 public class Mapping {
-	
+
 	private String name = ""; // Titre de la map
 	private int width = 20; // Largeur de la map en tiles
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
+	private ArrayList<Tower> towers = new ArrayList<Tower>();
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -23,6 +27,11 @@ public class Mapping {
 		super ();
 		/* Lecture du fichier XML */
 		this.readXMLFile (XMLFileName);
+		towers.add(new SubmachineGunTower(2,2));
+		towers.add(new LaserTower(12,1));
+		towers.add(new FreezeTower(15,1));
+		towers.add(new MedicalTower(1,15));
+		towers.add(new BombTower(3,12));
 	}
 
 	// Construit une map à partir des données passées en paramètres, et initialise le tableau de tiles.
@@ -83,6 +92,10 @@ public class Mapping {
 	
 	public ArrayList<ArrayList<Tile>> getTiles() {
 		return tiles;
+	}
+	
+	public ArrayList<Tower> getTowers() {
+		return towers;
 	}
 	
 	/* ----- TRAITEMENT DE FICHIER ----- */

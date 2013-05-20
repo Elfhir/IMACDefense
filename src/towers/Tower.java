@@ -1,33 +1,29 @@
 package towers;
-/**
- * 
- */
 
-import java.util.LinkedList;
+import java.io.File;
 
+import map.Zone;
 import towers.strategy.improvement.*;
 import towers.strategy.shooter.*;
-import towers.towertypes.*;
-
-
-
-/**
- * @author Thaïs
- *
- */
-
 
 public class Tower {
 	
+	protected int width = 5;
+	protected int height = 5;
+	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif";
+	
 	protected ImproverInterface improver = new PowerImprovement(); // Ameliorateur
 	protected ShooterInterface shooter = new Freeze(); // Tireur
-	protected int price = 0; // Coût de placement de la tour
-	protected int shootSpeed = 0; // Vitesse de tir
-	protected int shootPower = 0; // Puissance de tir
-	protected int shootRange = 0; // Portée de tir - rayon
-	protected LinkedList<Object> position2d = new LinkedList<Object> (); // Position 2D sur la map
-	int life = 10; // Vie de la tour - à 0, elle est détruite
-	// private Player ownerPlayer; // Joueur propriétaire
+	
+	protected static int price = 0; // Coût de placement de la tour
+	protected static int shootSpeed = 0; // Vitesse de tir
+	protected static int shootPower = 0; // Puissance de tir
+	protected static int shootRange = 0; // Portée de tir - rayon
+	
+	private int x = 0;
+	private int y = 0; // Position 2D sur la map
+	private int life = 10; // Vie de la tour - à 0, elle est détruite
+	private Zone zone = null; // Zone à laquelle appartient la tour
 	
 	public int getLife() {
 		return life;
@@ -35,10 +31,6 @@ public class Tower {
 
 	public void setLife(int life) {
 		this.life = life;
-	}
-
-	public void setPosition2d(LinkedList<Object> position2d) {
-		this.position2d = position2d;
 	}
 
 	public ImproverInterface getImprover() {
@@ -60,57 +52,42 @@ public class Tower {
 	public int getPrice() {
 		return price;
 	}
+	
+	public int getWidth() {
+		return width;
+	}
 
-	public void setPrice(int price) {
-		this.price = price;
+	public int getHeight() {
+		return height;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 
 	public int getShootSpeed() {
 		return shootSpeed;
 	}
 
-	public void setShootSpeed(int shootSpeed) {
-		this.shootSpeed = shootSpeed;
-	}
-
 	public int getShootPower() {
 		return shootPower;
-	}
-
-	public void setShootPower(int shootPower) {
-		this.shootPower = shootPower;
 	}
 
 	public int getShootRange() {
 		return shootRange;
 	}
-
-	public void setShootRange(int shootRange) {
-		this.shootRange = shootRange;
-	}
-
-	/**
-	 * 
-	 */
-	public Tower(int price, int shootSpeed,
-			int shootPower, int shootRange, LinkedList<Object> position2d) {
+	
+	public Tower(int x, int y) {
 		super();
-		this.price = price;
-		this.shootSpeed = shootSpeed;
-		this.shootPower = shootPower;
-		this.shootRange = shootRange;
-		this.position2d = position2d;
+		this.x = x;
+		this.y = y;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Tower tower = new MedicalTower(0,0,0,0,new LinkedList<Object>());
-		Tower tower2 = new LaserTower (0,0,0,0,new LinkedList<Object>());
-		tower2.shooter.shoot(tower);
-		tower2.shooter.shoot(tower);
+	public String getImageName() {
+		return imageName;
 	}
-
 }

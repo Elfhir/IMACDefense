@@ -1,16 +1,7 @@
 package window;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.IndexColorModel;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
-import java.awt.image.SinglePixelPackedSampleModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,14 +10,17 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import towers.Tower;
+import towers.towertypes.SubmachineGunTower;
+
 import map.Mapping;
 import map.tiles.Tile;
   
-public class Panel extends JPanel {
+public class PanMap extends JPanel {
 	
 	private Mapping map = null;
 	
-	public Panel (Mapping map)
+	public PanMap (Mapping map)
 	{
 		this.map = map;
 	}
@@ -40,6 +34,7 @@ public class Panel extends JPanel {
 	public void paintMap (Graphics g)
 	{
 		paintAllTiles (g);
+		paintAllTowers(g);
 	}
 	
 	public void paintAllTiles (Graphics g)
@@ -66,6 +61,29 @@ public class Panel extends JPanel {
 		try {
 			BufferedImage img = ImageIO.read(new File(tile.getImageName()));
 			g.drawImage(img.getSubimage(tile.getSubImageX (), tile.getSubImageY (), Tile.getWidth(), Tile.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void paintAllTowers (Graphics g)
+	{
+		ArrayList<Tower> mapTowers = this.map.getTowers();
+		Iterator<Tower> it = mapTowers.iterator();
+		while(it.hasNext())
+        {
+			Tower current = it.next ();
+			paintTower (current, g);
+        }
+	}
+	
+	public void paintTower (Tower tower, Graphics g)
+	{
+		try {
+			BufferedImage img = ImageIO.read(new File(tower.getImageName()));
+			System.out.println(tower.getY());
+			g.drawImage(img, tower.getX()*Tile.getWidth(), tower.getY()*Tile.getHeight(), this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
