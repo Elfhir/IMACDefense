@@ -23,6 +23,11 @@ public class SubmachineGunTower extends Tower {
 	}
 	
 	@Override
+	public int getPrice() {
+		return price;
+	}
+	
+	@Override
 	public String getImageName() {
 		return imageName;
 	}

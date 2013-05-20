@@ -21,6 +21,11 @@ public class MedicalTower extends Tower {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public int getPrice() {
+		return price;
+	}
 
 	@Override
 	public int getWidth() {

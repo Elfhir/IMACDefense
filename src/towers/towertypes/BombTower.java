@@ -23,6 +23,11 @@ public class BombTower extends Tower {
 	}
 
 	@Override
+	public int getPrice() {
+		return price;
+	}
+
+	@Override
 	public int getWidth() {
 		return width;
 	}
