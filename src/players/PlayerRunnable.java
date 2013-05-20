@@ -29,8 +29,8 @@ public class PlayerRunnable implements Runnable {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Player player = new Player (1);
-		Player player2 = new Player (2);
+		Player player = new Player (1, Player.Color.red);
+		Player player2 = new Player (2, Player.Color.blue);
 		Thread thread = new Thread (new PlayerRunnable(player));
 		Thread thread2 = new Thread (new PlayerRunnable(player2));
 		thread.start();

@@ -13,6 +13,8 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import agents.Agent;
+
 import towers.Tower;
 import map.Mapping;
 import map.tiles.Tile;
@@ -30,15 +32,18 @@ public class PanMap extends JPanel {
 	public void paintComponent (Graphics g)
 	{
 		paintMap (g);
+		paintAgent (map.agent, g);
 	}
 	
-	public void paintMap (Graphics g)
+	// Dessine toute la map
+	private void paintMap (Graphics g)
 	{
 		paintAllTiles (g);
 		paintAllTowers(g);
 	}
 	
-	public void paintAllTiles (Graphics g)
+	// Dessine tous les tiles
+	private void paintAllTiles (Graphics g)
 	{
 		ArrayList<ArrayList<Tile>> mapTiles = this.map.getTiles();
 		Iterator<ArrayList<Tile>> line = mapTiles.iterator();
@@ -58,7 +63,8 @@ public class PanMap extends JPanel {
         }
 	}
 	
-	public void paintTile(Tile tile, int coordX, int coordY, Graphics g){
+	// Dessine 1 tile
+	private void paintTile(Tile tile, int coordX, int coordY, Graphics g){
 		try {
 			BufferedImage img = ImageIO.read(new File(tile.getImageName()));
 			g.drawImage(img.getSubimage(tile.getSubImageX (), tile.getSubImageY (), Tile.getWidth(), Tile.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
@@ -68,7 +74,8 @@ public class PanMap extends JPanel {
 		}
 	}
 	
-	public void paintAllTowers (Graphics g)
+	// Dessine toutes les tours
+	private void paintAllTowers (Graphics g)
 	{
 		Hashtable<Point, Tower> mapTowers = this.map.getTowers();
 		Set<Point> set = mapTowers.keySet();
@@ -95,11 +102,31 @@ public class PanMap extends JPanel {
 		}
 	}
 	
-	public void paintTower (Tower tower, int coordX, int coordY, Graphics g)
+	// Dessine 1 tour
+	private void paintTower (Tower tower, int coordX, int coordY, Graphics g)
 	{
 		try {
 			BufferedImage img = ImageIO.read(new File(tower.getImageName()));
 			g.drawImage(img, coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void paintAgent (Agent agent, Graphics g)
+	{
+		if (agent == null)
+			return;
+		
+		if (agent.getPosition2d() == null)
+			return;
+		
+		int coordX = (int) agent.getPosition2d().getX();
+		int coordY = (int) agent.getPosition2d().getY();
+		try {
+			BufferedImage img = ImageIO.read(new File(agent.getImageName()));
+			g.drawImage(img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Agent.getWidth(), Agent.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

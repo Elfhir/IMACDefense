@@ -1,9 +1,6 @@
 package players;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Hashtable;
-
 import towers.Tower;
 import map.Mapping;
 import map.Zone;
@@ -14,15 +11,29 @@ public class Player {
 	
 	private int id = 1;
 	private int money = 5000;
+	private Color color = Color.red;
+	
+	public enum Color
+	{
+		blue,
+		green,
+		red,
+		yellow;
+	}
 
 	public Player() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Player (int id)
+	public Player (int id, Player.Color color)
 	{
 		super();
 		this.id = id;
+		this.color = color;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 	public int getId() {

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+
+import agents.Agent;
 import towers.Tower;
 import towers.towertypes.*;
 
@@ -20,6 +22,7 @@ public class Mapping {
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
+	public Agent agent;
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
