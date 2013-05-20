@@ -57,7 +57,13 @@ public class Player {
 		
 		int i = 0, j = 0;
 		
-		/* Pour chaque ligne de tiles occupée par la tour, */
+		/* On vérifie d'abord que le joueur a assez d'argent. */
+		if (this.money < tower.getPrice())
+			return false;
+		
+		/* Puis on vérifie qu'il veut construire la tour au bon endroit.
+		 * Pour chaque ligne de tiles occupée par la tour,
+		 */
 		for (i = 0; i < tower.getHeight(); ++i)
 		{
 			/* Pour chaque tile occupé par la tour (ligne*colonne) */
@@ -84,6 +90,7 @@ public class Player {
 		if (this.canIConstruct(tower, map, x, y))
 		{
 			map.setTower(tower, x, y);
+			this.money -= tower.getPrice();
 		}
 	}
 }
