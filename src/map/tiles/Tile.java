@@ -40,14 +40,6 @@ public class Tile {
 		return height;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public String getImageName() {
 		// TODO Auto-generated method stub
 		return null;

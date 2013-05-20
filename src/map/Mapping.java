@@ -1,6 +1,8 @@
 package map;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import towers.Tower;
 import towers.towertypes.*;
@@ -17,7 +19,7 @@ public class Mapping {
 	private int width = 20; // Largeur de la map en tiles
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
-	private ArrayList<Tower> towers = new ArrayList<Tower>();
+	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -27,14 +29,9 @@ public class Mapping {
 		super ();
 		/* Lecture du fichier XML */
 		this.readXMLFile (XMLFileName);
-		towers.add(new SubmachineGunTower(2,2));
-		towers.add(new LaserTower(12,1));
-		towers.add(new FreezeTower(15,1));
-		towers.add(new MedicalTower(1,15));
-		towers.add(new BombTower(3,12));
 	}
 
-	// Construit une map à partir des données passées en paramètres, et initialise le tableau de tiles.
+	// Construit une map à partir des données passées en paramètres, et initialise les tableaux.
 	public Mapping(String name, int widthTiles, int heightTiles) {
 		// TODO Auto-generated constructor stub
 		super();
@@ -94,8 +91,22 @@ public class Mapping {
 		return tiles;
 	}
 	
-	public ArrayList<Tower> getTowers() {
+	public Hashtable<Point, Tower> getTowers() {
 		return towers;
+	}
+	
+	/* ----- SETTERS ----- */
+	
+	public void setTower (Tower tower, int x, int y)
+	{
+		int i = 0, j = 0;
+		for (i = 0; i < tower.getHeight(); ++i)
+		{
+			for (j = 0; j < tower.getWidth(); ++j)
+			{
+				this.towers.put (new Point(x + j, y + i), tower);
+			}
+		}
 	}
 	
 	/* ----- TRAITEMENT DE FICHIER ----- */
@@ -223,5 +234,20 @@ public class Mapping {
         	++i;
         	j = 0;
         }
+	}
+	
+	/* ----- OPERATIONS SUR LES TOURS ----- */
+	
+	public boolean isThereATowerHere (int x, int y)
+	{
+		Point pointToTest = new Point (x, y);
+		
+		/* S'il y a une tour sauvegardée à ces coordonnées précisément :
+		 * il y a bien une tour, on retourne true.
+		 */
+		if (this.towers.get(pointToTest) != null)
+			return true;
+		
+		return false;
 	}
 }

@@ -16,13 +16,12 @@ public class LaserTower extends Tower {
 	private static int shootSpeed = 3;
 	private static int shootPower = 8;
 	private static int shootRange = 6;
-
-	public LaserTower(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
-		this.shooter = new IncreasingHurt(LaserTower.shootPower);
-	}
 	
+	public LaserTower() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public int getWidth() {
 		return width;

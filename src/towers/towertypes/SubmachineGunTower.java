@@ -17,10 +17,9 @@ public class SubmachineGunTower extends Tower {
 	private static int shootPower = 2;
 	private static int shootRange = 5;
 
-	public SubmachineGunTower(int x, int y) {
-		super(x, y);
+	public SubmachineGunTower() {
+		super();
 		// TODO Auto-generated constructor stub
-		this.shooter = new Hurt (SubmachineGunTower.shootPower);
 	}
 	
 	@Override

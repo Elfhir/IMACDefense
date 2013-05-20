@@ -16,11 +16,10 @@ public class MedicalTower extends Tower {
 	private static int shootSpeed = 5;
 	private static int shootPower = 4;
 	private static int shootRange = 7;
-
-	public MedicalTower(int x, int y) {
-		super(x, y);
+	
+	public MedicalTower() {
+		super();
 		// TODO Auto-generated constructor stub
-		this.shooter = new Heal(MedicalTower.shootPower);
 	}
 
 	@Override

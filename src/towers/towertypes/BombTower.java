@@ -17,10 +17,9 @@ public class BombTower extends Tower {
 	private static int shootPower = 0;
 	private static int shootRange = 5;
 
-	public BombTower(int x, int y) {
-		super(x, y);
+	public BombTower() {
+		super();
 		// TODO Auto-generated constructor stub
-		this.shooter = new Bomb ();
 	}
 
 	@Override

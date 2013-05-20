@@ -60,14 +60,6 @@ public class Buttress extends Tile {
 	public Zone getZone() {
 		return zone;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	@Override
 	public int getSubImageX ()

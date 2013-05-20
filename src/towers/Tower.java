@@ -20,8 +20,6 @@ public class Tower {
 	protected static int shootPower = 0; // Puissance de tir
 	protected static int shootRange = 0; // Portée de tir - rayon
 	
-	private int x = 0;
-	private int y = 0; // Position 2D sur la map
 	private int life = 10; // Vie de la tour - à 0, elle est détruite
 	private Zone zone = null; // Zone à laquelle appartient la tour
 	
@@ -61,14 +59,6 @@ public class Tower {
 		return height;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
 	public int getShootSpeed() {
 		return shootSpeed;
 	}
@@ -81,10 +71,9 @@ public class Tower {
 		return shootRange;
 	}
 	
-	public Tower(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
+	public Tower ()
+	{
+		super ();
 	}
 
 	public String getImageName() {

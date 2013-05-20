@@ -122,13 +122,4 @@ public class Mountain extends Tile {
 	public String getImageName() {
 		return this.imageName;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

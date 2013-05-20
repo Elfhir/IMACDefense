@@ -1,8 +1,13 @@
 package players;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import towers.Tower;
+import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
-import map.tiles.Mountain;
 import map.tiles.Tile;
 
 public class Player {
@@ -37,21 +42,6 @@ public class Player {
 		return false;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Player player = new Player (1);
-		Player player2 = new Player (2);
-		Buttress tile = new Buttress (new Zone (1));
-		Mountain tile2 = new Mountain ();
-		System.out.println("tile and player 1 : " + player.isThisTileInMyZone(tile));
-		System.out.println("tile2 and player 1 : " + player.isThisTileInMyZone(tile2));
-		System.out.println("tile and player 2 : " + player2.isThisTileInMyZone(tile));
-		System.out.println("tile2 and player 2 : " + player2.isThisTileInMyZone(tile2));
-	}
-
 	public int getMoney() {
 		return money;
 	}
@@ -59,5 +49,41 @@ public class Player {
 	public void setMoney(int money) {
 		this.money = money;
 	}
-
+	
+	// Vérifie si le joueur a le droit de construire la tour tower dans la map map aux coordonnées x et y.
+	public boolean canIConstruct (Tower tower, Mapping map, int x, int y)
+	{
+		ArrayList<ArrayList<Tile>> mapTiles = map.getTiles();
+		
+		int i = 0, j = 0;
+		
+		/* Pour chaque ligne de tiles occupée par la tour, */
+		for (i = 0; i < tower.getHeight(); ++i)
+		{
+			/* Pour chaque tile occupé par la tour (ligne*colonne) */
+			for (j = 0; j < tower.getWidth(); ++j)
+			{
+				/* On vérifie si le tile en question est bien dans la zone du joueur */
+				if (!this.isThisTileInMyZone(mapTiles.get(y+i).get(x+j)))
+				{
+					return false;
+				}
+				
+				/* On vérifie également qu'il n'y a aucune tour déjà construite à cet endroit. */
+				if (map.isThereATowerHere(x+j, y+i))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public void construct (Tower tower, Mapping map, int x, int y)
+	{
+		if (this.canIConstruct(tower, map, x, y))
+		{
+			map.setTower(tower, x, y);
+		}
+	}
 }

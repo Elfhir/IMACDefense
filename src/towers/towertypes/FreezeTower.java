@@ -17,10 +17,9 @@ public class FreezeTower extends Tower {
 	private static int shootPower = 0;
 	private static int shootRange = 4;
 
-	public FreezeTower(int x, int y) {
-		super(x, y);
+	public FreezeTower() {
+		super();
 		// TODO Auto-generated constructor stub
-		this.shooter = new Freeze ();
 	}
 
 	@Override
