@@ -1,5 +1,6 @@
 package window;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,8 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import basis.Base;
 
 import agents.Agent;
 
@@ -40,6 +43,7 @@ public class PanMap extends JPanel {
 	{
 		paintAllTiles (g);
 		paintAllTowers(g);
+		paintAllBasis (g);
 	}
 	
 	// Dessine tous les tiles
@@ -131,5 +135,55 @@ public class PanMap extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	// Dessine toutes les tours
+	private void paintAllBasis (Graphics g)
+	{
+		Hashtable<Point, Base> mapBasis = this.map.getBasis();
+		Set<Point> set = mapBasis.keySet();
+		Iterator<Point> it = set.iterator();
+
+		while (it.hasNext())
+		{
+			Point currentPoint = it.next();
+			Base currentBase = mapBasis.get(currentPoint);
+			
+			/* Une tour peut prendre plus d'un tile, il faut donc vérifier qu'on affiche pas la tour plusieurs fois.
+			 * Pour cela, on vérifie si elle a déjà été affichée en vérifiant si la même tour est présente dans le tile en haut et/ou dans le tile à gauche.
+			 */
+			int x = (int) currentPoint.getX();
+			int y = (int) currentPoint.getY();
+			
+			paintBase (currentBase, x, y, g);
+		}
+	}
+	
+	public void paintBase (Base base, int coordX, int coordY, Graphics g)
+	{
+		if (base == null)
+			return;
+		if (base.getOwnerPlayer() == null)
+			return;
+		
+		/* On détermine la couleur de la base */
+		Color color = base.getOwnerPlayer().getColor();
+		g.setColor(color);
+		
+		/* On dessine un disque de cette couleur */
+	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getNbCreatableAgents()*Tile.getWidth(), base.getNbCreatableAgents()*Tile.getHeight());
+	    
+	    /* On écrit un texte en blanc sur le disque */
+	    g.setColor(Color.white);
+	    System.out.println();
+	    
+	    String textToDraw = Integer.toString(base.getCapacity());
+	    int textWidth = g.getFontMetrics().stringWidth(textToDraw);
+	    int textHeight = g.getFontMetrics().getHeight();
+	    
+	    int diamCircle = base.getNbCreatableAgents()*Tile.getWidth();
+	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
+	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
+	    g.drawString(textToDraw, coordXString, coordYString);
 	}
 }

@@ -1,11 +1,9 @@
 package agents;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.io.File;
-import java.util.Vector;
-
 import players.Player;
-import players.Player.Color;
 import basis.Base;
 
 
@@ -103,7 +101,7 @@ public class Agent {
 		
 		String workingdir = System.getProperty("user.dir");
 		String path = File.separator + "img" + File.separator + "agents" + File.separator;
-		String filename = "agent" + ownerPlayer.getColor() + ".png";
+		String filename = "agent" + ownerPlayer.getColorName() + ".png";
 		this.imageName =  workingdir + path + filename;
 	}
 	

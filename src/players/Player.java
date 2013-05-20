@@ -1,5 +1,6 @@
 package players;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import towers.Tower;
 import map.Mapping;
@@ -11,29 +12,56 @@ public class Player {
 	
 	private int id = 1;
 	private int money = 5000;
-	private Color color = Color.red;
+	private PlayerColor color = PlayerColor.red;
 	
-	public enum Color
+	public enum PlayerColor
 	{
-		blue,
-		green,
-		red,
-		yellow;
+		blue (Color.blue),
+		green (Color.green),
+		red (Color.red.darker().darker()),
+		yellow (Color.yellow);
+		
+		private Color color = null;
+		
+		private PlayerColor (Color color)
+		{
+			this.color = color;
+		}
+		
+		public Color getColor ()
+		{
+			return this.color;
+		}
 	}
 
 	public Player() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Player (int id, Player.Color color)
+	public Player (int id, PlayerColor color)
 	{
 		super();
 		this.id = id;
+		this.setColor(color);
+	}
+	
+	public void setColor (PlayerColor color)
+	{
+		if (color != PlayerColor.red && color != PlayerColor.blue && color != PlayerColor.yellow && color != PlayerColor.green)
+		{
+			this.color = PlayerColor.red;
+			return;
+		}
 		this.color = color;
 	}
 
-	public Color getColor() {
+	public PlayerColor getColorName() {
 		return color;
+	}
+	
+	public Color getColor ()
+	{
+		return color.getColor();
 	}
 
 	public int getId() {

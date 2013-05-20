@@ -1,30 +1,28 @@
 package basis;
 
-import java.util.Vector;
+import java.awt.Point;
+
+import players.Player;
 
 public class Base {
 
-	protected int id = 0;
-	protected int time = 0; // temps d'attente entre chaque création d'agent en secondes
-	protected int nbCreatableAgents = 0; // nb d’agents que la base peut créer (par intervalle régulier)
-	protected int nbHostedAgents = 0; // nb d’agents que la base héberge
-	protected Vector<Object> position2d = new Vector<Object> (); // Position 2D sur la map
-	protected Base target = new Base();
-	// private Player ownerPlayer; // Joueur propriétaire
+	private static int time = 1000; // temps d'attente entre chaque création d'agent en millièmes de secondes
+	private int nbCreatableAgents = 0; // nb d’agents que la base peut créer (par intervalle régulier)
+	private int nbHostedAgents = 0; // nb d’agents que la base héberge actuellement
+	private int capacity = 0; // nb d'agents que la base peut héberger
+	private Base target = null;
+	private Player ownerPlayer = null; // Joueur propriétaire
 	
 	/*
 	 * Getter - setter
 	 */
-	public int getId() {
-		return id;
-	}
 	
+	public Player getOwnerPlayer() {
+		return ownerPlayer;
+	}
+
 	public int getTime() {
 		return time;
-	}
-	
-	public void setTime(int time) {
-		this.time = time;
 	}
 	
 	public int getNbCreatableAgents() {
@@ -43,28 +41,27 @@ public class Base {
 		this.nbHostedAgents = nbHostedAgents;
 	}
 	
-	public Vector<Object> getPosition2d() {
-		return position2d;
-	}
-
-	public void setPosition2d(Vector<Object> position2d) {
-		this.position2d = position2d;
+	public int getCapacity() {
+		return capacity;
 	}
 	
 	/*
 	 * Constructor
 	 */
-	
-	public Base(int time, int nbCreatableAgents, int nbHostedAgents, Vector<Object> position2d) {
-		this.time = time;
-		this.nbCreatableAgents = nbCreatableAgents;
-		this.nbHostedAgents = nbHostedAgents;
-		this.position2d = position2d;
-		this.id = this.id + 1;
+
+	public Base(int capacity, Player player) {
+		this.nbCreatableAgents = capacity/5;
+		this.capacity = capacity;
+		this.ownerPlayer = player;
 	}
 	
 	public Base() {
 		super();
+	}
+	
+	public Base (Player player)
+	{
+		this.ownerPlayer = player;
 	}
 	
 	/*

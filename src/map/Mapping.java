@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import basis.Base;
+
 import agents.Agent;
 import towers.Tower;
-import towers.towertypes.*;
 
 /* ----- IMPORTS TILES ----- */
 import map.tiles.Tile;
@@ -22,6 +23,7 @@ public class Mapping {
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
+	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
 	public Agent agent;
 	
 	/* ----- CONSTRUCTEURS ----- */
@@ -98,8 +100,12 @@ public class Mapping {
 		return towers;
 	}
 	
-	/* ----- SETTERS ----- */
+	public Hashtable<Point, Base> getBasis() {
+		return basis;
+	}
 	
+	/* ----- SETTERS ----- */
+
 	public void setTower (Tower tower, int x, int y)
 	{
 		int i = 0, j = 0;
