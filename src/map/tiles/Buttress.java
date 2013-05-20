@@ -135,6 +135,6 @@ public class Buttress extends Tile {
 	
 	public void setButtressColor ()
 	{
-		this.imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "Buttress" + this.zone.getPlayer() + ".png";
+		this.imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "Buttress" + this.zone.getPlayerId() + ".png";
 	}
 }

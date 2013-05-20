@@ -22,6 +22,7 @@ public class Mapping {
 	private int width = 20; // Largeur de la map en tiles
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
+	private ArrayList<Zone> zones = new ArrayList<Zone> ();
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
 	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
 	public Agent agent;
@@ -104,6 +105,10 @@ public class Mapping {
 		return basis;
 	}
 	
+	public ArrayList<Zone> getZones() {
+		return zones;
+	}
+	
 	/* ----- SETTERS ----- */
 
 	public void setTower (Tower tower, int x, int y)
@@ -116,6 +121,11 @@ public class Mapping {
 				this.towers.put (new Point(x + j, y + i), tower);
 			}
 		}
+	}
+	
+	public void setZones (ArrayList<Zone> zones)
+	{
+		this.zones = zones;
 	}
 	
 	/* ----- TRAITEMENT DE FICHIER ----- */
@@ -140,7 +150,7 @@ public class Mapping {
 		this.initializeTiles();
 		
 		/* On récupère dans le tableau de tiles les informations lues par le parser */
-		this.tiles = parser.getMapTiles();
+		parser.getMap(this);
 		
 		/* On "corrige" les images de tiles buttress et mountain (images de coins et de rebords) */
 		this.setCorrectImages();

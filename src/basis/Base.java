@@ -1,8 +1,6 @@
 package basis;
 
-import java.awt.Point;
-
-import players.Player;
+import map.Zone;
 
 public class Base {
 
@@ -11,15 +9,11 @@ public class Base {
 	private int nbHostedAgents = 0; // nb d’agents que la base héberge actuellement
 	private int capacity = 0; // nb d'agents que la base peut héberger
 	private Base target = null;
-	private Player ownerPlayer = null; // Joueur propriétaire
+	private Zone zone = null;
 	
 	/*
 	 * Getter - setter
 	 */
-	
-	public Player getOwnerPlayer() {
-		return ownerPlayer;
-	}
 
 	public int getTime() {
 		return time;
@@ -44,41 +38,35 @@ public class Base {
 	public int getCapacity() {
 		return capacity;
 	}
+
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
 	
 	/*
 	 * Constructor
 	 */
 
-	public Base(int capacity, Player player) {
+	public Base(int capacity, Zone zone) {
 		this.nbCreatableAgents = capacity/5;
 		this.capacity = capacity;
-		this.ownerPlayer = player;
+		this.zone = zone;
 	}
 	
 	public Base() {
 		super();
 	}
 	
-	public Base (Player player)
-	{
-		this.ownerPlayer = player;
-	}
-	
 	/*
 	 * Methodes
 	 */
 	
-	public Base ChooseTarget(Base base) { //choisir une cible
+	public Base chooseTarget(Base base) { //choisir une cible
 		
 		return base;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -17,9 +17,9 @@ public class Player {
 	public enum PlayerColor
 	{
 		blue (Color.blue),
-		green (Color.green),
+		green (Color.green.darker().darker()),
 		red (Color.red.darker().darker()),
-		yellow (Color.yellow);
+		yellow (Color.orange.darker());
 		
 		private Color color = null;
 		
@@ -74,7 +74,7 @@ public class Player {
 			return false;
 		
 		Zone tileZone = ((Buttress) tile).getZone();
-		if (tileZone.getPlayer() == this.id)
+		if (tileZone.getPlayerId() == this.id)
 		{
 			return true;
 		}

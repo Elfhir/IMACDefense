@@ -148,10 +148,7 @@ public class PanMap extends JPanel {
 		{
 			Point currentPoint = it.next();
 			Base currentBase = mapBasis.get(currentPoint);
-			
-			/* Une tour peut prendre plus d'un tile, il faut donc vérifier qu'on affiche pas la tour plusieurs fois.
-			 * Pour cela, on vérifie si elle a déjà été affichée en vérifiant si la même tour est présente dans le tile en haut et/ou dans le tile à gauche.
-			 */
+
 			int x = (int) currentPoint.getX();
 			int y = (int) currentPoint.getY();
 			
@@ -163,11 +160,14 @@ public class PanMap extends JPanel {
 	{
 		if (base == null)
 			return;
-		if (base.getOwnerPlayer() == null)
-			return;
-		
+
 		/* On détermine la couleur de la base */
-		Color color = base.getOwnerPlayer().getColor();
+		Color color = Color.gray;
+		if (base.getZone() != null && base.getZone().getOwner() != null && base.getZone().getOwner().getColor() != null)
+		{
+			color = base.getZone().getOwner().getColor();
+		}
+		
 		g.setColor(color);
 		
 		/* On dessine un disque de cette couleur */
@@ -175,7 +175,6 @@ public class PanMap extends JPanel {
 	    
 	    /* On écrit un texte en blanc sur le disque */
 	    g.setColor(Color.white);
-	    System.out.println();
 	    
 	    String textToDraw = Integer.toString(base.getCapacity());
 	    int textWidth = g.getFontMetrics().stringWidth(textToDraw);
