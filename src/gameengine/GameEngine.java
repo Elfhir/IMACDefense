@@ -3,11 +3,13 @@ package gameengine;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 
 import basis.Base;
-
 import agents.Agent;
 
 import map.Mapping;
@@ -26,48 +28,11 @@ public class GameEngine {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
-				Mapping map = new Mapping("map1.xml");
-				Player player = new Player (1, Player.PlayerColor.red);
-				Player player2 = new Player (2, Player.PlayerColor.green);
-				Player player3 = new Player (3, Player.PlayerColor.yellow);
-				Player player4 = new Player (4, Player.PlayerColor.blue);
-				Tower tower = new FreezeTower ();
-				Tower tower2 = new LaserTower ();
-				Tower tower3 = new LaserTower ();
-				player.construct (tower, map, 2, 0);
-				player.construct (tower2, map, 4, 0);
-				player.construct (tower3, map, 6, 2);
-				
-				ArrayList<Zone> zones = map.getZones();
-				for (Zone zone:zones)
-				{
-					if (zone.getPlayerId() == player.getId())
-					{
-						zone.setOwner(player);
-					}
-					if (zone.getPlayerId() == player2.getId())
-					{
-						zone.setOwner(player2);
-					}
-					if (zone.getPlayerId() == player3.getId())
-					{
-						zone.setOwner(player3);
-					}
-					if (zone.getPlayerId() == player4.getId())
-					{
-						zone.setOwner(player4);
-					}
-				}
-				
-				Agent agent = new Agent (new Point (0, 0), player);
-				map.agent = agent;
-				
-				// On crée une nouvelle instance de notre JDialog
-				GraphicalInterface window = new GraphicalInterface(map);
-				window.setVisible(true); //On la rend visible
-			}
-		});
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new Player (1, Player.PlayerColor.red));
+		players.add(new Player (2, Player.PlayerColor.green));
+		players.add(new Player (3, Player.PlayerColor.yellow));
+		players.add(new Player (4, Player.PlayerColor.blue));
+		SwingUtilities.invokeLater(new GameEngineRunnable(new Mapping ("map1.xml"), players));
 	}
 }

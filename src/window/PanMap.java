@@ -34,8 +34,8 @@ public class PanMap extends JPanel {
 	@Override
 	public void paintComponent (Graphics g)
 	{
-		paintMap (g);
-		paintAgent (map.agent, g);
+		if (this.map != null)
+			paintMap (g);
 	}
 	
 	// Dessine toute la map
@@ -44,6 +44,7 @@ public class PanMap extends JPanel {
 		paintAllTiles (g);
 		paintAllTowers(g);
 		paintAllBasis (g);
+		paintAllAgents (g);
 	}
 	
 	// Dessine tous les tiles
@@ -118,6 +119,19 @@ public class PanMap extends JPanel {
 		}
 	}
 	
+	public void paintAllAgents (Graphics g)
+	{
+		ArrayList<Agent> agents = this.map.getAgents();
+		Iterator<Agent> it = agents.iterator();
+		
+		while (it.hasNext())
+		{
+			Agent currentAgent = it.next();
+			if (currentAgent != null)
+				paintAgent (currentAgent, g);
+		}
+	}
+	
 	public void paintAgent (Agent agent, Graphics g)
 	{
 		if (agent == null)
@@ -126,11 +140,11 @@ public class PanMap extends JPanel {
 		if (agent.getPosition2d() == null)
 			return;
 		
-		int coordX = (int) agent.getPosition2d().getX();
-		int coordY = (int) agent.getPosition2d().getY();
+		int coordX = (int)agent.getPosition2d().getX();
+		int coordY = (int)agent.getPosition2d().getY();
 		try {
 			BufferedImage img = ImageIO.read(new File(agent.getImageName()));
-			g.drawImage(img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Agent.getWidth(), Agent.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
+			g.drawImage(img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Agent.getWidth(), Agent.getHeight()), coordX/*Tile.getWidth()*/, coordY/*Tile.getHeight()*/, this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,16 +185,16 @@ public class PanMap extends JPanel {
 		g.setColor(color);
 		
 		/* On dessine un disque de cette couleur */
-	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getNbCreatableAgents()*Tile.getWidth(), base.getNbCreatableAgents()*Tile.getHeight());
+	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
 	    /* On écrit un texte en blanc sur le disque */
 	    g.setColor(Color.white);
 	    
-	    String textToDraw = Integer.toString(base.getCapacity());
+	    String textToDraw = Integer.toString(base.getNbCreatableAgents());
 	    int textWidth = g.getFontMetrics().stringWidth(textToDraw);
 	    int textHeight = g.getFontMetrics().getHeight();
 	    
-	    int diamCircle = base.getNbCreatableAgents()*Tile.getWidth();
+	    int diamCircle = base.getDiam()*Tile.getWidth();
 	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
 	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
 	    g.drawString(textToDraw, coordXString, coordYString);

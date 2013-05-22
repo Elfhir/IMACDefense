@@ -240,7 +240,10 @@ public class XMLParser {
 			int capacity = Integer.parseInt(baseElement.getAttributeValue("capacity"));
 			
 			if (!(x < 0 || x >= 20 || x+capacity/5-1 < 0 || x+capacity/5-1 >= 20 || y+capacity/5-1 < 0 || y+capacity/5-1 >= 20))
-				map.getBasis().put (new Point (x, y), new Base(capacity, zone));
+			{
+				Point point = new Point (x, y);
+				map.getBasis().put (point, new Base(capacity, zone, point));
+			}
 		}
 	}
 }

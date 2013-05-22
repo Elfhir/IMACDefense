@@ -1,27 +1,32 @@
 package agents;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.io.File;
+
+import map.Mapping;
+import map.tiles.Tile;
 import players.Player;
 import basis.Base;
 
-
 public class Agent {
-
-	//public static final int SQUARE_LENGTH = 20; //longueur d'un côté de carré sur la map, en pixels. A DEFINIR DANS LA MAP ET PAS ICI !
 
 	private static int width = 20;
 	private static int height = 20;
 	
 	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "agents" + File.separator + "agentred.png";
 	
-	private Point position2d = null; // Position 2D sur la map
-	private Point nextPosition2d = null;
+	private Point coordInTiles = null; // Position 2D sur la map
+	private Point nextcoordInTiles = new Point (9, 9);
+	private Point position2d = null;
+	
 	private Base target = null;
 	private Player ownerPlayer = null; // Joueur propriétaire
 	
 	private Direction direction = Direction.right;
+	
+	boolean hostedInBase = false;
+	
+	int speed = 5;
 	
 	private enum Direction
 	{
@@ -56,10 +61,14 @@ public class Agent {
 	 * Getters - Setters
 	 */
 
+	public Point getcoordInTiles() {
+		return coordInTiles;
+	}
+	
 	public Point getPosition2d() {
 		return position2d;
 	}
-	
+
 	public Base getTarget() {
 		return target;
 	}
@@ -105,20 +114,166 @@ public class Agent {
 		this.imageName =  workingdir + path + filename;
 	}
 	
-	public Point moveAgent(int direction) {
-		if(direction == 0) { // up
-			//this.position2d.lastElement() += SQUARE_LENGTH; //l'ordonnée augmente d'un carré
-		} //ne fonctionne pas car lastelement() ne peut pas être modifié. Il faudrait en fait utiliser la structure du vecteur mais je sais pas comment (où ?) on la définit
-		if(direction == 1) { // right
-			//this.position2d.firstElement() += SQUARE_LENGTH; //l'abscisse augment d'un carré
+	public void pathfinding ()
+	{
+		int xDestination = (int)this.nextcoordInTiles.getX()*Tile.getWidth();
+		int yDestination = (int)this.nextcoordInTiles.getY()*Tile.getHeight();
+		int x = (int)this.position2d.getX();
+		int y = (int)this.position2d.getY();
+		
+		if (xDestination > x && yDestination > y)
+		{
+			this.direction = Direction.bottomright;
 		}
-		if(direction == 2) { // down
-			//this.position2d.lastElement() -= SQUARE_LENGTH; //l'ordonnée diminue d'un carré
+		else if (xDestination > x && yDestination < y)
+		{
+			this.direction = Direction.topright;
 		}
-		if(direction == 3) { // left
-			//this.position2d.firstElement() -= SQUARE_LENGTH; //l'abscisse diminue d'un carré
+		else if (xDestination < x && yDestination > y)
+		{
+			this.direction = Direction.bottomleft;
 		}
-		return position2d;
+		else if (xDestination < x && yDestination < y)
+		{
+			this.direction = Direction.topleft;
+		}
+		else if (xDestination < x)
+		{
+			this.direction = Direction.left;
+		}
+		else if (xDestination > x)
+		{
+			this.direction = Direction.right;
+		}
+		else if (yDestination > y)
+		{
+			this.direction = Direction.bottom;
+		}
+		else if (yDestination < y)
+		{
+			this.direction = Direction.top;
+		}
+	}
+	
+	public void move(Mapping map) {
+		if (this.hostedInBase)
+			return;
+		
+		if (this.position2d == null || this.nextcoordInTiles == null)
+			return;
+		
+		if (this.position2d.getX() == this.nextcoordInTiles.getX()*Tile.getWidth() && this.position2d.getY() == this.nextcoordInTiles.getY()*Tile.getHeight())
+			return;
+		
+		pathfinding();
+		
+		int mapWidth = map.getWidth();
+		int mapHeight = map.getHeight();
+		
+		int x = (int)this.position2d.getX();
+		int y = (int)this.position2d.getY();
+		
+		//System.out.println("x = " + x + ", y = " + y);
+		
+		switch (this.direction)
+		{
+			case bottom:
+			{
+				if (y+speed < mapHeight*Tile.getHeight())
+					this.position2d = new Point(x, y+speed);
+				else
+					this.position2d = new Point(x, mapHeight*Tile.getHeight());
+				break;
+			}
+			case bottomleft:
+			{
+				if (x-speed >= 0 && y+speed < mapHeight*Tile.getHeight())
+					this.position2d = new Point(x-speed, y+speed);
+				if (x-speed < 0)
+				{
+					this.position2d = new Point(0, y+speed);
+					x = 0;
+				}
+				if (y+speed >= mapHeight*Tile.getHeight())
+				{
+					this.position2d = new Point(x, mapHeight*Tile.getHeight());
+				}
+				break;
+			}
+			case bottomright:
+			{
+				if (x+speed < mapWidth*Tile.getWidth() && y+speed < mapHeight*Tile.getHeight())
+					this.position2d = new Point(x+speed, y+speed);
+				if (x+speed >= mapWidth*Tile.getWidth())
+				{
+					this.position2d = new Point(mapWidth*Tile.getWidth(), y);
+					x = mapWidth*Tile.getWidth();
+				}
+				if (y+speed >= mapHeight*Tile.getHeight())
+				{
+					this.position2d = new Point(x, mapHeight*Tile.getHeight());
+				}
+				break;
+			}
+			case left:
+			{
+				if (x-speed >= 0)
+					this.position2d = new Point(x-speed, y);
+				else
+					this.position2d = new Point(0, y);
+				break;
+			}
+			case right:
+			{
+				if (x+speed < mapWidth*Tile.getWidth())
+					this.position2d = new Point(x+speed, y);
+				else
+					this.position2d = new Point(mapWidth*Tile.getWidth(), y);
+				break;
+			}
+			case top:
+			{
+				if (y-speed >= 0)
+					this.position2d = new Point(x, y-speed);
+				else
+					this.position2d = new Point(x, 0);
+				break;
+			}
+			case topleft:
+			{
+				if (x-speed >= 0 && y-speed >= 0)
+					this.position2d = new Point(x-speed, y-speed);
+				if (x-speed < 0)
+				{
+					this.position2d = new Point(0, y);
+					x = 0;
+				}
+				if (y-speed < 0)
+				{
+					this.position2d = new Point(x, 0);
+				}
+				break;
+			}
+			case topright:
+			{
+				if (x+speed < mapWidth*Tile.getWidth() && y-speed >= 0)
+					this.position2d = new Point(x+speed, y-speed);
+				if (x+speed >= mapWidth*Tile.getWidth())
+				{
+					this.position2d = new Point(mapWidth*Tile.getWidth(), y);
+					x = mapWidth*Tile.getWidth();
+				}
+				if (y-speed < 0)
+				{
+					this.position2d = new Point(x, 0);
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
 	}
 	
 	/*
@@ -128,15 +283,17 @@ public class Agent {
 		super();
 	}
 	
-	public Agent (Point point, Player owner)
+	public Agent (Point coordInTiles, Player owner)
 	{
-		this.position2d = point;
+		this.coordInTiles = coordInTiles;
+		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
 		this.ownerPlayer = owner;
 		this.findImageName ();
 	}
 	
-	public Agent(Point position2d, Base target, Player owner) {
-		this.position2d = position2d;
+	public Agent(Point coordInTiles, Base target, Player owner) {
+		this.coordInTiles = coordInTiles;
+		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
 		this.target = target;
 		this.ownerPlayer = owner;
 		this.findImageName ();

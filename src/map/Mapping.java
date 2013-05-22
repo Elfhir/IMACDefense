@@ -25,7 +25,7 @@ public class Mapping {
 	private ArrayList<Zone> zones = new ArrayList<Zone> ();
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
 	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
-	public Agent agent;
+	private ArrayList<Agent> agents = new ArrayList<Agent>();
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -107,6 +107,10 @@ public class Mapping {
 	
 	public ArrayList<Zone> getZones() {
 		return zones;
+	}
+	
+	public ArrayList<Agent> getAgents() {
+		return agents;
 	}
 	
 	/* ----- SETTERS ----- */

@@ -1,5 +1,9 @@
 package basis;
 
+import java.awt.Point;
+import java.util.LinkedList;
+
+import agents.Agent;
 import map.Zone;
 
 public class Base {
@@ -10,6 +14,11 @@ public class Base {
 	private int capacity = 0; // nb d'agents que la base peut héberger
 	private Base target = null;
 	private Zone zone = null;
+	private int diam = 0;
+	
+	private Point position2d = null;
+	
+	private LinkedList<Agent> hostedAgents = new LinkedList<Agent>();
 	
 	/*
 	 * Getter - setter
@@ -47,14 +56,20 @@ public class Base {
 		this.zone = zone;
 	}
 	
+	public int getDiam() {
+		return diam;
+	}
+	
 	/*
 	 * Constructor
 	 */
 
-	public Base(int capacity, Zone zone) {
-		this.nbCreatableAgents = capacity/5;
-		this.capacity = capacity;
+	public Base(int capacity, Zone zone, Point point) {
+		this.nbCreatableAgents = capacity;
+		this.capacity = capacity*4;
+		this.diam = capacity/5;
 		this.zone = zone;
+		this.position2d = point;
 	}
 	
 	public Base() {
@@ -68,5 +83,19 @@ public class Base {
 	public Base chooseTarget(Base base) { //choisir une cible
 		
 		return base;
+	}
+	
+	public synchronized Agent createAgent ()
+	{
+		/* On ne crée pas d'agents si la base n'appartient à personne. */
+		if (this.zone == null || this.zone.getOwner() == null)
+			return null;
+		
+		/* On ne crée pas d'agents tant qu'il n'y a pas de cible choisie. */
+		/*if (this.target == null)
+			return null;*/
+		
+		Agent agent = new Agent (this.position2d, this.target, this.zone.getOwner());
+		return agent;
 	}
 }

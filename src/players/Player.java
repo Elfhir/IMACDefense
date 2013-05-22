@@ -92,6 +92,9 @@ public class Player {
 	// Vérifie si le joueur a le droit de construire la tour tower dans la map map aux coordonnées x et y.
 	public boolean canIConstruct (Tower tower, Mapping map, int x, int y)
 	{
+		if (map == null || tower == null)
+			return false;
+		
 		ArrayList<ArrayList<Tile>> mapTiles = map.getTiles();
 		
 		int i = 0, j = 0;

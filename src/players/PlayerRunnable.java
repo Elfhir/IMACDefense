@@ -17,11 +17,6 @@ public class PlayerRunnable implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		// Actions du joueur
-		int i = 0;
-		for (i = 0; i < 50; ++i)
-		{
-			System.out.println(this.player.getId());
-		}
 	}
 
 	/**
