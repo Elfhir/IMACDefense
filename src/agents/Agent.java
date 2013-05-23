@@ -16,7 +16,7 @@ public class Agent {
 	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "agents" + File.separator + "agentred.png";
 	
 	private Point coordInTiles = null; // Position 2D sur la map
-	private Point nextcoordInTiles = new Point (9, 9);
+	private Point nextcoordInTiles = null;
 	private Point position2d = null;
 	
 	private Base target = null;
@@ -24,9 +24,9 @@ public class Agent {
 	
 	private Direction direction = Direction.right;
 	
-	boolean hostedInBase = false;
+	private int speed = 5;
 	
-	int speed = 5;
+	private int force = 1; // Le nombre d'agents représentés par cet agent.
 	
 	private enum Direction
 	{
@@ -65,8 +65,16 @@ public class Agent {
 		return coordInTiles;
 	}
 	
+	public Player getOwnerPlayer() {
+		return ownerPlayer;
+	}
+
 	public Point getPosition2d() {
 		return position2d;
+	}
+
+	public int getForce() {
+		return force;
 	}
 
 	public Base getTarget() {
@@ -155,15 +163,25 @@ public class Agent {
 		}
 	}
 	
-	public void move(Mapping map) {
-		if (this.hostedInBase)
-			return;
-		
-		if (this.position2d == null || this.nextcoordInTiles == null)
-			return;
-		
+	public boolean arrivedAtDestination ()
+	{
 		if (this.position2d.getX() == this.nextcoordInTiles.getX()*Tile.getWidth() && this.position2d.getY() == this.nextcoordInTiles.getY()*Tile.getHeight())
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public void move(Mapping map) {		
+		if (this.position2d == null || this.nextcoordInTiles == null)
+		{
 			return;
+		}
+		
+		if (this.arrivedAtDestination())
+		{
+			return;
+		}
 		
 		pathfinding();
 		
@@ -172,8 +190,6 @@ public class Agent {
 		
 		int x = (int)this.position2d.getX();
 		int y = (int)this.position2d.getY();
-		
-		//System.out.println("x = " + x + ", y = " + y);
 		
 		switch (this.direction)
 		{
@@ -283,19 +299,23 @@ public class Agent {
 		super();
 	}
 	
-	public Agent (Point coordInTiles, Player owner)
+	public Agent (Point coordInTiles, Player owner, int force)
 	{
 		this.coordInTiles = coordInTiles;
 		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
 		this.ownerPlayer = owner;
 		this.findImageName ();
+		this.force = force;
 	}
 	
-	public Agent(Point coordInTiles, Base target, Player owner) {
+	public Agent(Point coordInTiles, Base target, Player owner, int force) {
 		this.coordInTiles = coordInTiles;
 		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
+		Point point = target.getCoordInTiles();
+		this.nextcoordInTiles = new Point ((int)point.getX(), (int)point.getY());
 		this.target = target;
 		this.ownerPlayer = owner;
 		this.findImageName ();
+		this.force = force;
 	}
 }

@@ -1,11 +1,13 @@
 package basis;
 
 import java.awt.Point;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
+import players.Player;
 import players.SelectableObject;
 
 import agents.Agent;
+import map.Mapping;
 import map.Zone;
 
 public class Base implements SelectableObject {
@@ -16,9 +18,10 @@ public class Base implements SelectableObject {
 	private int capacity = 0; // nb d'agents que la base peut héberger
 	private Base target = null;
 	private Zone zone = null;
+	private Player owner = null; // Si la base n'est associée à aucune zone, le propriétaire est sauvegardé directement dans la base.
 	private int diam = 0; // diamètre du cercle représentant la base en nb de tiles
 	
-	private Point position2d = null;
+	private Point coordInTiles = null;
 	
 	private boolean selected = false;
 	
@@ -30,26 +33,44 @@ public class Base implements SelectableObject {
 		return time;
 	}
 	
-	public int getNbCreatableAgents() {
-		return nbCreatableAgents;
+	public Player getOwner() {
+		if (zone != null)
+			return zone.getOwner();
+		return owner;
 	}
 	
-	public void setNbCreatableAgents(int nbCreatableAgents) {
-		this.nbCreatableAgents = nbCreatableAgents;
+	public void setOwner (Player owner)
+	{
+		if (zone != null)
+		{
+			zone.setOwner(owner);
+			return;
+		}
+		this.owner = owner;
 	}
-	
+
 	public int getNbHostedAgents() {
 		return nbHostedAgents;
 	}
 	
 	public void setNbHostedAgents(int nbHostedAgents) {
 		this.nbHostedAgents = nbHostedAgents;
+		this.nbCreatableAgents = nbHostedAgents/2;
+	}
+	
+	public void decreaseNbHostedAgents(int nbToDecrease) {
+		this.setNbHostedAgents(nbHostedAgents - nbToDecrease);
 	}
 	
 	public int getCapacity() {
 		return capacity;
 	}
 
+	public Point getCoordInTiles() {
+		return coordInTiles;
+	}
+
+	/* Zone : zone à laquelle est associée la base */
 	public Zone getZone() {
 		return zone;
 	}
@@ -58,20 +79,32 @@ public class Base implements SelectableObject {
 		this.zone = zone;
 	}
 	
+	/* Diam : diamètre du cercle (en tiles) représentant la base */
 	public int getDiam() {
 		return diam;
 	}
 	
+	/* Target : dernière cible de la base */
 	public void setTarget(Base target) {
 		this.target = target;
 	}
 	
+	/* Selected : booléen indiquant si l'objet est sélectionné dans l'IHM ou non. */
+	
+	@Override
 	public boolean isSelected() {
 		return selected;
 	}
 	
+	@Override
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	@Override
+	public void inverseSelected() {
+		// TODO Auto-generated method stub
+		this.selected = !this.selected;
 	}
 	
 	/*
@@ -84,7 +117,7 @@ public class Base implements SelectableObject {
 		this.capacity = capacity;
 		this.diam = capacity/5;
 		this.zone = zone;
-		this.position2d = point;
+		this.coordInTiles = point;
 	}
 	
 	public Base() {
@@ -100,24 +133,79 @@ public class Base implements SelectableObject {
 		return base;
 	}
 	
-	public synchronized Agent createAgent ()
+	public Agent sendAgent (Mapping map)
 	{
-		/* On ne crée pas d'agents si la base n'appartient à personne. */
-		if (this.zone == null || this.zone.getOwner() == null)
+		/* La base ne peut envoyer des agents attaquer si elle n'appartient à personne. */
+		if (this.getOwner() == null)
+		{
 			return null;
+		}
 		
-		/* On ne crée pas d'agents tant qu'il n'y a pas de cible choisie. */
+		/* On n'envoie pas d'agents attaquer si la base n'héberge plus qu'un agent. */
+		if (this.nbHostedAgents <= 1)
+		{
+			return null;
+		}
+		
+		/* On n'envoie pas d'agents attaquer tant qu'il n'y a pas de cible choisie. */
 		if (this.target == null)
+		{
 			return null;
+		}
 		
-		Agent agent = new Agent (this.position2d, this.target, this.zone.getOwner());
-		this.nbHostedAgents--;
+		Agent agent = new Agent (this.coordInTiles, this.target, this.getOwner(), this.nbCreatableAgents);
+		this.nbHostedAgents -= this.nbCreatableAgents;
 		this.nbCreatableAgents = (int)this.nbHostedAgents/2;
+		if (agent != null)
+			map.getAgents().add(agent);
 		return agent;
 	}
+	
+	public void beAttackedByAgent (Agent agent)
+	{
+		if (this.nbHostedAgents == agent.getForce())
+		{
+			this.setNbHostedAgents(0);
+			this.setOwner(null);
+		}
+		else if (this.nbHostedAgents > agent.getForce())
+		{
+			this.decreaseNbHostedAgents(agent.getForce());
+		}
+		else if (this.nbHostedAgents < agent.getForce())
+		{
+			int newNbHostedAgents = agent.getForce () - this.nbHostedAgents;
+			this.setOwner(agent.getOwnerPlayer());
+			this.setNbHostedAgents(newNbHostedAgents);
+		}
+	}
+	
+	public void hostFriendAgent (Agent agent)
+	{
+		this.setNbHostedAgents(this.nbHostedAgents + agent.getForce());
+	}
+	
+	public void receiveAgent (Agent agent)
+	{
+		if (this.getOwner() != null && this.getOwner().equals(agent.getOwnerPlayer()))
+		{
+			this.hostFriendAgent(agent);
+		}
+		else
+		{
+			this.beAttackedByAgent(agent);
+		}
+	}
 
-	public void inverseSelected() {
+	@Override
+	public int getWidth() {
 		// TODO Auto-generated method stub
-		this.selected = !this.selected;
+		return diam;
+	}
+
+	@Override
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return diam;
 	}
 }

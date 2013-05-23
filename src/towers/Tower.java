@@ -1,5 +1,6 @@
 package towers;
 
+import java.awt.Point;
 import java.io.File;
 
 import players.SelectableObject;
@@ -26,6 +27,7 @@ public class Tower implements SelectableObject {
 	private Zone zone = null; // Zone à laquelle appartient la tour
 	
 	private boolean selected = false;
+	private Point coordInTiles = null;
 	
 	public int getLife() {
 		return life;
@@ -100,5 +102,11 @@ public class Tower implements SelectableObject {
 	public void setSelected(boolean selected) {
 		// TODO Auto-generated method stub
 		this.selected = selected;
+	}
+
+	@Override
+	public Point getCoordInTiles() {
+		// TODO Auto-generated method stub
+		return coordInTiles;
 	}
 }

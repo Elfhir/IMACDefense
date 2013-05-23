@@ -6,13 +6,13 @@ import javax.swing.Timer;
 
 import map.Mapping;
 
-public class Animation implements ActionListener {
+public class Action implements ActionListener {
 
 	protected Timer timer = null;
 	protected Mapping map = null;
 	protected PanMap pan = null;
 
-	public Animation(GraphicalInterface frame, int timer) {
+	public Action(GraphicalInterface frame, int timer) {
 		// TODO Auto-generated constructor stub
 		this.timer = new Timer (timer, this);
 		this.map = frame.getMap();

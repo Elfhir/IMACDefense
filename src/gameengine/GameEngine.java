@@ -1,25 +1,13 @@
 package gameengine;
 
-import java.awt.Color;
-import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
-
 import javax.swing.SwingUtilities;
 
-import basis.Base;
-import agents.Agent;
-
 import map.Mapping;
-import map.Zone;
-
 import players.Player;
-import towers.Tower;
-import towers.towertypes.FreezeTower;
-import towers.towertypes.LaserTower;
-import window.GraphicalInterface;
+import window.Action;
+import window.MoveAgentAction;
 
 public class GameEngine {
 
@@ -34,5 +22,9 @@ public class GameEngine {
 		players.add(new Player (3, Player.PlayerColor.yellow));
 		players.add(new Player (4, Player.PlayerColor.blue));
 		SwingUtilities.invokeLater(new GameEngineRunnable(new Mapping ("map1.xml"), players));
+		/*MoveAgentAction code = new MoveAgentAction(null, 0);
+		MoveAgentAction code2 = new MoveAgentAction(null, 1);
+			 SwingUtilities.invokeLater(code);
+			 SwingUtilities.invokeLater(code2);*/
 	}
 }

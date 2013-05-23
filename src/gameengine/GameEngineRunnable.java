@@ -1,22 +1,26 @@
 package gameengine;
 
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
+
 import map.Mapping;
 import map.Zone;
 import players.Player;
-import window.Animation;
+import window.Action;
 import window.GraphicalInterface;
-import window.MoveAgentAnimation;
+import window.MoveAgentAction;
 import agents.Agent;
 import basis.Base;
 
 public class GameEngineRunnable implements Runnable {
 	
+	private static GraphicalInterface window = null;
 	Mapping map = null;
 	ArrayList<Player> players = new ArrayList<Player>();
 	//ArrayList<Thread> basisthreads = new ArrayList<Thread>();
@@ -69,8 +73,21 @@ public class GameEngineRunnable implements Runnable {
 			return;
 
 		/* On crée une nouvelle instance de notre JDialog */
-		GraphicalInterface window = new GraphicalInterface(map);
-		Animation moveagentanimation = new MoveAgentAnimation (window, 0);
-		moveagentanimation.run();
+		GameEngineRunnable.setWindow (new GraphicalInterface(map));
+		window.getContentPane().addMouseMotionListener(window);
+		//Action moveagentanimation = new MoveAgentAction (window, 0);
+		/*if (SwingUtilities.isEventDispatchThread()) {
+			moveagentanimation.run();
+		} else {*/
+			 // SwingUtilities.invokeLater(moveagentanimation);
+		/*}*/
+	}
+
+	public static GraphicalInterface getWindow() {
+		return window;
+	}
+
+	public static void setWindow(GraphicalInterface window) {
+		GameEngineRunnable.window = window;
 	}
 }

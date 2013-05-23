@@ -9,13 +9,15 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.event.MouseInputListener;
+
 import players.Player;
 import players.SelectableObject;
 
@@ -26,7 +28,7 @@ import agents.Agent;
 import map.Mapping;
 import map.tiles.Tile;
 
-public class GraphicalInterface extends JFrame implements MouseListener
+public class GraphicalInterface extends JFrame implements MouseInputListener
 {
 	/**
 	 * 
@@ -83,29 +85,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	    
 	    // On ajoute le mouseListener au contentPane
 	    contentPane.addMouseListener(this);
-	    
-		Hashtable<Point, Base> mapBasis = map.getBasis();
-		Set<Point> set = mapBasis.keySet();
-		Iterator<Point> it = set.iterator();
-
-		while (it.hasNext())
-		{
-			Point currentPoint = it.next();
-			Base currentBase = mapBasis.get(currentPoint);
-			if (currentBase != null)
-			{
-				int nbToCreate = currentBase.getNbCreatableAgents();
-				for (int i = 0; i < nbToCreate; ++i)
-				{
-					Agent newagent = currentBase.createAgent();
-					if (newagent != null)
-					{
-						map.getAgents().add(newagent);
-					}
-				}
-				currentBase.setTarget(null);
-			}
-		}
+	    contentPane.addMouseMotionListener(this);
 	}
 
 	public Mapping getMap() {
@@ -137,8 +117,24 @@ public class GraphicalInterface extends JFrame implements MouseListener
 			}
 			
 			/*
+			 * Si le dernier objet sélectionné est une base du joueur, (! A IMPLEMENTER)
+			 * le joueur a voulu faire de la base clickée la cible de la base sélectionnée.
+			 * On vérifie donc si :
+			 * 1 - l'objet clické est une base
+			 * 2 - l'objet sélectionné est une base
+			 */
+			else if (object instanceof Base && Player.getLastObjectSelected() instanceof Base)
+			{
+				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
+				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);
+				Action action = new MoveAgentAction(agent, this, 0);
+				action.run();
+				return;
+			}
+			
+			/*
 			 * Sinon, le joueur a voulu sélectionner l'objet.
-			 * On désélectionne l'objet qui était sélectionné auparavant, et on sélectionne l'objet clické.
+			 * On désélectionne l'objet précédemment sélectionné et on sélectionne l'objet clické.
 			 */
 			else
 			{
@@ -157,6 +153,9 @@ public class GraphicalInterface extends JFrame implements MouseListener
 			/*
 			 * Puis on redessine les éléments.
 			 */
+			Point point = object.getCoordInTiles();
+			int tilewidth = Tile.getWidth();
+			int tileheight = Tile.getHeight();
 			pan.repaint();
 		}
 	}
@@ -183,5 +182,22 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	} 
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		/*if (Player.getLastObjectSelected() != null)
+		{
+			Point point = Player.getLastObjectSelected().getCoordInTiles();
+			this.pan.setMousePosition(new Point (e.getX(), e.getY()));
+			this.repaint((int)point.getX()*Tile.getWidth(), (int)point.getY()*Tile.getHeight(), e.getX(), e.getY());
+		}*/
+	}
 }

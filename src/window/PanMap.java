@@ -14,6 +14,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import players.Player;
+import players.SelectableObject;
+
 import basis.Base;
 
 import agents.Agent;
@@ -24,7 +27,12 @@ import map.tiles.Tile;
   
 public class PanMap extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
+	private Point mousePosition = null;
 	
 	public PanMap (Mapping map)
 	{
@@ -35,7 +43,10 @@ public class PanMap extends JPanel {
 	public void paintComponent (Graphics g)
 	{
 		if (this.map != null)
+		{
 			paintMap (g);
+			//paintSelectedLine(g);
+		}
 	}
 	
 	// Dessine toute la map
@@ -146,6 +157,14 @@ public class PanMap extends JPanel {
 		try {
 			BufferedImage img = ImageIO.read(new File(agent.getImageName()));
 			g.drawImage(img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Agent.getWidth(), Agent.getHeight()), coordX/*Tile.getWidth()*/, coordY/*Tile.getHeight()*/, this);
+			g.setColor(agent.getOwnerPlayer().getColor());
+			g.fillRect(coordX, coordY - Tile.getHeight()/2, Tile.getWidth(), Tile.getHeight()/2);
+			
+			g.setColor(Color.white);
+			String textToDraw = Integer.toString(agent.getForce());
+			int textWidth = g.getFontMetrics().stringWidth(textToDraw);
+			
+			g.drawString(textToDraw, coordX + Tile.getWidth()/2 - textWidth/2, coordY);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,9 +208,10 @@ public class PanMap extends JPanel {
 
 		/* On détermine la couleur de la base */
 		Color color = Color.gray;
-		if (base.getZone() != null && base.getZone().getOwner() != null && base.getZone().getOwner().getColor() != null)
+		Player owner = base.getOwner();
+		if (owner != null && owner.getColor() != null)
 		{
-			color = base.getZone().getOwner().getColor();
+			color = owner.getColor();
 		}
 		
 		g.setColor(color);
@@ -217,5 +237,31 @@ public class PanMap extends JPanel {
 	    
 	    /* On écrit un texte en blanc sur le disque */
 	    g.drawString(textToDraw, coordXString, coordYString);
+	}
+	
+	/*public void paintSelectedLine (Graphics g)
+	{
+		if (mousePosition == null)
+			return;
+		if (Player.getLastObjectSelected() != null && Player.getLastObjectSelected() instanceof Base)
+		{
+			/*
+			 *  On définit les coordonnées du centre de l'objet.
+			 *  En effet, les coordonnées de l'objet sont toujours celles du coin supérieur gauche de l'image !
+			 */
+			/*SelectableObject objectselected = Player.getLastObjectSelected();
+			Point position = objectselected.getCoordInTiles();
+			int width = objectselected.getWidth();
+			int height = objectselected.getHeight();
+			double centerXinTiles = (width/2. + position.getX())*Tile.getWidth();
+			double centerYinTiles = (height/2. + position.getY())*Tile.getHeight();
+			
+			g.setColor(Color.gray);
+			g.drawLine((int)centerXinTiles, (int)centerYinTiles, (int)mousePosition.getX(), (int)mousePosition.getY());
+		}
+	}*/
+
+	public void setMousePosition(Point mousePosition) {
+		this.mousePosition = mousePosition;
 	}
 }
