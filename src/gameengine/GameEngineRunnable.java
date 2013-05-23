@@ -12,9 +12,7 @@ import javax.swing.SwingUtilities;
 import map.Mapping;
 import map.Zone;
 import players.Player;
-import window.Action;
 import window.GraphicalInterface;
-import window.MoveAgentAction;
 import agents.Agent;
 import basis.Base;
 
@@ -75,6 +73,8 @@ public class GameEngineRunnable implements Runnable {
 		/* On crée une nouvelle instance de notre JDialog */
 		GameEngineRunnable.setWindow (new GraphicalInterface(map));
 		window.getContentPane().addMouseMotionListener(window);
+		IncreaseNbHostedAgentsAction action = new IncreaseNbHostedAgentsAction(window, 5000);
+		action.run();
 		//Action moveagentanimation = new MoveAgentAction (window, 0);
 		/*if (SwingUtilities.isEventDispatchThread()) {
 			moveagentanimation.run();

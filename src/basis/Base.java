@@ -15,7 +15,7 @@ public class Base implements SelectableObject {
 	private static int time = 1000; // temps d'attente entre chaque création d'agent en millièmes de secondes
 	private int nbCreatableAgents = 0; // nb d’agents que la base peut créer (par intervalle régulier)
 	private int nbHostedAgents = 0; // nb d’agents que la base héberge actuellement
-	private int capacity = 0; // nb d'agents que la base peut héberger
+	private int maxCapacity = 0; // nb d'agents que la base peut héberger
 	private Base target = null;
 	private Zone zone = null;
 	private Player owner = null; // Si la base n'est associée à aucune zone, le propriétaire est sauvegardé directement dans la base.
@@ -62,8 +62,8 @@ public class Base implements SelectableObject {
 		this.setNbHostedAgents(nbHostedAgents - nbToDecrease);
 	}
 	
-	public int getCapacity() {
-		return capacity;
+	public int getMaxCapacity() {
+		return maxCapacity;
 	}
 
 	public Point getCoordInTiles() {
@@ -111,11 +111,11 @@ public class Base implements SelectableObject {
 	 * Constructor
 	 */
 
-	public Base(int capacity, Zone zone, Point point) {
-		this.nbCreatableAgents = capacity/2;
-		this.nbHostedAgents = capacity;
-		this.capacity = capacity;
-		this.diam = capacity/5;
+	public Base(int initialCapacity, Zone zone, Point point) {
+		this.nbCreatableAgents = initialCapacity/2;
+		this.nbHostedAgents = initialCapacity;
+		this.maxCapacity = initialCapacity*4;
+		this.diam = initialCapacity/5;
 		this.zone = zone;
 		this.coordInTiles = point;
 	}

@@ -6,8 +6,6 @@ import javax.swing.SwingUtilities;
 
 import map.Mapping;
 import players.Player;
-import window.Action;
-import window.MoveAgentAction;
 
 public class GameEngine {
 

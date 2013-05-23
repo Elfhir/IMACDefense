@@ -1,8 +1,11 @@
-package window;
+package gameengine;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+
+import window.GraphicalInterface;
+import window.PanMap;
 
 import map.Mapping;
 

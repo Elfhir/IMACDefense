@@ -1,5 +1,8 @@
 package window;
 
+import gameengine.Action;
+import gameengine.MoveAgentAction;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;

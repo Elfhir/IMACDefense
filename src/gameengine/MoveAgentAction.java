@@ -1,8 +1,10 @@
-package window;
+package gameengine;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
+import window.GraphicalInterface;
 
 import map.tiles.Tile;
 import agents.Agent;

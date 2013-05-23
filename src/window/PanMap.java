@@ -15,8 +15,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import players.Player;
-import players.SelectableObject;
-
 import basis.Base;
 
 import agents.Agent;
@@ -32,7 +30,7 @@ public class PanMap extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
-	private Point mousePosition = null;
+	//private Point mousePosition = null;
 	
 	public PanMap (Mapping map)
 	{
@@ -261,7 +259,7 @@ public class PanMap extends JPanel {
 		}
 	}*/
 
-	public void setMousePosition(Point mousePosition) {
+	/*public void setMousePosition(Point mousePosition) {
 		this.mousePosition = mousePosition;
-	}
+	}*/
 }
