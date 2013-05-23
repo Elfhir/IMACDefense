@@ -2,11 +2,13 @@ package towers;
 
 import java.io.File;
 
+import players.SelectableObject;
+
 import map.Zone;
 import towers.strategy.improvement.*;
 import towers.strategy.shooter.*;
 
-public class Tower {
+public class Tower implements SelectableObject {
 	
 	protected int width = 5;
 	protected int height = 5;
@@ -22,6 +24,8 @@ public class Tower {
 	
 	private int life = 10; // Vie de la tour - à 0, elle est détruite
 	private Zone zone = null; // Zone à laquelle appartient la tour
+	
+	private boolean selected = false;
 	
 	public int getLife() {
 		return life;
@@ -78,5 +82,23 @@ public class Tower {
 
 	public String getImageName() {
 		return imageName;
+	}
+
+	@Override
+	public boolean isSelected() {
+		// TODO Auto-generated method stub
+		return selected;
+	}
+
+	@Override
+	public void inverseSelected() {
+		// TODO Auto-generated method stub
+		selected = !selected;
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		// TODO Auto-generated method stub
+		this.selected = selected;
 	}
 }

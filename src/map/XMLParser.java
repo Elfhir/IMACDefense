@@ -241,8 +241,7 @@ public class XMLParser {
 			
 			if (!(x < 0 || x >= 20 || x+capacity/5-1 < 0 || x+capacity/5-1 >= 20 || y+capacity/5-1 < 0 || y+capacity/5-1 >= 20))
 			{
-				Point point = new Point (x, y);
-				map.getBasis().put (point, new Base(capacity, zone, point));
+				map.setBase (new Base(capacity, zone, new Point (x, y)), x, y);
 			}
 		}
 	}

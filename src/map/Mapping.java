@@ -127,6 +127,18 @@ public class Mapping {
 		}
 	}
 	
+	public void setBase (Base base, int x, int y)
+	{
+		int i = 0, j = 0;
+		for (i = 0; i < base.getDiam(); ++i)
+		{
+			for (j = 0; j < base.getDiam(); ++j)
+			{
+				this.basis.put (new Point(x + j, y + i), base);
+			}
+		}
+	}
+	
 	public void setZones (ArrayList<Zone> zones)
 	{
 		this.zones = zones;

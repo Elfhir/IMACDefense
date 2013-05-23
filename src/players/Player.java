@@ -1,7 +1,10 @@
 package players;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
+
+import basis.Base;
 import towers.Tower;
 import map.Mapping;
 import map.Zone;
@@ -9,6 +12,8 @@ import map.tiles.Buttress;
 import map.tiles.Tile;
 
 public class Player {
+	
+	private static SelectableObject lastObjectSelected = null;
 	
 	private int id = 1;
 	private int money = 5000;
@@ -64,6 +69,14 @@ public class Player {
 		return color.getColor();
 	}
 
+	public static SelectableObject getLastObjectSelected() {
+		return lastObjectSelected;
+	}
+
+	public static void setLastObjectSelected(SelectableObject lastObjectSelected) {
+		Player.lastObjectSelected = lastObjectSelected;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -79,6 +92,29 @@ public class Player {
 			return true;
 		}
 		return false;
+	}
+	
+	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map)
+	{
+		/* Les coordonnées clickées par la souris ne sont pas en nombre de tiles,
+		 * mais plutôt les coordonnées réelles dans la fenêtre.
+		 * Il faut donc diviser ces coordonnées par la largeur d'un tile pour connaître les coordonnées en nombre de tiles.
+		 */
+		Point tilepoint = new Point((int)mousepoint.getX()/Tile.getWidth(), (int)mousepoint.getY()/Tile.getHeight());
+		
+		Base base = map.getBasis().get(tilepoint);
+		if (base != null)
+		{
+			return base;
+		}
+		
+		Tower tower = map.getTowers().get(tilepoint);
+		if (tower != null)
+		{
+			return tower;
+		}
+		
+		return null;
 	}
 
 	public int getMoney() {

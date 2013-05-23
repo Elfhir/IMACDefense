@@ -91,7 +91,8 @@ public class PanMap extends JPanel {
 			Point currentPoint = it.next();
 			Tower currentTower = mapTowers.get(currentPoint);
 			
-			/* Une tour peut prendre plus d'un tile, il faut donc vérifier qu'on affiche pas la tour plusieurs fois.
+			/* 
+			 * Une tour peut prendre plus d'un tile, il faut donc vérifier qu'on affiche pas la tour plusieurs fois.
 			 * Pour cela, on vérifie si elle a déjà été affichée en vérifiant si la même tour est présente dans le tile en haut et/ou dans le tile à gauche.
 			 */
 			int x = (int) currentPoint.getX();
@@ -162,11 +163,22 @@ public class PanMap extends JPanel {
 		{
 			Point currentPoint = it.next();
 			Base currentBase = mapBasis.get(currentPoint);
-
+			
+			/*
+			 * Tout comme une tour, une base peut prendre plusieurs tiles.
+			 * Voir explication de l'opération suivante dans la fonction paintAllTowers.
+			 */
+			
 			int x = (int) currentPoint.getX();
 			int y = (int) currentPoint.getY();
 			
-			paintBase (currentBase, x, y, g);
+			Base left = mapBasis.get(new Point(x-1, y));
+			Base top = mapBasis.get(new Point(x, y-1));
+			
+			if (!(left != null && left.equals(currentBase)) && !(top != null && top.equals(currentBase)))
+			{
+				paintBase (currentBase, x, y, g);
+			}
 		}
 	}
 	
@@ -187,16 +199,23 @@ public class PanMap extends JPanel {
 		/* On dessine un disque de cette couleur */
 	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
-	    /* On écrit un texte en blanc sur le disque */
+	    /* On sélectionne la couleur blanche */
 	    g.setColor(Color.white);
 	    
-	    String textToDraw = Integer.toString(base.getNbCreatableAgents());
+	    /* Si la base est sélectionnée par le joueur, alors on entoure la base de blanc. */
+	    if (base.isSelected())
+	    	g.drawOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
+	    
+	    String textToDraw = Integer.toString(base.getNbHostedAgents());
 	    int textWidth = g.getFontMetrics().stringWidth(textToDraw);
 	    int textHeight = g.getFontMetrics().getHeight();
-	    
 	    int diamCircle = base.getDiam()*Tile.getWidth();
+	    
+	    // On calcule les coordonnées du texte afin qu'il soit centré sur le cercle.
 	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
 	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
+	    
+	    /* On écrit un texte en blanc sur le disque */
 	    g.drawString(textToDraw, coordXString, coordYString);
 	}
 }
