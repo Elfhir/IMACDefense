@@ -20,6 +20,11 @@ import basis.Base;
 import agents.Agent;
 
 import towers.Tower;
+import towers.towertypes.BombTower;
+import towers.towertypes.FreezeTower;
+import towers.towertypes.LaserTower;
+import towers.towertypes.MedicalTower;
+import towers.towertypes.SubmachineGunTower;
 import map.Mapping;
 import map.tiles.Tile;
   
@@ -43,6 +48,7 @@ public class PanMap extends JPanel {
 		if (this.map != null)
 		{
 			paintMap (g);
+			paintIHM(g);
 			//paintSelectedLine(g);
 		}
 	}
@@ -54,6 +60,11 @@ public class PanMap extends JPanel {
 		paintAllTowers(g);
 		paintAllBasis (g);
 		paintAllAgents (g);
+	}
+	
+	private void paintIHM (Graphics g)
+	{
+		paintConstructIHM(g);
 	}
 	
 	// Dessine tous les tiles
@@ -262,4 +273,13 @@ public class PanMap extends JPanel {
 	/*public void setMousePosition(Point mousePosition) {
 		this.mousePosition = mousePosition;
 	}*/
+	
+	public void paintConstructIHM (Graphics g)
+	{
+		paintTower (new BombTower (), map.getWidth() + 1, 10, g);
+		paintTower (new FreezeTower (), map.getWidth() + 3, 10, g);
+		paintTower (new LaserTower (), map.getWidth() + 5, 10, g);
+		paintTower (new MedicalTower (), map.getWidth() + 2, 13, g);
+		paintTower (new SubmachineGunTower (), map.getWidth() + 4, 12, g);
+	}
 }

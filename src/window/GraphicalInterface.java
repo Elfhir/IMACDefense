@@ -11,16 +11,14 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.event.MouseInputListener;
-
 import players.Player;
 import players.SelectableObject;
 
@@ -31,7 +29,7 @@ import agents.Agent;
 import map.Mapping;
 import map.tiles.Tile;
 
-public class GraphicalInterface extends JFrame implements MouseInputListener
+public class GraphicalInterface extends JFrame implements MouseListener, KeyListener
 {
 	/**
 	 * 
@@ -81,14 +79,19 @@ public class GraphicalInterface extends JFrame implements MouseInputListener
         //On prévient notre JFrame que notre JPanel sera son content pane
 		this.pan = new PanMap (map);
 		this.pan.setDoubleBuffered(true);
-		this.pan.setPreferredSize(new Dimension(map.getWidth()*Tile.getWidth(), map.getHeight()*Tile.getHeight()));
+		
+		int ihmsize = 150;
+		
+		this.pan.setPreferredSize(new Dimension(map.getWidth()*Tile.getWidth() + ihmsize, map.getHeight()*Tile.getHeight()));
+		
+		this.pan.setLayout(null);
+		
+		JButton buttonConstruct = new JButton("Construire");
+	    buttonConstruct.setBounds(map.getWidth()*Tile.getWidth(), 100, ihmsize, 30);
+	    pan.add(buttonConstruct);
 	    contentPane.add(this.pan);
 	    pack ();
 	    this.setVisible(true);
-	    
-	    // On ajoute le mouseListener au contentPane
-	    contentPane.addMouseListener(this);
-	    contentPane.addMouseMotionListener(this);
 	}
 
 	public Mapping getMap() {
@@ -156,9 +159,6 @@ public class GraphicalInterface extends JFrame implements MouseInputListener
 			/*
 			 * Puis on redessine les éléments.
 			 */
-			Point point = object.getCoordInTiles();
-			int tilewidth = Tile.getWidth();
-			int tileheight = Tile.getHeight();
 			pan.repaint();
 		}
 	}
@@ -186,21 +186,24 @@ public class GraphicalInterface extends JFrame implements MouseInputListener
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
-	public void mouseDragged(MouseEvent e) {
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		/*char c = e.getKeyChar();
+			System.out.println(c);*/
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		/*if (Player.getLastObjectSelected() != null)
-		{
-			Point point = Player.getLastObjectSelected().getCoordInTiles();
-			this.pan.setMousePosition(new Point (e.getX(), e.getY()));
-			this.repaint((int)point.getX()*Tile.getWidth(), (int)point.getY()*Tile.getHeight(), e.getX(), e.getY());
-		}*/
+		char c = e.getKeyChar();
+			System.out.println(c);
 	}
 }

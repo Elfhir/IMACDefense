@@ -72,7 +72,8 @@ public class GameEngineRunnable implements Runnable {
 
 		/* On crée une nouvelle instance de notre JDialog */
 		GameEngineRunnable.setWindow (new GraphicalInterface(map));
-		window.getContentPane().addMouseMotionListener(window);
+		window.getContentPane().addMouseListener(window);
+		window.getContentPane().addKeyListener(window);
 		IncreaseNbHostedAgentsAction action = new IncreaseNbHostedAgentsAction(window, 5000);
 		action.run();
 		//Action moveagentanimation = new MoveAgentAction (window, 0);
