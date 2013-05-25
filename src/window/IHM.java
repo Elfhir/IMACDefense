@@ -12,12 +12,8 @@ import java.util.Set;
 import map.Mapping;
 import map.tiles.Tile;
 
-import towers.Tower;
-import towers.towertypes.BombTower;
-import towers.towertypes.FreezeTower;
-import towers.towertypes.LaserTower;
-import towers.towertypes.MedicalTower;
-import towers.towertypes.SubmachineGunTower;
+import towers.*;
+import towers.towertypes.*;;
 
 public class IHM {
 	

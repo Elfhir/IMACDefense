@@ -145,32 +145,39 @@ public class PanMap extends JPanel {
 		BufferedImage img = null;
 		if (tile instanceof Buttress)
 		{
-			switch (((Buttress)tile).getZone().getOwner().getColorName())
+			if (((Buttress)tile).getZone().getOwner() == null)
 			{
-				case blue:
+				img = this.buttressTileImage;
+			}
+			else
+			{
+				switch (((Buttress)tile).getZone().getOwner().getColorName())
 				{
-					img = this.blueButtressTileImage;
-					break;
-				}
-				case green:
-				{
-					img = this.greenButtressTileImage;
-					break;
-				}
-				case red:
-				{
-					img = this.redButtressTileImage;
-					break;
-				}
-				case yellow:
-				{
-					img = this.yellowButtressTileImage;
-					break;
-				}
-				default:
-				{
-					img = this.buttressTileImage;
-					break;
+					case blue:
+					{
+						img = this.blueButtressTileImage;
+						break;
+					}
+					case green:
+					{
+						img = this.greenButtressTileImage;
+						break;
+					}
+					case red:
+					{
+						img = this.redButtressTileImage;
+						break;
+					}
+					case yellow:
+					{
+						img = this.yellowButtressTileImage;
+						break;
+					}
+					default:
+					{
+						img = this.buttressTileImage;
+						break;
+					}
 				}
 			}
 		}

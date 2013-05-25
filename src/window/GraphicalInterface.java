@@ -155,7 +155,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			{
 				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
 				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);
-				Action action = new MoveAgentAction(agent, this, 1);
+				Action action = new MoveAgentAction(agent, this, 30);
 				action.run();
 				return;
 			}

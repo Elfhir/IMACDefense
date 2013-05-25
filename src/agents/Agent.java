@@ -83,10 +83,6 @@ public class Agent {
 		this.target = base;
 	}
 	
-	/*public String getImageName() {
-		return imageName;
-	}*/
-	
 	public int getSubImageX()
 	{
 		return this.direction.getSubX();
@@ -108,17 +104,6 @@ public class Agent {
 	/*
 	 * Methodes
 	 */
-
-	public void findImageName ()
-	{
-		if (this.ownerPlayer == null)
-			return;
-		
-		/*String workingdir = System.getProperty("user.dir");
-		String path = File.separator + "img" + File.separator + "agents" + File.separator;
-		String filename = "agent" + ownerPlayer.getColorName() + ".png";
-		this.imageName =  workingdir + path + filename;*/
-	}
 	
 	public void pathfinding ()
 	{
@@ -127,35 +112,35 @@ public class Agent {
 		int x = (int)this.position2d.getX();
 		int y = (int)this.position2d.getY();
 		
-		if (xDestination > x && yDestination > y)
+		if (xDestination > x && Math.abs(xDestination - x) > speed && yDestination > y && Math.abs(yDestination - y) > speed)
 		{
 			this.direction = Direction.bottomright;
 		}
-		else if (xDestination > x && yDestination < y)
+		else if (xDestination > x && Math.abs(xDestination - x) > speed && yDestination < y && Math.abs(yDestination - y) > speed)
 		{
 			this.direction = Direction.topright;
 		}
-		else if (xDestination < x && yDestination > y)
+		else if (xDestination < x && Math.abs(xDestination - x) > speed && yDestination > y && Math.abs(yDestination - y) > speed)
 		{
 			this.direction = Direction.bottomleft;
 		}
-		else if (xDestination < x && yDestination < y)
+		else if (xDestination < x && Math.abs(xDestination - x) > speed && yDestination < y && Math.abs(yDestination - y) > speed)
 		{
 			this.direction = Direction.topleft;
 		}
-		else if (xDestination < x)
+		else if (xDestination < x && Math.abs(yDestination - y) <= speed)
 		{
 			this.direction = Direction.left;
 		}
-		else if (xDestination > x)
+		else if (xDestination > x && Math.abs(yDestination - y) <= speed)
 		{
 			this.direction = Direction.right;
 		}
-		else if (yDestination > y)
+		else if (yDestination > y && Math.abs(xDestination - x) <= speed)
 		{
 			this.direction = Direction.bottom;
 		}
-		else if (yDestination < y)
+		else if (yDestination < y && Math.abs(xDestination - x) <= speed)
 		{
 			this.direction = Direction.top;
 		}
@@ -163,22 +148,30 @@ public class Agent {
 	
 	public boolean arrivedAtDestination ()
 	{
-		if (this.position2d.getX() == this.nextcoordInTiles.getX()*Tile.getWidth() && this.position2d.getY() == this.nextcoordInTiles.getY()*Tile.getHeight())
+		boolean xTrue = false;
+		boolean yTrue = false;
+		int currentX = (int)this.position2d.getX();
+		int currentY = (int)this.position2d.getY();
+		int nextX = (int)this.nextcoordInTiles.getX()*Tile.getWidth();
+		int nextY = (int)this.nextcoordInTiles.getY()*Tile.getHeight();
+		
+		if (currentX == nextX || Math.abs(nextX - currentX) <= speed)
 		{
-			return true;
+			xTrue = true;
 		}
-		return false;
+		System.out.println(currentY + " " + nextY);
+		if (currentY == nextY || Math.abs(nextY - currentY) <= speed)
+		{
+			yTrue = true;
+		}
+		
+		return xTrue && yTrue;
 	}
 	
 	public void move(Mapping map)
 	{
 		
 		if (this.position2d == null || this.nextcoordInTiles == null)
-		{
-			return;
-		}
-		
-		if (this.arrivedAtDestination())
 		{
 			return;
 		}
@@ -290,6 +283,8 @@ public class Agent {
 				break;
 			}
 		}
+		
+		this.coordInTiles = new Point ((int)this.position2d.getX()/20, (int)this.position2d.getY()/20);
 	}
 	
 	/*
@@ -304,7 +299,6 @@ public class Agent {
 		this.coordInTiles = coordInTiles;
 		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
 		this.ownerPlayer = owner;
-		this.findImageName ();
 		this.force = force;
 	}
 	
@@ -315,7 +309,6 @@ public class Agent {
 		this.nextcoordInTiles = new Point ((int)point.getX(), (int)point.getY());
 		this.target = target;
 		this.ownerPlayer = owner;
-		this.findImageName ();
 		this.force = force;
 	}
 }
