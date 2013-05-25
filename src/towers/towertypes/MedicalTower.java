@@ -10,7 +10,7 @@ public class MedicalTower extends Tower {
 	protected int width = 1; // Largeur en tiles
 	protected int height = 1; // Hauteur en tiles
 
-	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "medical.png";
+	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "medicaltower.png";
 	
 	private static int price = 2000;
 	private static int shootSpeed = 5;

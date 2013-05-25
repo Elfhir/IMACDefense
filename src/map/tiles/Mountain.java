@@ -1,14 +1,11 @@
 package map.tiles;
 
-import java.io.File;
-
 public class Mountain extends Tile {
 	
 	private boolean destroyable = true;
 	private boolean walkable = false;
 	private boolean constructible = false;
 	private GroupPosition pos = GroupPosition.Alone;
-	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "terrain.png";
 	
 	public enum GroupPosition
 	{
@@ -116,10 +113,5 @@ public class Mountain extends Tile {
 	public int getSubImageY ()
 	{
 		return this.pos.getSubY();
-	}
-
-	@Override
-	public String getImageName() {
-		return this.imageName;
 	}
 }

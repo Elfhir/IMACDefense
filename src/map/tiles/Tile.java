@@ -40,11 +40,6 @@ public class Tile {
 		return height;
 	}
 
-	public String getImageName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public int getSubImageX() {
 		// TODO Auto-generated method stub
 		return 0;

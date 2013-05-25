@@ -24,7 +24,6 @@ import towers.towertypes.BombTower;
 import towers.towertypes.FreezeTower;
 import towers.towertypes.LaserTower;
 import towers.towertypes.MedicalTower;
-import towers.towertypes.SubmachineGunTower;
 import map.Mapping;
 import map.tiles.Buttress;
 import map.tiles.Tile;
@@ -37,12 +36,63 @@ public class PanMap extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
 	private IHM ihm = null;
-	//private Point mousePosition = null;
 	
-	public PanMap (Mapping map, IHM ihm)
+	/*
+	 * Chargement des images
+	 */
+	private BufferedImage
+	
+		/*
+		 * Tiles
+		 */
+		fieldAndMountainTileImage = null,
+		buttressTileImage = null,
+		redButtressTileImage = null,
+		greenButtressTileImage = null,
+		yellowButtressTileImage = null,
+		blueButtressTileImage = null,
+		
+		/*
+		 * Agents
+		 */
+		redAgentImage = null,
+		greenAgentImage = null,
+		yellowAgentImage = null,
+		blueAgentImage = null,
+		
+		/*
+		 * Towers
+		 */
+		bombTowerImage = null,
+		freezeTowerImage = null,
+		laserTowerImage = null,
+		medicalTowerImage = null,
+		submachineGunTowerImage = null;
+	
+	public PanMap (Mapping map, IHM ihm) throws IOException
 	{
 		this.map = map;
 		this.ihm = ihm;
+		
+		String filepath = System.getProperty("user.dir") + File.separator + "img" + File.separator;
+		
+		this.fieldAndMountainTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "terrain.png"));
+		this.buttressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttress.png"));
+		this.redButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressred.png"));
+		this.greenButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressgreen.png"));
+		this.yellowButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressyellow.png"));
+		this.blueButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressblue.png"));
+
+		this.redAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentred.png"));
+		this.greenAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentgreen.png"));
+		this.yellowAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentyellow.png"));
+		this.blueAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentblue.png"));
+		
+		this.bombTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "bombtower.png"));
+		this.freezeTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "freezetower.png"));
+		this.laserTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "lasertower.png"));
+		this.medicalTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "medicaltower.png"));
+		this.submachineGunTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "submachineguntower.png"));
 	}
 	
 	@Override
@@ -52,7 +102,6 @@ public class PanMap extends JPanel {
 		{
 			paintMap (g);
 			paintIHM(g);
-			//paintSelectedLine(g);
 		}
 	}
 	
@@ -91,18 +140,48 @@ public class PanMap extends JPanel {
         }
 	}
 	
-	// Dessine 1 tile
+	// Dessine un tile
 	private void paintTile(Tile tile, int coordX, int coordY, Graphics g){
-		try {
-			if (tile instanceof Buttress)
+		BufferedImage img = null;
+		if (tile instanceof Buttress)
+		{
+			switch (((Buttress)tile).getZone().getOwner().getColorName())
 			{
-				((Buttress)tile).setButtressColor();
+				case blue:
+				{
+					img = this.blueButtressTileImage;
+					break;
+				}
+				case green:
+				{
+					img = this.greenButtressTileImage;
+					break;
+				}
+				case red:
+				{
+					img = this.redButtressTileImage;
+					break;
+				}
+				case yellow:
+				{
+					img = this.yellowButtressTileImage;
+					break;
+				}
+				default:
+				{
+					img = this.buttressTileImage;
+					break;
+				}
 			}
-			BufferedImage img = ImageIO.read(new File(tile.getImageName()));
-			g.drawImage(img.getSubimage(tile.getSubImageX (), tile.getSubImageY (), Tile.getWidth(), Tile.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		else
+			img = this.fieldAndMountainTileImage;
+		
+		img = img.getSubimage(tile.getSubImageX(), tile.getSubImageY(), Tile.getWidth(), Tile.getHeight());
+
+		if (img != null)
+		{
+			g.drawImage(img, coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
 		}
 	}
 	
@@ -135,16 +214,23 @@ public class PanMap extends JPanel {
 		}
 	}
 	
-	// Dessine 1 tour
+	// Dessine une tour
 	private void paintTower (Tower tower, int coordX, int coordY, Graphics g)
 	{
-		try {
-			BufferedImage img = ImageIO.read(new File(tower.getImageName()));
+		BufferedImage img = null;
+		if (tower instanceof BombTower)
+			img = this.bombTowerImage;
+		else if (tower instanceof FreezeTower)
+			img = this.freezeTowerImage;
+		else if (tower instanceof LaserTower)
+			img = this.laserTowerImage;
+		else if (tower instanceof MedicalTower)
+			img = this.medicalTowerImage;
+		else
+			img = this.submachineGunTowerImage;
+		
+		if (img != null)
 			g.drawImage(img, coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void paintAllAgents (Graphics g)
@@ -170,21 +256,42 @@ public class PanMap extends JPanel {
 		
 		int coordX = (int)agent.getPosition2d().getX();
 		int coordY = (int)agent.getPosition2d().getY();
-		try {
-			BufferedImage img = ImageIO.read(new File(agent.getImageName()));
-			g.drawImage(img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Agent.getWidth(), Agent.getHeight()), coordX/*Tile.getWidth()*/, coordY/*Tile.getHeight()*/, this);
-			g.setColor(agent.getOwnerPlayer().getColor());
-			g.fillRect(coordX, coordY - Tile.getHeight()/2, Tile.getWidth(), Tile.getHeight()/2);
-			
-			g.setColor(Color.white);
-			String textToDraw = Integer.toString(agent.getForce());
-			int textWidth = g.getFontMetrics().stringWidth(textToDraw);
-			
-			g.drawString(textToDraw, coordX + Tile.getWidth()/2 - textWidth/2, coordY);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		BufferedImage img = null;
+		switch (agent.getOwnerPlayer().getColorName())
+		{
+			case blue:
+			{
+				img = blueAgentImage;
+				break;
+			}
+			case green:
+			{
+				img = greenAgentImage;
+				break;
+			}
+			case yellow:
+			{
+				img = yellowAgentImage;
+				break;
+			}
+			default:
+			{
+				img = redAgentImage;
+				break;
+			}
 		}
+		
+		img = img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Tile.getWidth(), Tile.getHeight());
+		if (img != null)
+			g.drawImage(img, coordX, coordY, this);
+		g.setColor(agent.getOwnerPlayer().getColor());
+		g.fillRect(coordX, coordY - Tile.getHeight()/2, Tile.getWidth(), Tile.getHeight()/2);
+		
+		g.setColor(Color.white);
+		String textToDraw = Integer.toString(agent.getForce());
+		int textWidth = g.getFontMetrics().stringWidth(textToDraw);
+		
+		g.drawString(textToDraw, coordX + Tile.getWidth()/2 - textWidth/2, coordY);
 	}
 	
 	// Dessine toutes les tours
@@ -247,7 +354,9 @@ public class PanMap extends JPanel {
 	    int textHeight = g.getFontMetrics().getHeight();
 	    int diamCircle = base.getDiam()*Tile.getWidth();
 	    
-	    // On calcule les coordonnées du texte afin qu'il soit centré sur le cercle.
+	    /*
+	     *  On calcule les coordonnées du texte afin qu'il soit centré sur le cercle.
+	     */
 	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
 	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
 	    
@@ -276,10 +385,6 @@ public class PanMap extends JPanel {
 			g.drawLine((int)centerXinTiles, (int)centerYinTiles, (int)mousePosition.getX(), (int)mousePosition.getY());
 		}
 	}*/
-
-	/*public void setMousePosition(Point mousePosition) {
-		this.mousePosition = mousePosition;
-	}*/
 	
 	public void paintConstructIHM (Graphics g)
 	{
@@ -294,13 +399,4 @@ public class PanMap extends JPanel {
 			paintTower (current, (int)point.getX(), (int)point.getY(), g);
 		}
 	}
-	
-	/*public void paintConstructIHM (Graphics g)
-	{
-		paintTower (new BombTower (), map.getWidth() + 1, 10, g);
-		paintTower (new FreezeTower (), map.getWidth() + 3, 10, g);
-		paintTower (new LaserTower (), map.getWidth() + 5, 10, g);
-		paintTower (new MedicalTower (), map.getWidth() + 2, 13, g);
-		paintTower (new SubmachineGunTower (), map.getWidth() + 4, 12, g);
-	}*/
 }

@@ -2,8 +2,6 @@ package gameengine;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-
 import window.GraphicalInterface;
 
 import map.tiles.Tile;
@@ -44,6 +42,7 @@ public class MoveAgentAction extends Action {
     	int tilewidth = Tile.getWidth();
     	
     	pan.repaint ((int)point.getX(),(int)(point.getY()-tileheight/2), tilewidth, tileheight*2);
+
     	agent.move(map);
     	
     	// Si l'agent est arrivé à destination

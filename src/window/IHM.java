@@ -5,13 +5,9 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
-
-import javax.swing.JPanel;
 
 import map.Mapping;
 import map.tiles.Tile;
@@ -28,7 +24,7 @@ public class IHM {
 	GraphicalInterface window = null;
 	PanMap pan = null;
 	Hashtable<Point, Tower> towers = null;
-	public Class<? extends Tower> selectedTowerClass = null;
+	private Class<? extends Tower> selectedTowerClass = null;
 
 	public IHM(GraphicalInterface window, Mapping map) {
 		// TODO Auto-generated constructor stub
@@ -75,4 +71,7 @@ public class IHM {
 		}
 	}
 
+	public Class<? extends Tower> getSelectedTowerClass() {
+		return selectedTowerClass;
+	}
 }

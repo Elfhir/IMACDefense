@@ -1,8 +1,6 @@
 package agents;
 
 import java.awt.Point;
-import java.io.File;
-
 import map.Mapping;
 import map.tiles.Tile;
 import players.Player;
@@ -13,7 +11,7 @@ public class Agent {
 	private static int width = 20;
 	private static int height = 20;
 	
-	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "agents" + File.separator + "agentred.png";
+	//private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "agents" + File.separator + "agentred.png";
 	
 	private Point coordInTiles = null; // Position 2D sur la map
 	private Point nextcoordInTiles = null;
@@ -24,7 +22,7 @@ public class Agent {
 	
 	private Direction direction = Direction.right;
 	
-	private int speed = 5;
+	private int speed = 1;
 	
 	private int force = 1; // Le nombre d'agents représentés par cet agent.
 	
@@ -85,9 +83,9 @@ public class Agent {
 		this.target = base;
 	}
 	
-	public String getImageName() {
+	/*public String getImageName() {
 		return imageName;
-	}
+	}*/
 	
 	public int getSubImageX()
 	{
@@ -116,10 +114,10 @@ public class Agent {
 		if (this.ownerPlayer == null)
 			return;
 		
-		String workingdir = System.getProperty("user.dir");
+		/*String workingdir = System.getProperty("user.dir");
 		String path = File.separator + "img" + File.separator + "agents" + File.separator;
 		String filename = "agent" + ownerPlayer.getColorName() + ".png";
-		this.imageName =  workingdir + path + filename;
+		this.imageName =  workingdir + path + filename;*/
 	}
 	
 	public void pathfinding ()
@@ -172,7 +170,9 @@ public class Agent {
 		return false;
 	}
 	
-	public void move(Mapping map) {		
+	public void move(Mapping map)
+	{
+		
 		if (this.position2d == null || this.nextcoordInTiles == null)
 		{
 			return;

@@ -10,7 +10,7 @@ public class SubmachineGunTower extends Tower {
 	protected int width = 2; // Largeur en tiles
 	protected int height = 2; // Hauteur en tiles
 
-	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "submachinegun.png";
+	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "submachineguntower.png";
 
 	private static int price = 3000;
 	private static int shootSpeed = 10;

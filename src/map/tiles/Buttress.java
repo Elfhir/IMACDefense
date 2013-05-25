@@ -1,10 +1,5 @@
 package map.tiles;
 
-import java.awt.Point;
-import java.io.File;
-
-import players.SelectableObject;
-
 import map.Zone;
 
 public class Buttress extends Tile {
@@ -13,8 +8,7 @@ public class Buttress extends Tile {
 	private boolean walkable = false;
 	private boolean constructible = true;
 	private GroupPosition pos = GroupPosition.Center;
-	private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "buttress.png";
-	
+
 	public enum GroupPosition
 	{
 		TopLeftCorner (0, 0),
@@ -48,16 +42,12 @@ public class Buttress extends Tile {
 			return subY;
 		}
 	};
-
-	private int subImageX = 80;
-	private int subImageY = 41;
 	
 	private Zone zone = null;
 
 	public Buttress(Zone zone) {
 		// TODO Auto-generated constructor stub
 		this.zone = zone;
-		this.setButtressColor();
 	}
 
 	public Zone getZone() {
@@ -129,16 +119,5 @@ public class Buttress extends Tile {
 	public int getSubImageY ()
 	{
 		return this.pos.getSubY();
-	}
-
-	@Override
-	public String getImageName() {
-		return this.imageName;
-	}
-	
-	public void setButtressColor ()
-	{
-		if (this.zone != null && this.zone.getOwner() != null && this.zone.getOwner().getColorName() != null)
-			this.imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "tileset" + File.separator + "buttress" + this.zone.getOwner().getColorName() + ".png";
 	}
 }

@@ -16,15 +16,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import players.Player;
 import players.SelectableObject;
 import towers.Tower;
-import towers.towertypes.LaserTower;
-
 import basis.Base;
 
 import agents.Agent;
@@ -77,7 +75,12 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
         contentPane.setLayout(new BorderLayout());
         
         //On prévient notre JFrame que notre JPanel sera son content pane
-		this.pan = new PanMap (map, ihm);
+		try {
+			this.pan = new PanMap (map, ihm);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.pan.setDoubleBuffered(true);
 		
 		int ihmsize = 150;
@@ -139,7 +142,6 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			if (object.isSelected())
 			{
 				Player.setLastObjectSelected(null);
-				Point point = object.getCoordInTiles();
 			}
 			
 			/*
@@ -153,7 +155,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			{
 				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
 				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);
-				Action action = new MoveAgentAction(agent, this, 0);
+				Action action = new MoveAgentAction(agent, this, 1);
 				action.run();
 				return;
 			}
@@ -194,7 +196,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			{
 				// A terminer
 				try {
-					Tower tower = tileObject.getZone().getOwner().construct(ihm.selectedTowerClass.newInstance(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
+					Tower tower = tileObject.getZone().getOwner().construct(ihm.getSelectedTowerClass().newInstance(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
 					if (tower != null)
 						pan.repaint((int)tower.getCoordInTiles().getX()*Tile.getWidth(), (int)tower.getCoordInTiles().getY()*Tile.getHeight(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
 					
