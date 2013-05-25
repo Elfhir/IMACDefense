@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import basis.Base;
 import towers.Tower;
+import window.IHM;
 import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
@@ -18,6 +19,7 @@ public class Player {
 	private int id = 1;
 	private int money = 5000;
 	private PlayerColor color = PlayerColor.red;
+	private static boolean constructingNow = false;
 	
 	public enum PlayerColor
 	{
@@ -60,6 +62,11 @@ public class Player {
 		this.color = color;
 	}
 
+	/* Lorsque les joueurs seront implémentés : enlever static */
+	public static boolean isConstructingNow() {
+		return constructingNow;
+	}
+
 	public PlayerColor getColorName() {
 		return color;
 	}
@@ -81,6 +88,10 @@ public class Player {
 		return id;
 	}
 	
+	public static void setConstructingNow(boolean constructingNow) {
+		Player.constructingNow = constructingNow;
+	}
+
 	public boolean isThisTileInMyZone (Tile tile)
 	{
 		if (!(tile instanceof Buttress))
@@ -94,7 +105,22 @@ public class Player {
 		return false;
 	}
 	
-	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map)
+	/* Lorsque les joueurs seront implémentés : la méthode ne doit plus être statique et la condition doit être décommentée */
+	public static Buttress didIClickInMyZone (Point mousepoint, Mapping map)
+	{
+		Point tilepoint = new Point((int)mousepoint.getX()/Tile.getWidth(), (int)mousepoint.getY()/Tile.getHeight());
+		if (tilepoint.getX() < map.getWidth() && tilepoint.getY() < map.getHeight())
+		{
+			Tile tile = map.getTiles().get((int)tilepoint.getX()).get((int)tilepoint.getY());
+			if (tile != null && tile instanceof Buttress /*&& this.isThisTileInMyZone(tile)*/)
+			{
+				return (Buttress)tile;
+			}	
+		}
+		return null;
+	}
+	
+	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map, IHM ihm)
 	{
 		/* Les coordonnées clickées par la souris ne sont pas en nombre de tiles,
 		 * mais plutôt les coordonnées réelles dans la fenêtre.
@@ -112,6 +138,15 @@ public class Player {
 		if (tower != null)
 		{
 			return tower;
+		}
+		
+		if (ihm != null && ihm.getTowers() != null)
+		{
+			tower = ihm.getTowers().get(tilepoint);
+			if (tower != null)
+			{
+				return tower;
+			}
 		}
 		
 		return null;
@@ -142,10 +177,10 @@ public class Player {
 		/* Puis on vérifie qu'il veut construire la tour au bon endroit.
 		 * Pour chaque ligne de tiles occupée par la tour,
 		 */
-		for (i = 0; i < tower.getHeight(); ++i)
+		for (i = 0; i < tower.getObjectHeight(); ++i)
 		{
 			/* Pour chaque tile occupé par la tour (ligne*colonne) */
-			for (j = 0; j < tower.getWidth(); ++j)
+			for (j = 0; j < tower.getObjectWidth(); ++j)
 			{
 				/* On vérifie si le tile en question est bien dans la zone du joueur */
 				if (!this.isThisTileInMyZone(mapTiles.get(y+i).get(x+j)))
@@ -163,12 +198,17 @@ public class Player {
 		return true;
 	}
 	
-	public void construct (Tower tower, Mapping map, int x, int y)
+	public Tower construct (Tower tower, Mapping map, Zone zone, int x, int y)
 	{
 		if (this.canIConstruct(tower, map, x, y))
 		{
 			map.setTower(tower, x, y);
+			tower.setCoordInTiles(new Point(x,y));
+			tower.setZone(zone);
 			this.money -= tower.getPrice();
+			constructingNow = false;
+			return tower;
 		}
+		return null;
 	}
 }

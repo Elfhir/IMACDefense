@@ -28,12 +28,12 @@ public class BombTower extends Tower {
 	}
 
 	@Override
-	public int getWidth() {
+	public int getObjectWidth() {
 		return width;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getObjectHeight() {
 		return height;
 	}
 

@@ -8,6 +8,7 @@ public interface SelectableObject {
 	public void inverseSelected();
 	
 	public Point getCoordInTiles ();
-	public int getWidth();
-	public int getHeight();
+	public void setCoordInTiles (Point coordInTiles);
+	public int getObjectWidth();
+	public int getObjectHeight();
 }

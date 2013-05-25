@@ -21,7 +21,7 @@ public class SubmachineGunTower extends Tower {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public int getPrice() {
 		return price;
@@ -33,12 +33,12 @@ public class SubmachineGunTower extends Tower {
 	}
 	
 	@Override
-	public int getWidth() {
+	public int getObjectWidth() {
 		return width;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getObjectHeight() {
 		return height;
 	}
 }

@@ -26,6 +26,7 @@ import towers.towertypes.LaserTower;
 import towers.towertypes.MedicalTower;
 import towers.towertypes.SubmachineGunTower;
 import map.Mapping;
+import map.tiles.Buttress;
 import map.tiles.Tile;
   
 public class PanMap extends JPanel {
@@ -35,11 +36,13 @@ public class PanMap extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
+	private IHM ihm = null;
 	//private Point mousePosition = null;
 	
-	public PanMap (Mapping map)
+	public PanMap (Mapping map, IHM ihm)
 	{
 		this.map = map;
+		this.ihm = ihm;
 	}
 	
 	@Override
@@ -91,6 +94,10 @@ public class PanMap extends JPanel {
 	// Dessine 1 tile
 	private void paintTile(Tile tile, int coordX, int coordY, Graphics g){
 		try {
+			if (tile instanceof Buttress)
+			{
+				((Buttress)tile).setButtressColor();
+			}
 			BufferedImage img = ImageIO.read(new File(tile.getImageName()));
 			g.drawImage(img.getSubimage(tile.getSubImageX (), tile.getSubImageY (), Tile.getWidth(), Tile.getHeight()), coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
 		} catch (IOException e) {
@@ -276,10 +283,24 @@ public class PanMap extends JPanel {
 	
 	public void paintConstructIHM (Graphics g)
 	{
+		Hashtable<Point, Tower> ihmTowers = this.ihm.getTowers();
+		Set<Point> set = ihmTowers.keySet();
+		Iterator<Point> it = set.iterator();
+		
+		while (it.hasNext())
+		{
+			Point point = it.next();
+			Tower current = ihmTowers.get(point);
+			paintTower (current, (int)point.getX(), (int)point.getY(), g);
+		}
+	}
+	
+	/*public void paintConstructIHM (Graphics g)
+	{
 		paintTower (new BombTower (), map.getWidth() + 1, 10, g);
 		paintTower (new FreezeTower (), map.getWidth() + 3, 10, g);
 		paintTower (new LaserTower (), map.getWidth() + 5, 10, g);
 		paintTower (new MedicalTower (), map.getWidth() + 2, 13, g);
 		paintTower (new SubmachineGunTower (), map.getWidth() + 4, 12, g);
-	}
+	}*/
 }

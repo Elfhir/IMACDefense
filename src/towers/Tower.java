@@ -29,6 +29,22 @@ public class Tower implements SelectableObject {
 	private boolean selected = false;
 	private Point coordInTiles = null;
 	
+	/* ----- CONSTRUCTEURS ----- */
+	
+	public Tower ()
+	{
+		super ();
+	}
+	
+	public Tower(Point coordInTiles) {
+		super();
+		this.coordInTiles = coordInTiles;
+	}
+	
+	/* ----- GETTERS & SETTERS ----- */
+	
+	/* Life */
+	
 	public int getLife() {
 		return life;
 	}
@@ -37,6 +53,8 @@ public class Tower implements SelectableObject {
 		this.life = life;
 	}
 
+	/* ImproverInterface */
+	
 	public ImproverInterface getImprover() {
 		return improver;
 	}
@@ -45,6 +63,8 @@ public class Tower implements SelectableObject {
 		this.improver = improver;
 	}
 
+	/* ShooterInterface */
+	
 	public ShooterInterface getShooter() {
 		return shooter;
 	}
@@ -53,37 +73,61 @@ public class Tower implements SelectableObject {
 		this.shooter = shooter;
 	}
 
+	/* Price */
+	
 	public int getPrice() {
 		return price;
 	}
 	
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
+	/* ShootSpeed */
+	
 	public int getShootSpeed() {
 		return shootSpeed;
 	}
 
+	/* ShootPower */
+	
 	public int getShootPower() {
 		return shootPower;
 	}
 
+	/* ShootRange */
+	
 	public int getShootRange() {
 		return shootRange;
 	}
 	
-	public Tower ()
-	{
-		super ();
-	}
-
+	/* ImageName */
+	
 	public String getImageName() {
 		return imageName;
+	}
+	
+	/* Zone */
+	
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
+	
+	/* ----- FROM SELECTABLEOBJECT INTERFACE ----- */
+
+	@Override
+	public int getObjectWidth() {
+		return width;
+	}
+
+	@Override
+	public int getObjectHeight() {
+		return height;
+	}
+
+	@Override
+	public void setCoordInTiles(Point coordInTiles) {
+		this.coordInTiles = coordInTiles;
 	}
 
 	@Override

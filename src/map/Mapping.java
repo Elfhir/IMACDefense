@@ -118,9 +118,9 @@ public class Mapping {
 	public void setTower (Tower tower, int x, int y)
 	{
 		int i = 0, j = 0;
-		for (i = 0; i < tower.getHeight(); ++i)
+		for (i = 0; i < tower.getObjectHeight(); ++i)
 		{
-			for (j = 0; j < tower.getWidth(); ++j)
+			for (j = 0; j < tower.getObjectWidth(); ++j)
 			{
 				this.towers.put (new Point(x + j, y + i), tower);
 			}

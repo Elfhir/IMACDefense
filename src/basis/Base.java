@@ -198,14 +198,20 @@ public class Base implements SelectableObject {
 	}
 
 	@Override
-	public int getWidth() {
+	public int getObjectWidth() {
 		// TODO Auto-generated method stub
 		return diam;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getObjectHeight() {
 		// TODO Auto-generated method stub
 		return diam;
+	}
+
+	@Override
+	public void setCoordInTiles(Point coordInTiles) {
+		// TODO Auto-generated method stub
+		this.coordInTiles = coordInTiles;
 	}
 }

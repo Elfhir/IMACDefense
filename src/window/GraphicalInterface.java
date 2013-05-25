@@ -17,16 +17,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import players.Player;
 import players.SelectableObject;
+import towers.Tower;
+import towers.towertypes.LaserTower;
 
 import basis.Base;
 
 import agents.Agent;
 
 import map.Mapping;
+import map.tiles.Buttress;
 import map.tiles.Tile;
 
 public class GraphicalInterface extends JFrame implements MouseListener, KeyListener
@@ -37,6 +41,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
 	private PanMap pan = null;
+	private IHM ihm = null;
 	
 	public GraphicalInterface(){
 		super();
@@ -46,6 +51,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 	public GraphicalInterface(Mapping map) throws HeadlessException {
 		super();
 		this.map = map;
+		this.ihm = new IHM(this, map);
 		build ();
 	}
 
@@ -57,13 +63,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 		Image icone = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif");
 		this.setIconImage(icone);
 		
-		// Curseur Cible
-		Image cursorImage = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "cursor.png");
-		// On récupère la dimension qu'aura la curseur à l'écran
-		Dimension cursorDimension = Toolkit.getDefaultToolkit().getBestCursorSize(15, 15);
-		// Le curseur est en forme de croix (cible), on veut donc que le "hotspot" se situe au centre du curseur, donc on divise les dimensions récupérées par 2.
-		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point((int)cursorDimension.getWidth()/2, (int)cursorDimension.getHeight()/2), "Cursor");
-		this.setCursor(cursor);
+		this.setTargetCursor();
 	
 		this.setTitle("IMACDefense - " + map.getName()); // On donne un titre à l'application
 		//this.setSize(map.getWidth()*Tile.getWidth() + 6, map.getHeight()*Tile.getHeight() + 28); // On donne une taille à notre fenêtre
@@ -77,7 +77,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
         contentPane.setLayout(new BorderLayout());
         
         //On prévient notre JFrame que notre JPanel sera son content pane
-		this.pan = new PanMap (map);
+		this.pan = new PanMap (map, ihm);
 		this.pan.setDoubleBuffered(true);
 		
 		int ihmsize = 150;
@@ -89,6 +89,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 		JButton buttonConstruct = new JButton("Construire");
 	    buttonConstruct.setBounds(map.getWidth()*Tile.getWidth(), 100, ihmsize, 30);
 	    pan.add(buttonConstruct);
+	    
 	    contentPane.add(this.pan);
 	    pack ();
 	    this.setVisible(true);
@@ -106,8 +107,26 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		Point mousepoint = new Point(e.getX(), e.getY());
 		// On vérifie si le joueur a cliqué sur un objet selectionnable.
-		SelectableObject object = Player.whereDidIClick(new Point(e.getX(), e.getY()), map);
+		SelectableObject object = Player.whereDidIClick(mousepoint, map, ihm);
 		
 		// Si oui,
 		if (object != null)
@@ -120,6 +139,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			if (object.isSelected())
 			{
 				Player.setLastObjectSelected(null);
+				Point point = object.getCoordInTiles();
 			}
 			
 			/*
@@ -156,29 +176,35 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			 */
 			object.inverseSelected();
 			
+			if (object instanceof Tower)
+			{
+				ihm.setTowerCursor((Tower)object);
+				Player.setConstructingNow(true);
+			}
+			
 			/*
 			 * Puis on redessine les éléments.
 			 */
 			pan.repaint();
 		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		else
+		{
+			Buttress tileObject = Player.didIClickInMyZone(mousepoint, map);
+			if (tileObject != null && Player.isConstructingNow())
+			{
+				// A terminer
+				try {
+					Tower tower = tileObject.getZone().getOwner().construct(ihm.selectedTowerClass.newInstance(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
+					if (tower != null)
+						pan.repaint((int)tower.getCoordInTiles().getX()*Tile.getWidth(), (int)tower.getCoordInTiles().getY()*Tile.getHeight(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
+					
+					this.setTargetCursor();
+				} catch (InstantiationException | IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -205,5 +231,16 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 		// TODO Auto-generated method stub
 		char c = e.getKeyChar();
 			System.out.println(c);
+	}
+	
+	public void setTargetCursor ()
+	{
+		// Curseur Cible
+		Image cursorImage = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "cursor.png");
+		// On récupère la dimension qu'aura la curseur à l'écran
+		Dimension cursorDimension = Toolkit.getDefaultToolkit().getBestCursorSize(15, 15);
+		// Le curseur est en forme de croix (cible), on veut donc que le "hotspot" se situe au centre du curseur, donc on divise les dimensions récupérées par 2.
+		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point((int)cursorDimension.getWidth()/2, (int)cursorDimension.getHeight()/2), "Cursor");
+		this.setCursor(cursor);
 	}
 }

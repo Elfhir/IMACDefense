@@ -20,9 +20,5 @@ public class GameEngine {
 		players.add(new Player (3, Player.PlayerColor.yellow));
 		players.add(new Player (4, Player.PlayerColor.blue));
 		SwingUtilities.invokeLater(new GameEngineRunnable(new Mapping ("map1.xml"), players));
-		/*MoveAgentAction code = new MoveAgentAction(null, 0);
-		MoveAgentAction code2 = new MoveAgentAction(null, 1);
-			 SwingUtilities.invokeLater(code);
-			 SwingUtilities.invokeLater(code2);*/
 	}
 }
