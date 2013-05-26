@@ -1,35 +1,21 @@
 package map.tiles;
 
+import java.awt.Point;
+
 public class Tile {
 	
 	private static int width = 20;
 	private static int height = 20;
-	private int x = 0;
-	private int y = 0;
+	private Point coordInTiles = null;
 
 	protected boolean destroyable = false;
 	protected boolean walkable = true;
 	protected boolean constructible = false;
 
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public Tile ()
+	public Tile (Point point)
 	{
 		super ();
+		this.coordInTiles = point;
 	}
 
 	public static int getWidth() {
@@ -48,6 +34,16 @@ public class Tile {
 	public int getSubImageY() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public boolean isObstacle() {
+		// TODO Auto-generated method stub
+		return !this.walkable;
+	}
+
+	public Point getCoordsInMap() {
+		// TODO Auto-generated method stub
+		return this.coordInTiles;
 	}
 
 }

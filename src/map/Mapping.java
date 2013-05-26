@@ -71,7 +71,7 @@ public class Mapping {
 			for (j = 0; j < this.width; ++j)
 			{
 				/* On ajoute un tile Field à la ligne */
-				newLine.add(new Field ());
+				newLine.add(new Field (new Point(j, i)));
 			}
 			/* On ajoute la ligne au tableau */
 			this.tiles.add(newLine);

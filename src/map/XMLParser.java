@@ -87,8 +87,11 @@ public class XMLParser {
 	{
 		if (tileElement.getName() != "tile" && tileElement.getName() != "group") return null;
 		
+		int x = Integer.parseInt(tileElement.getAttributeValue("x"));
+		int y = Integer.parseInt(tileElement.getAttributeValue("y"));
+		
 		// Les coordonnées du tile ne peuvent être en dehors de la taille de la map demandée.
-		if (Integer.parseInt(tileElement.getAttributeValue("x")) < 0 && Integer.parseInt(tileElement.getAttributeValue("x")) >= this.getMapWidth() && Integer.parseInt(tileElement.getAttributeValue("y")) < 0 && Integer.parseInt(tileElement.getAttributeValue("y")) >= this.getMapHeight())
+		if (x < 0 && x >= this.getMapWidth() && y < 0 && y >= this.getMapHeight())
 		{
 			return null;
 		}
@@ -98,7 +101,7 @@ public class XMLParser {
 		{			
 			/* Le tile appartient à cette zone : on met la zone en attribut. */
 			/* On sait aussi que le Tile est de type Buttress. */
-			return new Buttress (zone);
+			return new Buttress (zone, new Point (x, y));
 		}
 		
 		/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
@@ -113,7 +116,7 @@ public class XMLParser {
 			{
 				case "mountain" :
 				{
-					return new Mountain ();
+					return new Mountain (new Point(x, y));
 				}
 				default :
 				{
@@ -121,7 +124,7 @@ public class XMLParser {
 				}
 			}
 		}
-		return new Field();
+		return new Field(new Point(x, y));
 	}
 	
 	public void getDescendentTiles (Element element, Zone zone, Mapping map)
@@ -133,11 +136,13 @@ public class XMLParser {
 		while (it.hasNext())
 		{
 			Element current = it.next();
-			Tile tile = new Field();
+			int x = Integer.parseInt(current.getAttributeValue("x"));
+			int y = Integer.parseInt(current.getAttributeValue("y"));
 			
 			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
-			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
-			{					
+			if (x >= 0 && x < this.getMapWidth() && y >= 0 && y < this.getMapHeight())
+			{		
+				Tile tile = new Field(new Point (x, y));
 				tile = readMapTile (current, zone, map);
 				
 				if (tile != null)
@@ -163,11 +168,14 @@ public class XMLParser {
 		while (it.hasNext())
 		{
 			Element current = it.next();
-			Tile tile = new Field ();
+			int x = Integer.parseInt(current.getAttributeValue("x"));
+			int y = Integer.parseInt(current.getAttributeValue("y"));
 			
 			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
 			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
 			{
+				Tile tile = new Field(new Point (x, y));
+				
 				// On veille à ce que le groupe de tiles ne dépasse pas la map.
 				int height = Integer.parseInt(current.getAttributeValue("height"));
 				int width = Integer.parseInt(current.getAttributeValue("width"));
@@ -239,7 +247,7 @@ public class XMLParser {
 			int y = Integer.parseInt(baseElement.getAttributeValue("y"));
 			int capacity = Integer.parseInt(baseElement.getAttributeValue("capacity"));
 			
-			if (!(x < 0 || x >= 20 || x+capacity/5-1 < 0 || x+capacity/5-1 >= 20 || y+capacity/5-1 < 0 || y+capacity/5-1 >= 20))
+			if (!(x < 0 || x >= map.getWidth() || x+capacity/5-1 < 0 || x+capacity/5-1 >= map.getWidth() || y < 0 || y >= map.getHeight() || y+capacity/5-1 < 0 || y+capacity/5-1 >= map.getHeight()))
 			{
 				map.setBase (new Base(capacity, zone, new Point (x, y)), x, y);
 			}

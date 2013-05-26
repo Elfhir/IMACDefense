@@ -1,5 +1,7 @@
 package map.tiles;
 
+import java.awt.Point;
+
 import map.Zone;
 
 public class Buttress extends Tile {
@@ -45,8 +47,9 @@ public class Buttress extends Tile {
 	
 	private Zone zone = null;
 
-	public Buttress(Zone zone) {
+	public Buttress(Zone zone, Point point) {
 		// TODO Auto-generated constructor stub
+		super(point);
 		this.zone = zone;
 	}
 
@@ -119,5 +122,11 @@ public class Buttress extends Tile {
 	public int getSubImageY ()
 	{
 		return this.pos.getSubY();
+	}
+	
+	@Override
+	public boolean isObstacle() {
+		// TODO Auto-generated method stub
+		return !this.walkable;
 	}
 }

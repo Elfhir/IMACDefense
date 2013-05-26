@@ -1,5 +1,7 @@
 package map.tiles;
 
+import java.awt.Point;
+
 public class Mountain extends Tile {
 	
 	private boolean destroyable = true;
@@ -42,8 +44,8 @@ public class Mountain extends Tile {
 		}
 	};
 
-	public Mountain() {
-		super ();
+	public Mountain(Point point) {
+		super (point);
 	}
 	
 	@Override
@@ -113,5 +115,11 @@ public class Mountain extends Tile {
 	public int getSubImageY ()
 	{
 		return this.pos.getSubY();
+	}
+	
+	@Override
+	public boolean isObstacle() {
+		// TODO Auto-generated method stub
+		return !this.walkable;
 	}
 }

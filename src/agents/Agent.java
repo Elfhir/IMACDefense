@@ -1,6 +1,10 @@
 package agents;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 import map.Mapping;
 import map.tiles.Tile;
 import players.Player;
@@ -10,9 +14,7 @@ public class Agent {
 
 	private static int width = 20;
 	private static int height = 20;
-	
-	//private String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "agents" + File.separator + "agentred.png";
-	
+
 	private Point coordInTiles = null; // Position 2D sur la map
 	private Point nextcoordInTiles = null;
 	private Point position2d = null;
@@ -25,6 +27,8 @@ public class Agent {
 	private int speed = 1;
 	
 	private int force = 1; // Le nombre d'agents représentés par cet agent.
+	
+	private ArrayList<Tile> path = null;
 	
 	private enum Direction
 	{
@@ -105,7 +109,32 @@ public class Agent {
 	 * Methodes
 	 */
 	
-	public void pathfinding ()
+	public void pathfinding (Mapping map)
+	{
+		if (path != null)
+		{
+			int indexOfCurrentTile = path.indexOf(map.getTiles().get((int)this.coordInTiles.getY()).get((int)this.coordInTiles.getX()));
+			if (indexOfCurrentTile + 1 < path.size())
+			{
+				Tile nextTile = path.get(indexOfCurrentTile + 1);
+				this.nextcoordInTiles = new Point ((int)nextTile.getCoordsInMap().getX(), (int)nextTile.getCoordsInMap().getY());
+			}
+		}
+	}
+	
+	public void calculatePath (Mapping map)
+	{
+		ArrayList<ArrayList<Tile>> mapTiles = map.getTiles();
+		
+		Tile start = mapTiles.get((int)this.coordInTiles.getY()).get((int)this.coordInTiles.getX());
+		Tile arrival = mapTiles.get((int)this.target.getCoordInTiles().getY()).get((int)this.target.getCoordInTiles().getX());
+		
+		AStarAlgorithm aStar = new AStarAlgorithm(start, arrival, map);
+		
+		path = aStar.getFinalPath();
+	}
+	
+	public void findDirection ()
 	{
 		int xDestination = (int)this.nextcoordInTiles.getX()*Tile.getWidth();
 		int yDestination = (int)this.nextcoordInTiles.getY()*Tile.getHeight();
@@ -152,14 +181,13 @@ public class Agent {
 		boolean yTrue = false;
 		int currentX = (int)this.position2d.getX();
 		int currentY = (int)this.position2d.getY();
-		int nextX = (int)this.nextcoordInTiles.getX()*Tile.getWidth();
-		int nextY = (int)this.nextcoordInTiles.getY()*Tile.getHeight();
+		int nextX = (int)this.target.getCoordInTiles().getX()*Tile.getWidth();
+		int nextY = (int)this.target.getCoordInTiles().getY()*Tile.getHeight();
 		
 		if (currentX == nextX || Math.abs(nextX - currentX) <= speed)
 		{
 			xTrue = true;
 		}
-		System.out.println(currentY + " " + nextY);
 		if (currentY == nextY || Math.abs(nextY - currentY) <= speed)
 		{
 			yTrue = true;
@@ -176,7 +204,12 @@ public class Agent {
 			return;
 		}
 		
-		pathfinding();
+		if (coordInTiles.equals(nextcoordInTiles))
+		{
+			this.pathfinding(map);
+		}
+		
+		findDirection();
 		
 		int mapWidth = map.getWidth();
 		int mapHeight = map.getHeight();
@@ -302,13 +335,16 @@ public class Agent {
 		this.force = force;
 	}
 	
-	public Agent(Point coordInTiles, Base target, Player owner, int force) {
+	public Agent(Point coordInTiles, Base target, Player owner, int force, Mapping map) {
 		this.coordInTiles = coordInTiles;
 		this.position2d = new Point ((int)coordInTiles.getX()*Tile.getWidth(), (int)coordInTiles.getY()*Tile.getHeight());
-		Point point = target.getCoordInTiles();
-		this.nextcoordInTiles = new Point ((int)point.getX(), (int)point.getY());
+		//Point point = target.getCoordInTiles();
+		//this.nextcoordInTiles = new Point ((int)point.getX(), (int)point.getY());
 		this.target = target;
 		this.ownerPlayer = owner;
 		this.force = force;
+		
+		this.calculatePath(map);
+		this.pathfinding(map);
 	}
 }

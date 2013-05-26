@@ -153,7 +153,7 @@ public class Base implements SelectableObject {
 			return null;
 		}
 		
-		Agent agent = new Agent (this.coordInTiles, this.target, this.getOwner(), this.nbCreatableAgents);
+		Agent agent = new Agent (this.coordInTiles, this.target, this.getOwner(), this.nbCreatableAgents, map);
 		this.nbHostedAgents -= this.nbCreatableAgents;
 		this.nbCreatableAgents = (int)this.nbHostedAgents/2;
 		if (agent != null)
