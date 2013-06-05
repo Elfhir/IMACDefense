@@ -1,5 +1,6 @@
 package towers.strategy.shooter;
 
+import map.Mapping;
 import towers.Tower;
 
 public class IncreasingHurt implements ShooterInterface {
@@ -15,7 +16,7 @@ public class IncreasingHurt implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot(Object target) {
+	public void shoot(ShootableObject target, Mapping map) {
 		// TODO Auto-generated method stub
 		
 		// Gestion de la puissance
@@ -31,14 +32,6 @@ public class IncreasingHurt implements ShooterInterface {
 			System.out.println("Hurting Tower Ennemie. Current Power : ");
 			System.out.println(this.currentPower);
 		}
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -1,5 +1,7 @@
 package towers.strategy.shooter;
 
+import map.Mapping;
+
 public class Heal implements ShooterInterface {
 	
 	private int power = 0;
@@ -10,17 +12,9 @@ public class Heal implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot(Object target) {
+	public void shoot(ShootableObject target, Mapping map) {
 		// TODO Auto-generated method stub
 		System.out.println("Healing friend !");
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

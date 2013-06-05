@@ -1,5 +1,7 @@
 package towers.strategy.shooter;
 
+import map.Mapping;
+
 public interface ShooterInterface {
-	void shoot (Object target);
+	void shoot (ShootableObject target, Mapping map);
 }

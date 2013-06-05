@@ -19,7 +19,7 @@ public class FreezeTower extends Tower {
 
 	public FreezeTower() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setShooter(new Freeze());
 	}
 
 	@Override

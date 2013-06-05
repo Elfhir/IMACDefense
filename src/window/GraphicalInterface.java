@@ -1,7 +1,8 @@
 package window;
 
 import gameengine.Action;
-import gameengine.MoveAgentAction;
+import gameengine.MoveBulletAction;
+import gameengine.TowerShootAction;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -11,18 +12,18 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import players.Player;
 import players.SelectableObject;
 import towers.Tower;
+import towers.strategy.shooter.shootType.GunBullet;
 import basis.Base;
 
 import agents.Agent;
@@ -31,7 +32,7 @@ import map.Mapping;
 import map.tiles.Buttress;
 import map.tiles.Tile;
 
-public class GraphicalInterface extends JFrame implements MouseListener, KeyListener
+public class GraphicalInterface extends JFrame implements MouseListener
 {
 	/**
 	 * 
@@ -126,6 +127,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		
 		// TODO Auto-generated method stub
 		Point mousepoint = new Point(e.getX(), e.getY());
 		// On vérifie si le joueur a cliqué sur un objet selectionnable.
@@ -155,7 +157,7 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 			{
 				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
 				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);
-				Action action = new MoveAgentAction(agent, this, 30);
+				Action action = new MoveBulletAction(agent, this, 30);
 				action.run();
 				return;
 			}
@@ -198,8 +200,11 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 				try {
 					Tower tower = tileObject.getZone().getOwner().construct(ihm.getSelectedTowerClass().newInstance(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
 					if (tower != null)
+					{
 						pan.repaint((int)tower.getCoordInTiles().getX()*Tile.getWidth(), (int)tower.getCoordInTiles().getY()*Tile.getHeight(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
-					
+						TowerShootAction action = new TowerShootAction(map, this, 1000, tower);
+						action.run();
+					}
 					this.setTargetCursor();
 				} catch (InstantiationException | IllegalAccessException e1) {
 					// TODO Auto-generated catch block
@@ -213,26 +218,6 @@ public class GraphicalInterface extends JFrame implements MouseListener, KeyList
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		/*char c = e.getKeyChar();
-			System.out.println(c);*/
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		char c = e.getKeyChar();
-			System.out.println(c);
 	}
 	
 	public void setTargetCursor ()

@@ -20,6 +20,8 @@ import basis.Base;
 import agents.Agent;
 
 import towers.Tower;
+import towers.strategy.shooter.shootType.GunBullet;
+import towers.strategy.shooter.shootType.MovableBullet;
 import towers.towertypes.BombTower;
 import towers.towertypes.FreezeTower;
 import towers.towertypes.LaserTower;
@@ -67,7 +69,8 @@ public class PanMap extends JPanel {
 		freezeTowerImage = null,
 		laserTowerImage = null,
 		medicalTowerImage = null,
-		submachineGunTowerImage = null;
+		submachineGunTowerImage = null,
+		gunBulletImage = null;
 	
 	public PanMap (Mapping map, IHM ihm) throws IOException
 	{
@@ -93,6 +96,8 @@ public class PanMap extends JPanel {
 		this.laserTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "lasertower.png"));
 		this.medicalTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "medicaltower.png"));
 		this.submachineGunTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "submachineguntower.png"));
+		
+		this.gunBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "gunbullet.png"));
 	}
 	
 	@Override
@@ -112,6 +117,7 @@ public class PanMap extends JPanel {
 		paintAllTowers(g);
 		paintAllBasis (g);
 		paintAllAgents (g);
+		paintAllGunBullets (g);
 	}
 	
 	private void paintIHM (Graphics g)
@@ -288,17 +294,47 @@ public class PanMap extends JPanel {
 			}
 		}
 		
-		img = img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), Tile.getWidth(), Tile.getHeight());
+		img = img.getSubimage(agent.getSubImageX(), agent.getSubImageY(), MovableBullet.getWidth(), MovableBullet.getHeight());
 		if (img != null)
 			g.drawImage(img, coordX, coordY, this);
 		g.setColor(agent.getOwnerPlayer().getColor());
-		g.fillRect(coordX, coordY - Tile.getHeight()/2, Tile.getWidth(), Tile.getHeight()/2);
+		g.fillRect(coordX, coordY - MovableBullet.getHeight()/2, MovableBullet.getWidth(), MovableBullet.getHeight()/2);
 		
 		g.setColor(Color.white);
 		String textToDraw = Integer.toString(agent.getForce());
 		int textWidth = g.getFontMetrics().stringWidth(textToDraw);
 		
-		g.drawString(textToDraw, coordX + Tile.getWidth()/2 - textWidth/2, coordY);
+		g.drawString(textToDraw, coordX + MovableBullet.getWidth()/2 - textWidth/2, coordY);
+	}
+	
+	public void paintAllGunBullets (Graphics g)
+	{
+		ArrayList<GunBullet> bullets = this.map.getGunbullets();
+		Iterator<GunBullet> it = bullets.iterator();
+		
+		while (it.hasNext())
+		{
+			GunBullet currentBullet = it.next();
+			if (currentBullet != null)
+				paintGunBullet (currentBullet, g);
+		}
+	}
+	
+	public void paintGunBullet (GunBullet bullet, Graphics g)
+	{
+		if (bullet == null)
+			return;
+		
+		if (bullet.getPosition2d() == null)
+			return;
+		
+		int coordX = (int)bullet.getPosition2d().getX();
+		int coordY = (int)bullet.getPosition2d().getY();
+		BufferedImage img = gunBulletImage;
+		
+		img = img.getSubimage(bullet.getSubImageX(), bullet.getSubImageY(), MovableBullet.getWidth(), MovableBullet.getHeight());
+		if (img != null)
+			g.drawImage(img, coordX, coordY, this);
 	}
 	
 	// Dessine toutes les tours

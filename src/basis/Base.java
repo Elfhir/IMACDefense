@@ -1,16 +1,15 @@
 package basis;
 
 import java.awt.Point;
-import java.util.ArrayList;
-
 import players.Player;
 import players.SelectableObject;
-
+import towers.strategy.shooter.AttackableObject;
+import towers.strategy.shooter.shootType.AttackingObject;
 import agents.Agent;
 import map.Mapping;
 import map.Zone;
 
-public class Base implements SelectableObject {
+public class Base implements SelectableObject, AttackableObject {
 
 	private static int time = 1000; // temps d'attente entre chaque création d'agent en millièmes de secondes
 	private int nbCreatableAgents = 0; // nb d’agents que la base peut créer (par intervalle régulier)
@@ -161,22 +160,26 @@ public class Base implements SelectableObject {
 		return agent;
 	}
 	
-	public void beAttackedByAgent (Agent agent)
+	@Override
+	public void beAttacked (AttackingObject agent)
 	{
-		if (this.nbHostedAgents == agent.getForce())
+		if (agent instanceof Agent)
 		{
-			this.setNbHostedAgents(0);
-			this.setOwner(null);
-		}
-		else if (this.nbHostedAgents > agent.getForce())
-		{
-			this.decreaseNbHostedAgents(agent.getForce());
-		}
-		else if (this.nbHostedAgents < agent.getForce())
-		{
-			int newNbHostedAgents = agent.getForce () - this.nbHostedAgents;
-			this.setOwner(agent.getOwnerPlayer());
-			this.setNbHostedAgents(newNbHostedAgents);
+			if (this.nbHostedAgents == ((Agent) agent).getForce())
+			{
+				this.setNbHostedAgents(0);
+				this.setOwner(null);
+			}
+			else if (this.nbHostedAgents > ((Agent) agent).getForce())
+			{
+				this.decreaseNbHostedAgents(((Agent) agent).getForce());
+			}
+			else if (this.nbHostedAgents < ((Agent) agent).getForce())
+			{
+				int newNbHostedAgents = ((Agent) agent).getForce () - this.nbHostedAgents;
+				this.setOwner(((Agent) agent).getOwnerPlayer());
+				this.setNbHostedAgents(newNbHostedAgents);
+			}
 		}
 	}
 	
@@ -193,25 +196,22 @@ public class Base implements SelectableObject {
 		}
 		else
 		{
-			this.beAttackedByAgent(agent);
+			this.beAttacked(agent);
 		}
 	}
 
 	@Override
 	public int getObjectWidth() {
-		// TODO Auto-generated method stub
 		return diam;
 	}
 
 	@Override
 	public int getObjectHeight() {
-		// TODO Auto-generated method stub
 		return diam;
 	}
 
 	@Override
 	public void setCoordInTiles(Point coordInTiles) {
-		// TODO Auto-generated method stub
 		this.coordInTiles = coordInTiles;
 	}
 }

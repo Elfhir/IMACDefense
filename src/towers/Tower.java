@@ -2,14 +2,20 @@ package towers;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.Hashtable;
 
+import agents.Agent;
+
+import players.Player;
 import players.SelectableObject;
 
+import map.Mapping;
 import map.Zone;
 import towers.strategy.improvement.*;
 import towers.strategy.shooter.*;
+import towers.strategy.shooter.shootType.AttackingObject;
 
-public class Tower implements SelectableObject {
+public class Tower implements SelectableObject, ShootableObject {
 	
 	protected int width = 5;
 	protected int height = 5;
@@ -19,15 +25,17 @@ public class Tower implements SelectableObject {
 	protected ShooterInterface shooter = new Freeze(); // Tireur
 	
 	protected static int price = 0; // Coût de placement de la tour
-	protected static int shootSpeed = 0; // Vitesse de tir
-	protected static int shootPower = 0; // Puissance de tir
-	protected static int shootRange = 0; // Portée de tir - rayon
+	protected int shootSpeed = 0; // Vitesse de tir
+	protected int shootPower = 0; // Puissance de tir
+	protected int shootRange = 0; // Portée de tir - rayon
 	
 	private int life = 10; // Vie de la tour - à 0, elle est détruite
 	private Zone zone = null; // Zone à laquelle appartient la tour
 	
 	private boolean selected = false;
 	private Point coordInTiles = null;
+	
+	private ShootableObject target;
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -152,5 +160,53 @@ public class Tower implements SelectableObject {
 	public Point getCoordInTiles() {
 		// TODO Auto-generated method stub
 		return coordInTiles;
+	}
+	
+	/* ----- FROM SHOOTABLEOBJECT INTERFACE ----- */
+
+	@Override
+	public void destruct(Mapping map) {
+		// TODO Auto-generated method stub
+		map.removeTower(this);
+		this.life = 0;
+	}
+
+	@Override
+	public boolean isDestructed() {
+		// TODO Auto-generated method stub
+		return (this.getLife() <= 0);
+	}
+
+	@Override
+	public void beAttacked(AttackingObject object) {
+		// TODO Auto-generated method stub
+		if (object instanceof Agent)
+			return;
+	}
+
+	public void setTarget(ShootableObject target) {
+		this.target = target;
+	}
+
+	public ShootableObject getTarget() {
+		// TODO Auto-generated method stub
+		return target;
+	}
+
+	public void calculateBestTarget(Mapping map) {
+		// TODO Auto-generated method stub
+		if (!map.getAgents().isEmpty())
+		{
+			this.target = map.getAgents().get(0);
+		}
+	}
+
+	@Override
+	public Player getOwner() {
+		if (this.zone != null && this.zone.getOwner() != null)
+		{
+			return this.zone.getOwner();
+		}
+		return null;
 	}
 }

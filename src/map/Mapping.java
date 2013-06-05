@@ -9,6 +9,7 @@ import basis.Base;
 
 import agents.Agent;
 import towers.Tower;
+import towers.strategy.shooter.shootType.GunBullet;
 
 /* ----- IMPORTS TILES ----- */
 import map.tiles.Tile;
@@ -26,6 +27,7 @@ public class Mapping {
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
 	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
 	private ArrayList<Agent> agents = new ArrayList<Agent>();
+	private ArrayList<GunBullet> gunbullets = new ArrayList<GunBullet>();
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -148,10 +150,12 @@ public class Mapping {
 
 	// Lecture d'un fichier XML
 	public void readXMLFile (String filename)
-	{
+	{		
 		/* --- OUVERTURE DU FICHIER XML --- */
 		/* On instancie un parser XML qui ouvre le fichier XML demandé */
 		XMLParser parser = new XMLParser (filename);
+		
+		if (parser == null) return;
 		
 		
 		/* --- INFORMATIONS DE LA MAP --- */		
@@ -284,5 +288,39 @@ public class Mapping {
 			return true;
 		
 		return false;
+	}
+	
+	public void removeTower (Tower tower)
+	{
+		for (int i = 0; i < 2; ++i)
+		{
+			int y = (int) (tower.getCoordInTiles().getY() + i);
+			for (int j = 0; j < 2; ++j)
+			{
+				int x = (int) (tower.getCoordInTiles().getX() + j);
+				this.towers.remove(new Point (x, y));
+			}
+		}
+	}
+	
+	/* ----- OPERATIONS SUR LES AGENTS ----- */
+	
+	public void removeAgent (Agent agent)
+	{
+		this.agents.remove(agent);
+	}
+
+	public ArrayList<GunBullet> getGunbullets() {
+		return gunbullets;
+	}
+	
+	public void addGunBullet (GunBullet bullet)
+	{
+		this.gunbullets.add(bullet);
+	}
+	
+	public void removeGunBullet (GunBullet bullet)
+	{
+		this.gunbullets.remove(bullet);
 	}
 }

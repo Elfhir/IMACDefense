@@ -1,5 +1,7 @@
 package towers.strategy.shooter;
 
+import map.Mapping;
+
 public class Bomb implements ShooterInterface {
 
 	public Bomb() {
@@ -7,17 +9,9 @@ public class Bomb implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot(Object target) {
+	public void shoot(ShootableObject target, Mapping map) {
 		// TODO Auto-generated method stub
 		System.out.println("Putting a bomb now !");
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

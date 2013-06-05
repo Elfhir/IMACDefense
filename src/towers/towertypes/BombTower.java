@@ -19,7 +19,7 @@ public class BombTower extends Tower {
 
 	public BombTower() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setShooter(new Bomb());
 	}
 
 	@Override

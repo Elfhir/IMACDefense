@@ -1,5 +1,6 @@
 package towers.towertypes;
 
+import java.awt.Point;
 import java.io.File;
 
 import towers.Tower;
@@ -13,13 +14,21 @@ public class SubmachineGunTower extends Tower {
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "submachineguntower.png";
 
 	private static int price = 3000;
-	private static int shootSpeed = 10;
-	private static int shootPower = 2;
-	private static int shootRange = 5;
+	private int shootSpeed = 10;
+	private int shootPower = 2;
+	private int shootRange = 5;
+
+	public int getShootPower() {
+		return shootPower;
+	}
+
+	public int getShootRange() {
+		return shootRange;
+	}
 
 	public SubmachineGunTower() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setShooter(new Hurt(this));
 	}
 
 	@Override

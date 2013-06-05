@@ -19,7 +19,7 @@ public class MedicalTower extends Tower {
 	
 	public MedicalTower() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setShooter(new Heal(shootPower));
 	}
 
 	@Override

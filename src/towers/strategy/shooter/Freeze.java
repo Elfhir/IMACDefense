@@ -1,5 +1,7 @@
 package towers.strategy.shooter;
 
+import map.Mapping;
+
 public class Freeze implements ShooterInterface {
 
 	public Freeze() {
@@ -7,17 +9,9 @@ public class Freeze implements ShooterInterface {
 	}
 
 	@Override
-	public void shoot(Object target) {
+	public void shoot(ShootableObject target, Mapping map) {
 		// TODO Auto-generated method stub
 		System.out.println("Freezing ennemie !");
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

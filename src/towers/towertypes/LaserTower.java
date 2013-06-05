@@ -19,7 +19,7 @@ public class LaserTower extends Tower {
 	
 	public LaserTower() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setShooter(new IncreasingHurt(shootPower));
 	}
 
 	@Override
