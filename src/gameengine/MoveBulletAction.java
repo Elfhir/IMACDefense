@@ -10,6 +10,7 @@ import agents.Agent;
 import towers.strategy.shooter.ShootableObject;
 import towers.strategy.shooter.shootType.GunBullet;
 import towers.strategy.shooter.shootType.MovableBullet;
+import towers.strategy.shooter.shootType.Projectile;
 import window.GraphicalInterface;
 
 import map.tiles.Tile;
@@ -49,9 +50,9 @@ public class MoveBulletAction extends Action {
 
     	bullet.move(map);
     	
-    	if (bullet instanceof GunBullet)
+    	if (bullet instanceof Projectile)
     	{
-    		((GunBullet)bullet).changeTarget(map);
+    		((Projectile)bullet).changeTarget(map);
     	}
     	
     	// Si le bullet est arrivé à destination

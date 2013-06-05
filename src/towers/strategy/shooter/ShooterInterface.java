@@ -1,7 +1,9 @@
 package towers.strategy.shooter;
 
+import towers.strategy.shooter.shootType.Projectile;
 import map.Mapping;
 
 public interface ShooterInterface {
-	void shoot (ShootableObject target, Mapping map);
+	public void shoot (ShootableObject target, Mapping map);
+	public Projectile getLastBullet ();
 }

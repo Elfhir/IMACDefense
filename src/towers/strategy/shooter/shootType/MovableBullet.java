@@ -1,6 +1,7 @@
 package towers.strategy.shooter.shootType;
 
 import java.awt.Point;
+
 import map.Mapping;
 import map.tiles.Tile;
 import players.Player;
@@ -8,13 +9,14 @@ import towers.strategy.shooter.AttackableObject;
 
 public class MovableBullet implements AttackingObject {
 	
+	protected Point coordInTiles = null; // Position en tiles sur la map
+	protected Point finalCoordInTiles; // Position destination finale
+	
 	protected static int width = 21;
 	protected static int height = 21;
 
-	protected Point coordInTiles = null; // Position 2D sur la map
 	protected Point nextcoordInTiles = null;
 	protected Point position2d = null;
-	protected Point finalCoordInTiles = null; // Position destination finale
 	
 	protected AttackableObject target = null;
 	protected Player ownerPlayer = null; // Joueur propriétaire
@@ -23,7 +25,7 @@ public class MovableBullet implements AttackingObject {
 	
 	protected int speed = 1;
 	
-	protected int force = 1; // Le nombre d'agents représentés par cet agent.
+	protected int force = 1;
 	
 	protected enum Direction
 	{
@@ -52,6 +54,35 @@ public class MovableBullet implements AttackingObject {
 		public int getSubY() {
 			return subY;
 		}
+	}
+	
+	public Player getOwnerPlayer() {
+		return ownerPlayer;
+	}
+	
+	public AttackableObject getTarget() {
+		return target;
+	}
+	
+	public void setTarget(AttackableObject target) {
+		if (target.getOwner() != this.getOwnerPlayer())
+		{
+			this.target = target;
+			this.finalCoordInTiles = target.getCoordInTiles();
+		}
+	}
+
+	public Point getcoordInTiles() {
+		return coordInTiles;
+	}
+
+	@Override
+	public void destruct(Mapping map) {
+	}
+
+	@Override
+	public int getPower() {
+		return this.force;
 	}
 	
 	/*
@@ -85,15 +116,7 @@ public class MovableBullet implements AttackingObject {
 	/*
 	 * Getters - Setters
 	 */
-
-	public Point getcoordInTiles() {
-		return coordInTiles;
-	}
 	
-	public Player getOwnerPlayer() {
-		return ownerPlayer;
-	}
-
 	public Point getPosition2d() {
 		return position2d;
 	}
@@ -101,19 +124,11 @@ public class MovableBullet implements AttackingObject {
 	public int getForce() {
 		return force;
 	}
+	
+	public Point getFinalCoordInTiles() {
+		return finalCoordInTiles;
+	}
 
-	public AttackableObject getTarget() {
-		return target;
-	}
-	
-	public void setTarget(AttackableObject target) {
-		if (target.getOwner() != this.getOwnerPlayer())
-		{
-			this.target = target;
-			this.finalCoordInTiles = target.getCoordInTiles();
-		}
-	}
-	
 	public int getSubImageX()
 	{
 		return this.direction.getSubX();
@@ -323,15 +338,5 @@ public class MovableBullet implements AttackingObject {
 		}
 		
 		this.coordInTiles = new Point ((int)this.position2d.getX()/20, (int)this.position2d.getY()/20);
-	}
-
-	@Override
-	public void destruct(Mapping map) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public int getPower() {
-		return this.force;
 	}
 }

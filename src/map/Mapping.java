@@ -10,6 +10,9 @@ import basis.Base;
 import agents.Agent;
 import towers.Tower;
 import towers.strategy.shooter.shootType.GunBullet;
+import towers.strategy.shooter.shootType.LaserRay;
+import towers.strategy.shooter.shootType.MedicalBullet;
+import towers.strategy.shooter.shootType.Projectile;
 
 /* ----- IMPORTS TILES ----- */
 import map.tiles.Tile;
@@ -27,7 +30,7 @@ public class Mapping {
 	private Hashtable<Point, Tower> towers = new Hashtable<Point, Tower>();
 	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
 	private ArrayList<Agent> agents = new ArrayList<Agent>();
-	private ArrayList<GunBullet> gunbullets = new ArrayList<GunBullet>();
+	private ArrayList<Projectile> bullets = new ArrayList<Projectile>();
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -310,17 +313,17 @@ public class Mapping {
 		this.agents.remove(agent);
 	}
 
-	public ArrayList<GunBullet> getGunbullets() {
-		return gunbullets;
+	public ArrayList<Projectile> getBullets() {
+		return bullets;
 	}
 	
-	public void addGunBullet (GunBullet bullet)
+	public void addBullet (Projectile bullet)
 	{
-		this.gunbullets.add(bullet);
+		this.bullets.add(bullet);
 	}
 	
-	public void removeGunBullet (GunBullet bullet)
+	public void removeBullet (Projectile bullet)
 	{
-		this.gunbullets.remove(bullet);
+		this.bullets.remove(bullet);
 	}
 }

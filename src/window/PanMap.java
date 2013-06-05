@@ -21,7 +21,10 @@ import agents.Agent;
 
 import towers.Tower;
 import towers.strategy.shooter.shootType.GunBullet;
+import towers.strategy.shooter.shootType.LaserRay;
+import towers.strategy.shooter.shootType.MedicalBullet;
 import towers.strategy.shooter.shootType.MovableBullet;
+import towers.strategy.shooter.shootType.Projectile;
 import towers.towertypes.BombTower;
 import towers.towertypes.FreezeTower;
 import towers.towertypes.LaserTower;
@@ -70,7 +73,8 @@ public class PanMap extends JPanel {
 		laserTowerImage = null,
 		medicalTowerImage = null,
 		submachineGunTowerImage = null,
-		gunBulletImage = null;
+		gunBulletImage = null,
+		medicalBulletImage = null;
 	
 	public PanMap (Mapping map, IHM ihm) throws IOException
 	{
@@ -98,6 +102,7 @@ public class PanMap extends JPanel {
 		this.submachineGunTowerImage = ImageIO.read(new File(filepath + "buildings" + File.separator + "submachineguntower.png"));
 		
 		this.gunBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "gunbullet.png"));
+		this.medicalBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "medicalbullet.png"));
 	}
 	
 	@Override
@@ -117,7 +122,7 @@ public class PanMap extends JPanel {
 		paintAllTowers(g);
 		paintAllBasis (g);
 		paintAllAgents (g);
-		paintAllGunBullets (g);
+		paintAllBullets (g);
 	}
 	
 	private void paintIHM (Graphics g)
@@ -246,7 +251,7 @@ public class PanMap extends JPanel {
 			g.drawImage(img, coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
 	}
 	
-	public void paintAllAgents (Graphics g)
+	private void paintAllAgents (Graphics g)
 	{
 		ArrayList<Agent> agents = this.map.getAgents();
 		Iterator<Agent> it = agents.iterator();
@@ -259,7 +264,7 @@ public class PanMap extends JPanel {
 		}
 	}
 	
-	public void paintAgent (Agent agent, Graphics g)
+	private void paintAgent (Agent agent, Graphics g)
 	{
 		if (agent == null)
 			return;
@@ -307,20 +312,29 @@ public class PanMap extends JPanel {
 		g.drawString(textToDraw, coordX + MovableBullet.getWidth()/2 - textWidth/2, coordY);
 	}
 	
-	public void paintAllGunBullets (Graphics g)
+	private void paintAllBullets (Graphics g)
 	{
-		ArrayList<GunBullet> bullets = this.map.getGunbullets();
-		Iterator<GunBullet> it = bullets.iterator();
+		ArrayList<Projectile> bullets = this.map.getBullets();
+		Iterator<Projectile> it = bullets.iterator();
 		
 		while (it.hasNext())
 		{
-			GunBullet currentBullet = it.next();
+			Projectile currentBullet = it.next();
 			if (currentBullet != null)
-				paintGunBullet (currentBullet, g);
+			{
+				if (currentBullet instanceof LaserRay)
+				{
+					paintLaserRay ((LaserRay)currentBullet, g);
+				}
+				else
+				{
+					paintBullet (currentBullet, g);
+				}
+			}
 		}
 	}
 	
-	public void paintGunBullet (GunBullet bullet, Graphics g)
+	private void paintBullet (Projectile bullet, Graphics g)
 	{
 		if (bullet == null)
 			return;
@@ -330,11 +344,34 @@ public class PanMap extends JPanel {
 		
 		int coordX = (int)bullet.getPosition2d().getX();
 		int coordY = (int)bullet.getPosition2d().getY();
-		BufferedImage img = gunBulletImage;
+		BufferedImage img = null;
+		
+		if (bullet instanceof GunBullet)
+			img = gunBulletImage;
+		else if (bullet instanceof MedicalBullet)
+			img = medicalBulletImage;
 		
 		img = img.getSubimage(bullet.getSubImageX(), bullet.getSubImageY(), MovableBullet.getWidth(), MovableBullet.getHeight());
 		if (img != null)
 			g.drawImage(img, coordX, coordY, this);
+	}
+	
+	private void paintLaserRay (LaserRay laserray, Graphics g)
+	{
+		if (laserray == null)
+			return;
+		
+		if (laserray.getPosition2d() == null)
+			return;
+		
+		int firstCoordX = (int)laserray.getInitialPoint().getX();
+		int firstCoordY = (int)laserray.getInitialPoint().getY();
+		
+		int coordX = (int)laserray.getPosition2d().getX();
+		int coordY = (int)laserray.getPosition2d().getY();
+
+		g.setColor(Color.red);
+		g.drawLine(firstCoordX*Tile.getWidth(), firstCoordY*Tile.getHeight(), coordX, coordY);
 	}
 	
 	// Dessine toutes les tours
@@ -367,7 +404,7 @@ public class PanMap extends JPanel {
 		}
 	}
 	
-	public void paintBase (Base base, int coordX, int coordY, Graphics g)
+	private void paintBase (Base base, int coordX, int coordY, Graphics g)
 	{
 		if (base == null)
 			return;
@@ -429,7 +466,7 @@ public class PanMap extends JPanel {
 		}
 	}*/
 	
-	public void paintConstructIHM (Graphics g)
+	private void paintConstructIHM (Graphics g)
 	{
 		Hashtable<Point, Tower> ihmTowers = this.ihm.getTowers();
 		Set<Point> set = ihmTowers.keySet();

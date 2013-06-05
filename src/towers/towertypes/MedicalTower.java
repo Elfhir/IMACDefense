@@ -10,16 +10,14 @@ public class MedicalTower extends Tower {
 	protected int width = 1; // Largeur en tiles
 	protected int height = 1; // Hauteur en tiles
 
-	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "medicaltower.png";
-	
 	private static int price = 2000;
-	private static int shootSpeed = 5;
-	private static int shootPower = 4;
-	private static int shootRange = 7;
+	private int shootSpeed = 5;
+	private int shootPower = 1;
+	private int shootRange = 7;
 	
 	public MedicalTower() {
 		super();
-		this.setShooter(new Heal(shootPower));
+		this.setShooter(new Heal(this));
 	}
 
 	@Override
@@ -38,7 +36,12 @@ public class MedicalTower extends Tower {
 	}
 
 	@Override
-	public String getImageName() {
-		return imageName;
+	public int getShootPower() {
+		return shootPower;
+	}
+
+	@Override
+	public int getShootRange() {
+		return shootRange;
 	}
 }

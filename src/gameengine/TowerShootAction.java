@@ -12,6 +12,7 @@ import map.Mapping;
 import towers.Tower;
 import window.GraphicalInterface;
 import towers.strategy.shooter.Hurt;
+import towers.strategy.shooter.IncreasingHurt;
 
 public class TowerShootAction extends Action {
 	
@@ -32,11 +33,8 @@ public class TowerShootAction extends Action {
 			if (tower.getTarget() != null)
 			{
 				tower.getShooter().shoot(tower.getTarget(), map);
-				if (tower.getShooter() instanceof Hurt)
-				{
-					MoveBulletAction mba = new MoveBulletAction(((Hurt)tower.getShooter()).getLastBullet(), this.frame, 100);
-					mba.run();
-				}
+				MoveBulletAction mba = new MoveBulletAction(tower.getShooter().getLastBullet(), this.frame, 100);
+				mba.run();
 			}
 			
 			if (tower.getTarget() != null && tower.getTarget().isDestructed())

@@ -1,6 +1,5 @@
 package towers.strategy.shooter;
 
-import gameengine.MoveBulletAction;
 import map.Mapping;
 
 import towers.Tower;
@@ -10,7 +9,6 @@ public class Hurt implements ShooterInterface {
 	
 	private Tower shootingtower;
 	private GunBullet lastBullet;
-	
 
 	public Hurt(Tower shootingtower) {
 		this.shootingtower = shootingtower;
@@ -27,7 +25,7 @@ public class Hurt implements ShooterInterface {
 		
 		GunBullet bullet = new GunBullet(shootingtower.getCoordInTiles(), target, shootingtower.getZone().getOwner(), power, range, map);
 		
-		map.addGunBullet(bullet);
+		map.addBullet(bullet);
 		
 		lastBullet = bullet;
 		
@@ -51,6 +49,7 @@ public class Hurt implements ShooterInterface {
 			System.out.println("Hurting ennemie !");*/
 	}
 
+	@Override
 	public GunBullet getLastBullet() {
 		return lastBullet;
 	}

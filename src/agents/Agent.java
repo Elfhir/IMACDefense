@@ -140,4 +140,10 @@ public class Agent extends MovableBullet implements ShootableObject {
 		// TODO Auto-generated method stub
 		return force;
 	}
+
+	@Override
+	public void setLife(int life) {
+		// TODO Auto-generated method stub
+		this.force = life;
+	}
 }

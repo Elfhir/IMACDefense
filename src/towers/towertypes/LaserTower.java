@@ -13,13 +13,13 @@ public class LaserTower extends Tower {
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "lasertower.png";
 
 	private static int price = 5000;
-	private static int shootSpeed = 3;
-	private static int shootPower = 8;
-	private static int shootRange = 6;
+	private int shootSpeed = 3;
+	private int shootPower = 8;
+	private int shootRange = 6;
 	
 	public LaserTower() {
 		super();
-		this.setShooter(new IncreasingHurt(shootPower));
+		this.setShooter(new IncreasingHurt(this));
 	}
 
 	@Override
@@ -40,5 +40,15 @@ public class LaserTower extends Tower {
 	@Override
 	public String getImageName() {
 		return imageName;
+	}
+
+	@Override
+	public int getShootPower() {
+		return shootPower;
+	}
+
+	@Override
+	public int getShootRange() {
+		return shootRange;
 	}
 }

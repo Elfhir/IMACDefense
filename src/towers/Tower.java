@@ -2,18 +2,18 @@ package towers;
 
 import java.awt.Point;
 import java.io.File;
-import java.util.Hashtable;
-
-import agents.Agent;
-
-import players.Player;
-import players.SelectableObject;
 
 import map.Mapping;
 import map.Zone;
-import towers.strategy.improvement.*;
-import towers.strategy.shooter.*;
+import players.Player;
+import players.SelectableObject;
+import towers.strategy.improvement.ImproverInterface;
+import towers.strategy.improvement.PowerImprovement;
+import towers.strategy.shooter.Freeze;
+import towers.strategy.shooter.ShootableObject;
+import towers.strategy.shooter.ShooterInterface;
 import towers.strategy.shooter.shootType.AttackingObject;
+import agents.Agent;
 
 public class Tower implements SelectableObject, ShootableObject {
 	
