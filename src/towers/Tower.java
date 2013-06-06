@@ -19,8 +19,8 @@ import agents.Agent;
 
 public class Tower implements SelectableObject, ShootableObject {
 	
-	protected int width = 5;
-	protected int height = 5;
+	protected int width = 2; // Largeur en tiles
+	protected int height = 2; // Longueur en tiles
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif";
 	
 	protected ImproverInterface improver = new PowerImprovement(); // Ameliorateur
@@ -48,12 +48,6 @@ public class Tower implements SelectableObject, ShootableObject {
 	
 	public Tower() {
 		super();
-	}
-	
-	public Tower(Point coordInTiles) {
-		super();
-		this.coordInTiles = coordInTiles;
-		this.hitbox.setRect(coordInTiles.getX(), coordInTiles.getY(), width, height);
 	}
 	
 	/* ----- GETTERS & SETTERS ----- */
@@ -143,9 +137,7 @@ public class Tower implements SelectableObject, ShootableObject {
 	@Override
 	public void setCoordInTiles(Point coordInTiles) {
 		this.coordInTiles = coordInTiles;
-		
-		this.hitbox = new Rectangle2D.Double();
-		this.hitbox.setRect(coordInTiles.getX(), coordInTiles.getY(), width, height);
+		this.setHitBox();
 	}
 
 	@Override
@@ -253,7 +245,7 @@ public class Tower implements SelectableObject, ShootableObject {
 		{
 			this.hitbox = new Rectangle2D.Double();
 		}
-		this.hitbox.setRect(coordInTiles.getX()*Tile.getWidth(), coordInTiles.getY()*Tile.getHeight(), width, height);
+		this.hitbox.setRect(coordInTiles.getX()*Tile.getWidth(), coordInTiles.getY()*Tile.getHeight(), getObjectWidth()*Tile.getWidth(), getObjectHeight()*Tile.getHeight());
 	}
 
 	@Override

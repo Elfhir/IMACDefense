@@ -1,22 +1,20 @@
 package map;
 
-import java.awt.Point;
+import basis.Base;
+import map.tiles.Buttress;
+import map.tiles.Field;
+import map.tiles.Tile;
+import org.jdom2.Element;
+import org.jdom2.filter.ElementFilter;
+import org.jdom2.input.SAXBuilder;
+
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /* ----- IMPORTS LECTURE XML ----- */
-import org.jdom2.Element;
-import org.jdom2.filter.ElementFilter;
-import org.jdom2.input.SAXBuilder;
-
-import basis.Base;
-
 /* ----- IMPORTS TILES ----- */
-import map.tiles.Tile;
-import map.tiles.Buttress;
-import map.tiles.Field;
-import map.tiles.Mountain;
 
 public class XMLParser {
 	
@@ -31,17 +29,17 @@ public class XMLParser {
 		String workingDir = System.getProperty("user.dir");
 		String finalfile = workingDir + File.separator + "data" + File.separator + filename;
 		
-		//On crée une instance de SAXBuilder
+		//On crï¿½e une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try
 		{
-			//On crée un nouveau document JDOM avec en argument le fichier XML
+			//On crï¿½e un nouveau document JDOM avec en argument le fichier XML
 			document = sxb.build(new File(finalfile));
 		}
 		catch(Exception e){e.printStackTrace();}
 		finally
 		{
-			//On initialise un nouvel élément racine avec l'élément racine du document.
+			//On initialise un nouvel ï¿½lï¿½ment racine avec l'ï¿½lï¿½ment racine du document.
 			racine = document.getRootElement();
 		}
 	}
@@ -90,7 +88,7 @@ public class XMLParser {
 		int x = Integer.parseInt(tileElement.getAttributeValue("x"));
 		int y = Integer.parseInt(tileElement.getAttributeValue("y"));
 		
-		// Les coordonnées du tile ne peuvent être en dehors de la taille de la map demandée.
+		// Les coordonnï¿½es du tile ne peuvent ï¿½tre en dehors de la taille de la map demandï¿½e.
 		if (x < 0 && x >= this.getMapWidth() && y < 0 && y >= this.getMapHeight())
 		{
 			return null;
@@ -99,20 +97,20 @@ public class XMLParser {
 		/* Si la zone n'est pas nulle, */
 		if (zone != null)
 		{			
-			/* Le tile appartient à cette zone : on met la zone en attribut. */
+			/* Le tile appartient ï¿½ cette zone : on met la zone en attribut. */
 			/* On sait aussi que le Tile est de type Buttress. */
 			return new Buttress (zone, new Point (x, y));
 		}
 		
-		/* Sinon : le parent est un type de tile, le tile n'appartient à aucune zone particulière. */
+		/* Sinon : le parent est un type de tile, le tile n'appartient ï¿½ aucune zone particuliï¿½re. */
 		else
 		{
 			zone = null;
 			
-			/* On récupère l'élément parent à la balise tile */
+			/* On rï¿½cupï¿½re l'ï¿½lï¿½ment parent ï¿½ la balise tile */
 			Element parent = tileElement.getParentElement();
 			
-			switch (parent.getName())
+			/*switch (parent.getName())
 			{
 				case "mountain" :
 				{
@@ -122,7 +120,7 @@ public class XMLParser {
 				{
 					break;
 				}
-			}
+			} */
 		}
 		return new Field(new Point(x, y));
 	}
@@ -139,7 +137,7 @@ public class XMLParser {
 			int x = Integer.parseInt(current.getAttributeValue("x"));
 			int y = Integer.parseInt(current.getAttributeValue("y"));
 			
-			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
+			// Les coordonnï¿½es du tiles ne peuvent ï¿½tre en dehors de la taille de la map demandï¿½e.
 			if (x >= 0 && x < this.getMapWidth() && y >= 0 && y < this.getMapHeight())
 			{		
 				Tile tile = new Field(new Point (x, y));
@@ -147,13 +145,13 @@ public class XMLParser {
 				
 				if (tile != null)
 				{
-					/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
+					/* On dï¿½termine la case du tableau-liste ï¿½ double dimension (ArrayList de ArrayList) qui doit ï¿½tre actualisï¿½e :
 					 * ligne et colonne
 					 */
 					int column = Integer.parseInt(current.getAttributeValue("x"));
 					int line = Integer.parseInt(current.getAttributeValue("y"));
 					
-					/* Le tile est sauvegardé dans le tableau-liste retourné. */
+					/* Le tile est sauvegardï¿½ dans le tableau-liste retournï¿½. */
 					map.getTiles().get(line).set(column, tile);
 				}
 			}
@@ -163,7 +161,7 @@ public class XMLParser {
 	public void getDescendentGroupsOfTiles (Element element, Zone zone, Mapping map)
 	{
 		int i = 0, j = 0;
-		/* Parcours des balises group contenues dans le document avec un itérateur */	
+		/* Parcours des balises group contenues dans le document avec un itï¿½rateur */	
 		Iterator<Element> it = (Iterator<Element>) element.getDescendants(new ElementFilter ("group"));
 		while (it.hasNext())
 		{
@@ -171,12 +169,12 @@ public class XMLParser {
 			int x = Integer.parseInt(current.getAttributeValue("x"));
 			int y = Integer.parseInt(current.getAttributeValue("y"));
 			
-			// Les coordonnées du tiles ne peuvent être en dehors de la taille de la map demandée.
+			// Les coordonnï¿½es du tiles ne peuvent ï¿½tre en dehors de la taille de la map demandï¿½e.
 			if (Integer.parseInt(current.getAttributeValue("x")) >= 0 && Integer.parseInt(current.getAttributeValue("x")) < this.getMapWidth() && Integer.parseInt(current.getAttributeValue("y")) >= 0 && Integer.parseInt(current.getAttributeValue("y")) < this.getMapHeight())
 			{
 				Tile tile = new Field(new Point (x, y));
 				
-				// On veille à ce que le groupe de tiles ne dépasse pas la map.
+				// On veille ï¿½ ce que le groupe de tiles ne dï¿½passe pas la map.
 				int height = Integer.parseInt(current.getAttributeValue("height"));
 				int width = Integer.parseInt(current.getAttributeValue("width"));
 				if (height + Integer.parseInt(current.getAttributeValue("y")) >= this.getMapHeight())
@@ -195,13 +193,13 @@ public class XMLParser {
 						tile = readMapTile(current, zone, map);
 						if (tile != null)
 						{
-							/* On détermine la case du tableau-liste à double dimension (ArrayList de ArrayList) qui doit être actualisée :
+							/* On dï¿½termine la case du tableau-liste ï¿½ double dimension (ArrayList de ArrayList) qui doit ï¿½tre actualisï¿½e :
 							 * ligne et colonne
 							 */
 							int column = Integer.parseInt(current.getAttributeValue("x")) + i;
 							int line = Integer.parseInt(current.getAttributeValue("y")) + j;
 							
-							/* Le tile est sauvegardé dans le tableau-liste retourné. */
+							/* Le tile est sauvegardï¿½ dans le tableau-liste retournï¿½. */
 							map.getTiles().get(line).set(column, tile);
 						}
 					}
@@ -218,10 +216,10 @@ public class XMLParser {
 		if (map.getTiles () == null)
 			map.initializeTiles();
 		
-		/* Récupération des zones et donc des tiles de type buttress */
+		/* Rï¿½cupï¿½ration des zones et donc des tiles de type buttress */
 		getMapZones(map);
 		
-		/* Récupération des tiles de type mountain */
+		/* Rï¿½cupï¿½ration des tiles de type mountain */
 		Element current = racine.getChild ("mountain");
 		getDescendentTiles (current, null, map);
 		getDescendentGroupsOfTiles(current, null, map);
