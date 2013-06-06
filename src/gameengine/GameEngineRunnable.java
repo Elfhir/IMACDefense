@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import map.Mapping;
 import map.Zone;
 import players.Player;
+import players.types.ArtificialIntelligencePlayer;
+import players.types.aiStrategy.ExplorerStrategy;
 import window.GraphicalInterface;
 
 public class GameEngineRunnable implements Runnable {
