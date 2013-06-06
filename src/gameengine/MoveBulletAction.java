@@ -3,8 +3,6 @@ package gameengine;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
-import agents.Agent;
-
 import map.tiles.Tile;
 import towers.strategy.shooter.ShootableObject;
 import towers.strategy.shooter.shootType.MovableBullet;
@@ -66,7 +64,6 @@ public class MoveBulletAction extends Action {
     	// Si le bullet est arrivé à destination
 		if (bullet.arrivedAtDestination())
 		{
-			
 			if (bullet.getTarget() != null)
 			{
 				/*

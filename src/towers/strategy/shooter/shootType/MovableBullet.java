@@ -1,6 +1,8 @@
 package towers.strategy.shooter.shootType;
 
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 
 import map.Mapping;
 import map.tiles.Tile;
@@ -26,6 +28,8 @@ public class MovableBullet implements AttackingObject {
 	protected int speed = 1;
 	
 	protected int force = 1;
+	
+	protected Rectangle2D.Double hitbox;
 	
 	protected enum Direction
 	{
@@ -65,7 +69,7 @@ public class MovableBullet implements AttackingObject {
 	}
 	
 	public void setTarget(AttackableObject target) {
-		if (target.getOwner() != this.getOwnerPlayer())
+		if (target != null && target.getOwner() != null && target.getOwner() != this.getOwnerPlayer())
 		{
 			this.target = target;
 			this.finalCoordInTiles = target.getCoordInTiles();
@@ -200,6 +204,10 @@ public class MovableBullet implements AttackingObject {
 			return true;
 		if (this.target == null)
 			return false;
+		
+		if (this.target.getHitBox().intersects(this.hitbox))
+			return true;
+		
 		boolean xTrue = false;
 		boolean yTrue = false;
 		int currentX = (int)this.position2d.getX();
@@ -338,5 +346,22 @@ public class MovableBullet implements AttackingObject {
 		}
 		
 		this.coordInTiles = new Point ((int)this.position2d.getX()/20, (int)this.position2d.getY()/20);
+		this.setHitBox ();
+	}
+
+	@Override
+	public void setHitBox() {
+		if (this.hitbox == null)
+		{
+			this.hitbox = new Rectangle2D.Double();
+		}
+		this.hitbox.setRect(position2d.getX(), position2d.getY(), width, height);
+	}
+
+	@Override
+	public boolean isInHitBox(Point point) {
+		if (hitbox.contains(point))
+			return true;
+		return false;
 	}
 }

@@ -16,7 +16,7 @@ public class MedicalBullet extends Projectile {
 
 	@Override
 	public void setTarget(AttackableObject target) {
-		if (target.getOwner().equals(this.getOwnerPlayer()))
+		if (target != null && target.getOwner() != null && target.getOwner().equals(this.getOwnerPlayer()))
 		{
 			this.target = target;
 			this.finalCoordInTiles = target.getCoordInTiles();

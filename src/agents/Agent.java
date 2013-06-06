@@ -1,6 +1,7 @@
 package agents;
 
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import map.Mapping;
 import map.tiles.Tile;
@@ -102,6 +103,8 @@ public class Agent extends MovableBullet implements ShootableObject {
 		
 		this.calculatePath(map);
 		this.pathfinding(map);
+		
+		this.setHitBox();
 	}
 	
 	/* ----- FROM SHOOTABLEOBJECT INTERFACE ----- */
@@ -167,5 +170,10 @@ public class Agent extends MovableBullet implements ShootableObject {
 	@Override
 	public void setTotalFrozenTime(int frozentime) {
 		this.frozentime = frozentime;
+	}
+
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		return hitbox;
 	}
 }

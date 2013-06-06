@@ -174,6 +174,11 @@ public class Player {
 		if (this.money < tower.getPrice())
 			return false;
 		
+		if (y+tower.getObjectHeight() >= map.getHeight() || y < 0 || x+tower.getObjectWidth() >= map.getWidth() || x < 0)
+		{
+			return false;
+		}
+		
 		/* Puis on vérifie qu'il veut construire la tour au bon endroit.
 		 * Pour chaque ligne de tiles occupée par la tour,
 		 */

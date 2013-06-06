@@ -313,6 +313,9 @@ public class PanMap extends JPanel {
 		int textWidth = g.getFontMetrics().stringWidth(textToDraw);
 		
 		g.drawString(textToDraw, coordX + MovableBullet.getWidth()/2 - textWidth/2, coordY);
+		
+		// HitBox pour le test
+		//g.drawRect((int)agent.getHitBox().getX(), (int)agent.getHitBox().getY(), 21, 21);
 	}
 	
 	private void paintAllBullets (Graphics g)

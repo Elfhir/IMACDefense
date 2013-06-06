@@ -1,10 +1,12 @@
 package towers;
 
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 
 import map.Mapping;
 import map.Zone;
+import map.tiles.Tile;
 import players.Player;
 import players.SelectableObject;
 import towers.strategy.improvement.ImproverInterface;
@@ -38,25 +40,26 @@ public class Tower implements SelectableObject, ShootableObject {
 	private ShootableObject target;
 	
 	private boolean frozen = false;
-	
 	private int frozentime = 0;
+	
+	protected Rectangle2D.Double hitbox;
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
-	public Tower ()
-	{
-		super ();
+	public Tower() {
+		super();
 	}
 	
 	public Tower(Point coordInTiles) {
 		super();
 		this.coordInTiles = coordInTiles;
+		this.hitbox.setRect(coordInTiles.getX(), coordInTiles.getY(), width, height);
 	}
 	
 	/* ----- GETTERS & SETTERS ----- */
 	
 	/* Life */
-	
+
 	public int getLife() {
 		return life;
 	}
@@ -140,6 +143,9 @@ public class Tower implements SelectableObject, ShootableObject {
 	@Override
 	public void setCoordInTiles(Point coordInTiles) {
 		this.coordInTiles = coordInTiles;
+		
+		this.hitbox = new Rectangle2D.Double();
+		this.hitbox.setRect(coordInTiles.getX(), coordInTiles.getY(), width, height);
 	}
 
 	@Override
@@ -232,5 +238,26 @@ public class Tower implements SelectableObject, ShootableObject {
 	@Override
 	public void setTotalFrozenTime(int frozentime) {
 		this.frozentime = frozentime;
+	}
+
+	@Override
+	public boolean isInHitBox(Point point) {
+		if (this.hitbox != null && this.hitbox.contains(point))
+			return true;
+		return false;
+	}
+	
+	@Override
+	public void setHitBox() {
+		if (this.hitbox == null)
+		{
+			this.hitbox = new Rectangle2D.Double();
+		}
+		this.hitbox.setRect(coordInTiles.getX()*Tile.getWidth(), coordInTiles.getY()*Tile.getHeight(), width, height);
+	}
+
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		return hitbox;
 	}
 }

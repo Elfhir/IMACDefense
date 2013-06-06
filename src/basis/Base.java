@@ -1,6 +1,8 @@
 package basis;
 
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
+
 import players.Player;
 import players.SelectableObject;
 import towers.strategy.shooter.AttackableObject;
@@ -8,6 +10,7 @@ import towers.strategy.shooter.shootType.AttackingObject;
 import agents.Agent;
 import map.Mapping;
 import map.Zone;
+import map.tiles.Tile;
 
 public class Base implements SelectableObject, AttackableObject {
 
@@ -23,6 +26,7 @@ public class Base implements SelectableObject, AttackableObject {
 	private Point coordInTiles = null;
 	
 	private boolean selected = false;
+	private Rectangle2D.Double hitbox;
 	
 	/*
 	 * Getter - setter
@@ -102,7 +106,6 @@ public class Base implements SelectableObject, AttackableObject {
 	
 	@Override
 	public void inverseSelected() {
-		// TODO Auto-generated method stub
 		this.selected = !this.selected;
 	}
 	
@@ -117,6 +120,8 @@ public class Base implements SelectableObject, AttackableObject {
 		this.diam = initialCapacity/5;
 		this.zone = zone;
 		this.coordInTiles = point;
+		
+		this.setHitBox();
 	}
 	
 	public Base() {
@@ -213,5 +218,26 @@ public class Base implements SelectableObject, AttackableObject {
 	@Override
 	public void setCoordInTiles(Point coordInTiles) {
 		this.coordInTiles = coordInTiles;
+	}
+
+	@Override
+	public boolean isInHitBox(Point point) {
+		if (this.hitbox.contains(point))
+			return true;
+		return false;
+	}
+	
+	@Override
+	public void setHitBox() {
+		if (this.hitbox == null)
+		{
+			this.hitbox = new Rectangle2D.Double();
+		}
+		this.hitbox.setRect(coordInTiles.getX()*Tile.getWidth(), coordInTiles.getY()*Tile.getHeight(), diam, diam);
+	}
+	
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		return hitbox;
 	}
 }

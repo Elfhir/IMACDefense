@@ -85,7 +85,7 @@ public class Projectile extends MovableBullet {
 		while (it.hasNext())
 		{
 			Agent newAgentTarget = it.next();
-			if (newAgentTarget.getCoordInTiles().equals(this.getcoordInTiles()))
+			if (newAgentTarget.getHitBox().intersects(this.hitbox))
 			{
 				this.setTarget(newAgentTarget);
 				return;
