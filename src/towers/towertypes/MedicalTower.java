@@ -44,4 +44,9 @@ public class MedicalTower extends Tower {
 	public int getShootRange() {
 		return shootRange;
 	}
+
+	@Override
+	public int getShootSpeed() {
+		return shootSpeed;
+	}
 }

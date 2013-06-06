@@ -50,4 +50,9 @@ public class SubmachineGunTower extends Tower {
 	public int getObjectHeight() {
 		return height;
 	}
+
+	@Override
+	public int getShootSpeed() {
+		return shootSpeed;
+	}
 }

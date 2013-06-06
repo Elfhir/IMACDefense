@@ -202,7 +202,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 					if (tower != null)
 					{
 						pan.repaint((int)tower.getCoordInTiles().getX()*Tile.getWidth(), (int)tower.getCoordInTiles().getY()*Tile.getHeight(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
-						TowerShootAction action = new TowerShootAction(map, this, 1000, tower);
+						TowerShootAction action = new TowerShootAction(map, this, 10000/tower.getShootSpeed(), tower);
 						action.run();
 					}
 					this.setTargetCursor();

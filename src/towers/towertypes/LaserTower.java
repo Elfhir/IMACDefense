@@ -51,4 +51,9 @@ public class LaserTower extends Tower {
 	public int getShootRange() {
 		return shootRange;
 	}
+
+	@Override
+	public int getShootSpeed() {
+		return shootSpeed;
+	}
 }
