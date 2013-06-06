@@ -16,12 +16,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import players.Player;
 import players.SelectableObject;
+import players.types.HumanPlayer;
 import towers.Tower;
 import towers.strategy.shooter.shootType.GunBullet;
 import basis.Base;
@@ -131,7 +130,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 		Point mousepoint = new Point(e.getX(), e.getY());
 		// On vérifie si le joueur a cliqué sur un objet selectionnable.
-		SelectableObject object = Player.whereDidIClick(mousepoint, map, ihm);
+		SelectableObject object = HumanPlayer.whereDidIClick(mousepoint, map, ihm);
 		
 		// Si oui,
 		if (object != null)
@@ -183,7 +182,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 			if (object instanceof Tower)
 			{
 				ihm.setTowerCursor((Tower)object);
-				Player.setConstructingNow(true);
+				HumanPlayer.setConstructingNow(true);
 			}
 			
 			/*
@@ -193,12 +192,15 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		}
 		else
 		{
-			Buttress tileObject = Player.didIClickInMyZone(mousepoint, map);
-			if (tileObject != null && Player.isConstructingNow())
+			Buttress tileObject = HumanPlayer.whatZoneDidIClickIn(mousepoint, map);
+			
+			if (tileObject != null && tileObject.getZone() != null && tileObject.getZone().getOwner() != null && tileObject.getZone().getOwner() instanceof HumanPlayer)
 			{
-				// A terminer
-				try {
-					Tower tower = tileObject.getZone().getOwner().construct(ihm.getSelectedTowerClass().newInstance(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
+				HumanPlayer player = (HumanPlayer) tileObject.getZone().getOwner();
+				
+				if (HumanPlayer.isConstructingNow())
+				{
+					Tower tower = player.construct(ihm.getSelectedTowerClass(), map, tileObject.getZone(), (int)mousepoint.getX()/20, (int)mousepoint.getY()/20);
 					if (tower != null)
 					{
 						pan.repaint((int)tower.getCoordInTiles().getX()*Tile.getWidth(), (int)tower.getCoordInTiles().getY()*Tile.getHeight(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
@@ -206,9 +208,6 @@ public class GraphicalInterface extends JFrame implements MouseListener
 						action.run();
 					}
 					this.setTargetCursor();
-				} catch (InstantiationException | IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		}

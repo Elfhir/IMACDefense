@@ -252,6 +252,13 @@ public class PanMap extends JPanel {
 		
 		if (img != null)
 			g.drawImage(img, coordX*Tile.getWidth(), coordY*Tile.getHeight(), this);
+		
+		// Hitbox pour le test
+		/*if (tower.getHitBox() != null)
+		{
+			g.setColor(Color.white);
+			g.drawRect((int)tower.getHitBox().getX(), (int)tower.getHitBox().getY(), tower.getObjectWidth()*Tile.getWidth(), tower.getObjectHeight()*Tile.getHeight());
+		}*/
 	}
 	
 	private void paintAllAgents (Graphics g)
@@ -364,6 +371,10 @@ public class PanMap extends JPanel {
 		
 		if (img != null)
 			g.drawImage(img, coordX, coordY, this);
+		
+		// HitBox pour le test
+		/*if (bullet.getHitBox() != null)
+			g.drawRect((int)bullet.getHitBox().getX(), (int)bullet.getHitBox().getY(), 21, 21);*/
 	}
 	
 	private void paintLaserRay (LaserRay laserray, Graphics g)

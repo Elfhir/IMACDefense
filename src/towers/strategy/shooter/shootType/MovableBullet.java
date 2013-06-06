@@ -364,4 +364,9 @@ public class MovableBullet implements AttackingObject {
 			return true;
 		return false;
 	}
+
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		return this.hitbox;
+	}
 }
