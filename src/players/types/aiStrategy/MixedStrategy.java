@@ -1,5 +1,7 @@
 package players.types.aiStrategy;
 
+import map.Mapping;
+
 public class MixedStrategy implements AIStrategy {
 	
 	/*
@@ -11,7 +13,7 @@ public class MixedStrategy implements AIStrategy {
 	}
 
 	@Override
-	public void constructTower() {
+	public void constructTower(Mapping map) {
 		// TODO Auto-generated method stub
 
 	}

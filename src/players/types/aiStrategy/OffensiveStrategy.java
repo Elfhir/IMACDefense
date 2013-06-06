@@ -1,5 +1,7 @@
 package players.types.aiStrategy;
 
+import map.Mapping;
+
 public class OffensiveStrategy implements AIStrategy {
 	
 	/*
@@ -13,7 +15,7 @@ public class OffensiveStrategy implements AIStrategy {
 	}
 
 	@Override
-	public void constructTower() {
+	public void constructTower(Mapping map) {
 		/*
 		 * Les tours sont construites près des bases et des tours ennemies.
 		 * (Sauf Medical Towers, mais les tours de ce type sont moins utilisées)

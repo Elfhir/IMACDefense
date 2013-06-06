@@ -16,34 +16,39 @@ public class HumanPlayer extends Player {
 	
 	private static boolean constructingNow = false;
 
+	/*
+	 * Constructeurs
+	 */
+	
 	public HumanPlayer() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public HumanPlayer(int id, PlayerColor color) {
 		super(id, color);
-		// TODO Auto-generated constructor stub
 	}
 	
-	/* Lorsque les joueurs seront implémentés : enlever static */
+	/*
+	 * Getters
+	 */
+	
 	public static boolean isConstructingNow() {
 		return constructingNow;
 	}
+	
+	/*
+	 * Setters
+	 */
 	
 	public static void setConstructingNow(boolean constructingNow) {
 		HumanPlayer.constructingNow = constructingNow;
 	}
 	
-	@Override
-	public Tower construct(Class<? extends Tower> towerclass, Mapping map, map.Zone zone, int x, int y) {
-		Tower temptower = super.construct(towerclass, map, zone, x, y);
-		
-		if (temptower != null)
-			constructingNow = false;
-		
-		return temptower;
-	}
+	/*
+	 * Méthodes
+	 */
 	
+	// Si l'object cliqué est sélectionnable, retourne cet objet
 	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map, IHM ihm)
 	{
 		/* Les coordonnées clickées par la souris ne sont pas en nombre de tiles,
@@ -76,7 +81,7 @@ public class HumanPlayer extends Player {
 		return null;
 	}
 
-	/* Lorsque les joueurs seront implémentés : la méthode ne doit plus être statique et la condition doit être décommentée */
+	// Retourne le tile de contrefort cliqué
 	public static Buttress whatZoneDidIClickIn (Point mousepoint, Mapping map)
 	{
 		Point tilepoint = new Point((int)mousepoint.getX()/Tile.getWidth(), (int)mousepoint.getY()/Tile.getHeight());
@@ -89,6 +94,21 @@ public class HumanPlayer extends Player {
 			}	
 		}
 		return null;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see players.Player#construct(java.lang.Class, map.Mapping, map.Zone, int, int)
+	 */
+	
+	@Override
+	public Tower construct(Class<? extends Tower> towerclass, Mapping map, map.Zone zone, int x, int y) {
+		Tower temptower = super.construct(towerclass, map, zone, x, y);
+		
+		if (temptower != null)
+			constructingNow = false;
+		
+		return temptower;
 	}
 
 }
