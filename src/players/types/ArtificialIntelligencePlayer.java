@@ -8,8 +8,8 @@ public class ArtificialIntelligencePlayer extends Player {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArtificialIntelligencePlayer(int id, PlayerColor color) {
-		super(id, color);
+	public ArtificialIntelligencePlayer(int id, String name, PlayerColor color) {
+		super(id, name, color);
 		// TODO Auto-generated constructor stub
 	}
 

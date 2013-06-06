@@ -1,9 +1,6 @@
 package players.types;
 
-import java.awt.Point;
-
 import basis.Base;
-
 import map.Mapping;
 import map.tiles.Buttress;
 import map.tiles.Tile;
@@ -11,6 +8,8 @@ import players.Player;
 import players.SelectableObject;
 import towers.Tower;
 import window.IHM;
+
+import java.awt.*;
 
 public class HumanPlayer extends Player {
 	
@@ -20,12 +19,12 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HumanPlayer(int id, PlayerColor color) {
-		super(id, color);
+	public HumanPlayer(int id, String name, PlayerColor color) {
+		super(id, name, color);
 		// TODO Auto-generated constructor stub
 	}
 	
-	/* Lorsque les joueurs seront implémentés : enlever static */
+	/* Lorsque les joueurs seront implï¿½mentï¿½s : enlever static */
 	public static boolean isConstructingNow() {
 		return constructingNow;
 	}
@@ -46,9 +45,9 @@ public class HumanPlayer extends Player {
 	
 	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map, IHM ihm)
 	{
-		/* Les coordonnées clickées par la souris ne sont pas en nombre de tiles,
-		 * mais plutôt les coordonnées réelles dans la fenêtre.
-		 * Il faut donc diviser ces coordonnées par la largeur d'un tile pour connaître les coordonnées en nombre de tiles.
+		/* Les coordonnï¿½es clickï¿½es par la souris ne sont pas en nombre de tiles,
+		 * mais plutï¿½t les coordonnï¿½es rï¿½elles dans la fenï¿½tre.
+		 * Il faut donc diviser ces coordonnï¿½es par la largeur d'un tile pour connaï¿½tre les coordonnï¿½es en nombre de tiles.
 		 */
 		Point tilepoint = new Point((int)mousepoint.getX()/Tile.getWidth(), (int)mousepoint.getY()/Tile.getHeight());
 		
@@ -76,7 +75,7 @@ public class HumanPlayer extends Player {
 		return null;
 	}
 
-	/* Lorsque les joueurs seront implémentés : la méthode ne doit plus être statique et la condition doit être décommentée */
+	/* Lorsque les joueurs seront implï¿½mentï¿½s : la mï¿½thode ne doit plus ï¿½tre statique et la condition doit ï¿½tre dï¿½commentï¿½e */
 	public static Buttress whatZoneDidIClickIn (Point mousepoint, Mapping map)
 	{
 		Point tilepoint = new Point((int)mousepoint.getX()/Tile.getWidth(), (int)mousepoint.getY()/Tile.getHeight());
