@@ -1,8 +1,21 @@
 package window;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import agents.Agent;
+import basis.Base;
+import map.Mapping;
+import map.tiles.Buttress;
+import map.tiles.Tile;
+import players.Player;
+import towers.Tower;
+import towers.strategy.shooter.shootType.*;
+import towers.towertypes.BombTower;
+import towers.towertypes.FreezeTower;
+import towers.towertypes.LaserTower;
+import towers.towertypes.MedicalTower;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,29 +23,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import players.Player;
-import basis.Base;
-
-import agents.Agent;
-
-import towers.Tower;
-import towers.strategy.shooter.shootType.FreezeBullet;
-import towers.strategy.shooter.shootType.GunBullet;
-import towers.strategy.shooter.shootType.LaserRay;
-import towers.strategy.shooter.shootType.MedicalBullet;
-import towers.strategy.shooter.shootType.MovableBullet;
-import towers.strategy.shooter.shootType.Projectile;
-import towers.towertypes.BombTower;
-import towers.towertypes.FreezeTower;
-import towers.towertypes.LaserTower;
-import towers.towertypes.MedicalTower;
-import map.Mapping;
-import map.tiles.Buttress;
-import map.tiles.Tile;
   
 public class PanMap extends JPanel {
 	
@@ -219,8 +209,8 @@ public class PanMap extends JPanel {
 			Tower currentTower = mapTowers.get(currentPoint);
 			
 			/* 
-			 * Une tour peut prendre plus d'un tile, il faut donc vérifier qu'on affiche pas la tour plusieurs fois.
-			 * Pour cela, on vérifie si elle a déjà été affichée en vérifiant si la même tour est présente dans le tile en haut et/ou dans le tile à gauche.
+			 * Une tour peut prendre plus d'un tile, il faut donc vï¿½rifier qu'on affiche pas la tour plusieurs fois.
+			 * Pour cela, on vï¿½rifie si elle a dï¿½jï¿½ ï¿½tï¿½ affichï¿½e en vï¿½rifiant si la mï¿½me tour est prï¿½sente dans le tile en haut et/ou dans le tile ï¿½ gauche.
 			 */
 			int x = (int) currentPoint.getX();
 			int y = (int) currentPoint.getY();
@@ -409,7 +399,7 @@ public class PanMap extends JPanel {
 			
 			/*
 			 * Tout comme une tour, une base peut prendre plusieurs tiles.
-			 * Voir explication de l'opération suivante dans la fonction paintAllTowers.
+			 * Voir explication de l'opï¿½ration suivante dans la fonction paintAllTowers.
 			 */
 			
 			int x = (int) currentPoint.getX();
@@ -424,13 +414,40 @@ public class PanMap extends JPanel {
 			}
 		}
 	}
-	
+
+    public void paintPlayerInformationsIHM (Player player, Graphics g)
+    {
+        if (player ==null)
+            return;
+        //lez coordonnÃ©es en lesquelles le rectangle de couleur s'affiche resteront fixes
+        int x=410;
+        int y=5;
+
+        //choix du type de police et son format
+        Font fonte = new Font("Monospaced", Font.BOLD, 15);
+        g.setFont(fonte);
+
+        g.drawRect(x, y, 130, 30);
+        //on rÃ©cupÃ¨re la couleur du joueur
+        g.setColor(player.getColor());
+        // rempli un rectangle avec la couleur courante, en l'occurence celle du joueur
+        g.fillRect(x, y, 130, 30);
+
+        // permet d'afficher le nom du joueur en dessous du rectangle de couleur
+        g.drawString(player.getName(), 460, 50);
+
+
+        g.drawString("Argent:" + player.getMoney(), 430, 70);
+
+
+
+    }
 	private void paintBase (Base base, int coordX, int coordY, Graphics g)
 	{
 		if (base == null)
 			return;
 
-		/* On détermine la couleur de la base */
+		/* On dï¿½termine la couleur de la base */
 		Color color = Color.gray;
 		Player owner = base.getOwner();
 		if (owner != null && owner.getColor() != null)
@@ -443,10 +460,10 @@ public class PanMap extends JPanel {
 		/* On dessine un disque de cette couleur */
 	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
-	    /* On sélectionne la couleur blanche */
+	    /* On sï¿½lectionne la couleur blanche */
 	    g.setColor(Color.white);
 	    
-	    /* Si la base est sélectionnée par le joueur, alors on entoure la base de blanc. */
+	    /* Si la base est sï¿½lectionnï¿½e par le joueur, alors on entoure la base de blanc. */
 	    if (base.isSelected())
 	    	g.drawOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
@@ -456,12 +473,12 @@ public class PanMap extends JPanel {
 	    int diamCircle = base.getDiam()*Tile.getWidth();
 	    
 	    /*
-	     *  On calcule les coordonnées du texte afin qu'il soit centré sur le cercle.
+	     *  On calcule les coordonnï¿½es du texte afin qu'il soit centrï¿½ sur le cercle.
 	     */
 	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
 	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
 	    
-	    /* On écrit un texte en blanc sur le disque */
+	    /* On ï¿½crit un texte en blanc sur le disque */
 	    g.drawString(textToDraw, coordXString, coordYString);
 	}
 	
@@ -472,8 +489,8 @@ public class PanMap extends JPanel {
 		if (Player.getLastObjectSelected() != null && Player.getLastObjectSelected() instanceof Base)
 		{
 			/*
-			 *  On définit les coordonnées du centre de l'objet.
-			 *  En effet, les coordonnées de l'objet sont toujours celles du coin supérieur gauche de l'image !
+			 *  On dï¿½finit les coordonnï¿½es du centre de l'objet.
+			 *  En effet, les coordonnï¿½es de l'objet sont toujours celles du coin supï¿½rieur gauche de l'image !
 			 */
 			/*SelectableObject objectselected = Player.getLastObjectSelected();
 			Point position = objectselected.getCoordInTiles();
@@ -498,6 +515,7 @@ public class PanMap extends JPanel {
 			Point point = it.next();
 			Tower current = ihmTowers.get(point);
 			paintTower (current, (int)point.getX(), (int)point.getY(), g);
+            paintPlayerInformationsIHM (new Player (1, "Fifi" , Player.PlayerColor.red), g);
 		}
 	}
 }
