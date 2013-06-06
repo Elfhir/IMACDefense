@@ -1,7 +1,7 @@
 package gameengine;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
 import javax.swing.SwingUtilities;
 
 import map.Mapping;

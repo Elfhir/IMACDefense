@@ -13,9 +13,9 @@ public class BombTower extends Tower {
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "bombtower.png";
 	
 	private static int price = 5000;
-	private static int shootSpeed = 4;
-	private static int shootPower = 0;
-	private static int shootRange = 5;
+	private int shootSpeed = 4;
+	private int shootPower = 0;
+	private int shootRange = 5;
 
 	public BombTower() {
 		super();
@@ -40,5 +40,20 @@ public class BombTower extends Tower {
 	@Override
 	public String getImageName() {
 		return imageName;
+	}
+
+	@Override
+	public int getShootSpeed() {
+		return shootSpeed;
+	}
+
+	@Override
+	public int getShootPower() {
+		return shootPower;
+	}
+
+	@Override
+	public int getShootRange() {
+		return shootRange;
 	}
 }

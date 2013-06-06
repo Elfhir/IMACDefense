@@ -5,20 +5,15 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import basis.Base;
-
-import agents.Agent;
-import towers.Tower;
-import towers.strategy.shooter.shootType.GunBullet;
-import towers.strategy.shooter.shootType.LaserRay;
-import towers.strategy.shooter.shootType.MedicalBullet;
-import towers.strategy.shooter.shootType.Projectile;
-
-/* ----- IMPORTS TILES ----- */
-import map.tiles.Tile;
 import map.tiles.Buttress;
 import map.tiles.Field;
 import map.tiles.Mountain;
+import map.tiles.Tile;
+import towers.Tower;
+import towers.strategy.shooter.shootType.Projectile;
+import agents.Agent;
+import basis.Base;
+/* ----- IMPORTS TILES ----- */
 
 public class Mapping {
 
@@ -157,9 +152,6 @@ public class Mapping {
 		/* --- OUVERTURE DU FICHIER XML --- */
 		/* On instancie un parser XML qui ouvre le fichier XML demandé */
 		XMLParser parser = new XMLParser (filename);
-		
-		if (parser == null) return;
-		
 		
 		/* --- INFORMATIONS DE LA MAP --- */		
 		/* On récupère les informations de la map : nom, largeur, hauteur */

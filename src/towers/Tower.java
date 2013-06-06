@@ -22,7 +22,7 @@ public class Tower implements SelectableObject, ShootableObject {
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif";
 	
 	protected ImproverInterface improver = new PowerImprovement(); // Ameliorateur
-	protected ShooterInterface shooter = new Freeze(); // Tireur
+	protected ShooterInterface shooter = new Freeze(this); // Tireur
 	
 	protected static int price = 0; // Coût de placement de la tour
 	protected int shootSpeed = 0; // Vitesse de tir
@@ -36,6 +36,10 @@ public class Tower implements SelectableObject, ShootableObject {
 	private Point coordInTiles = null;
 	
 	private ShootableObject target;
+	
+	private boolean frozen = false;
+	
+	private int frozentime = 0;
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -208,5 +212,25 @@ public class Tower implements SelectableObject, ShootableObject {
 			return this.zone.getOwner();
 		}
 		return null;
+	}
+
+	@Override
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
+	}
+
+	@Override
+	public boolean isFrozen() {
+		return frozen;
+	}
+
+	@Override
+	public int getTotalFrozenTime() {
+		return frozentime;
+	}
+	
+	@Override
+	public void setTotalFrozenTime(int frozentime) {
+		this.frozentime = frozentime;
 	}
 }

@@ -2,18 +2,15 @@ package towers.strategy.shooter.shootType;
 
 import java.awt.Point;
 import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
-import agents.Agent;
-
+import map.Mapping;
 import players.Player;
 import towers.Tower;
 import towers.strategy.shooter.ShootableObject;
-
-import map.Mapping;
+import agents.Agent;
 
 public class LaserRay extends Projectile {
 

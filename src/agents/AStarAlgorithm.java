@@ -1,9 +1,8 @@
 package agents;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Collections;
+import java.util.Iterator;
 
 import map.Mapping;
 import map.tiles.Tile;

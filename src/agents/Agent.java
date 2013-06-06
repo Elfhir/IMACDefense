@@ -13,6 +13,8 @@ import basis.Base;
 public class Agent extends MovableBullet implements ShootableObject {
 	
 	private ArrayList<Tile> path = null;
+	private boolean frozen = false;
+	private int frozentime = 0;
 
 	/*
 	 * Getters - Setters
@@ -145,5 +147,25 @@ public class Agent extends MovableBullet implements ShootableObject {
 	public void setLife(int life) {
 		// TODO Auto-generated method stub
 		this.force = life;
+	}
+	
+	@Override
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
+	}
+
+	@Override
+	public boolean isFrozen() {
+		return frozen;
+	}
+	
+	@Override
+	public int getTotalFrozenTime() {
+		return frozentime;
+	}
+	
+	@Override
+	public void setTotalFrozenTime(int frozentime) {
+		this.frozentime = frozentime;
 	}
 }

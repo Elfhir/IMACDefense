@@ -1,9 +1,8 @@
 package towers.strategy.shooter;
 
-import towers.Tower;
-import towers.strategy.shooter.shootType.GunBullet;
-import towers.strategy.shooter.shootType.MedicalBullet;
 import map.Mapping;
+import towers.Tower;
+import towers.strategy.shooter.shootType.MedicalBullet;
 
 public class Heal implements ShooterInterface {
 	

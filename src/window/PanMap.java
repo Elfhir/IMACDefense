@@ -20,6 +20,7 @@ import basis.Base;
 import agents.Agent;
 
 import towers.Tower;
+import towers.strategy.shooter.shootType.FreezeBullet;
 import towers.strategy.shooter.shootType.GunBullet;
 import towers.strategy.shooter.shootType.LaserRay;
 import towers.strategy.shooter.shootType.MedicalBullet;
@@ -74,7 +75,8 @@ public class PanMap extends JPanel {
 		medicalTowerImage = null,
 		submachineGunTowerImage = null,
 		gunBulletImage = null,
-		medicalBulletImage = null;
+		medicalBulletImage = null,
+		freezeBulletImage = null;
 	
 	public PanMap (Mapping map, IHM ihm) throws IOException
 	{
@@ -103,6 +105,7 @@ public class PanMap extends JPanel {
 		
 		this.gunBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "gunbullet.png"));
 		this.medicalBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "medicalbullet.png"));
+		this.freezeBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "freezebullet.png"));
 	}
 	
 	@Override
@@ -350,8 +353,12 @@ public class PanMap extends JPanel {
 			img = gunBulletImage;
 		else if (bullet instanceof MedicalBullet)
 			img = medicalBulletImage;
+		else if (bullet instanceof FreezeBullet)
+			img = freezeBulletImage;
 		
-		img = img.getSubimage(bullet.getSubImageX(), bullet.getSubImageY(), MovableBullet.getWidth(), MovableBullet.getHeight());
+		if (bullet instanceof GunBullet || bullet instanceof MedicalBullet)
+			img = img.getSubimage(bullet.getSubImageX(), bullet.getSubImageY(), MovableBullet.getWidth(), MovableBullet.getHeight());
+		
 		if (img != null)
 			g.drawImage(img, coordX, coordY, this);
 	}

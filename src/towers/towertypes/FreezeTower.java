@@ -13,13 +13,13 @@ public class FreezeTower extends Tower {
 	protected String imageName = System.getProperty("user.dir") + File.separator + "img" + File.separator + "buildings" + File.separator + "freezetower.png";
 	
 	private static int price = 2000;
-	private static int shootSpeed = 3;
-	private static int shootPower = 0;
-	private static int shootRange = 4;
+	private int shootSpeed = 3;
+	private int shootPower = 1;
+	private int shootRange = 4;
 
 	public FreezeTower() {
 		super();
-		this.setShooter(new Freeze());
+		this.setShooter(new Freeze(this));
 	}
 
 	@Override
@@ -40,5 +40,20 @@ public class FreezeTower extends Tower {
 	@Override
 	public String getImageName() {
 		return imageName;
+	}
+
+	@Override
+	public int getShootSpeed() {
+		return shootSpeed;
+	}
+
+	@Override
+	public int getShootPower() {
+		return shootPower;
+	}
+
+	@Override
+	public int getShootRange() {
+		return shootRange;
 	}
 }

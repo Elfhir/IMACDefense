@@ -1,23 +1,17 @@
 package gameengine;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 import map.Mapping;
 import towers.Tower;
+import towers.strategy.shooter.ShootableObject;
 import window.GraphicalInterface;
-import towers.strategy.shooter.Hurt;
-import towers.strategy.shooter.IncreasingHurt;
 
 public class TowerShootAction extends Action {
 	
 	Mapping map;
 	Tower tower;
+	int frozencounter;
 
 	public TowerShootAction(Mapping map, GraphicalInterface frame, int timer, Tower tower) {
 		super(frame, timer);
@@ -28,19 +22,31 @@ public class TowerShootAction extends Action {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-			tower.calculateBestTarget (map);
-			
-			if (tower.getTarget() != null)
+		
+		if (tower.isFrozen())
+		{
+			frozencounter++;
+			if (frozencounter >= tower.getTotalFrozenTime ())
 			{
-				tower.getShooter().shoot(tower.getTarget(), map);
-				MoveBulletAction mba = new MoveBulletAction(tower.getShooter().getLastBullet(), this.frame, 100);
-				mba.run();
+				tower.setFrozen(false);
+				frozencounter = 0;
 			}
-			
-			if (tower.getTarget() != null && tower.getTarget().isDestructed())
-			{
-				tower.setTarget(null);
-			}
+			return;
+		}
+		
+		tower.calculateBestTarget (map);
+		
+		if (tower.getTarget() != null)
+		{
+			tower.getShooter().shoot(tower.getTarget(), map);
+			MoveBulletAction mba = new MoveBulletAction(tower.getShooter().getLastBullet(), this.frame, 100);
+			mba.run();
+		}
+		
+		if (tower.getTarget() != null && tower.getTarget().isDestructed())
+		{
+			tower.setTarget(null);
+		}
 	}
 	
 	/*public static void main (String[] args)

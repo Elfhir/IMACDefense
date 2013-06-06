@@ -3,21 +3,18 @@ package gameengine;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
-import basis.Base;
-
 import agents.Agent;
 
+import map.tiles.Tile;
 import towers.strategy.shooter.ShootableObject;
-import towers.strategy.shooter.shootType.GunBullet;
 import towers.strategy.shooter.shootType.MovableBullet;
 import towers.strategy.shooter.shootType.Projectile;
 import window.GraphicalInterface;
 
-import map.tiles.Tile;
-
 public class MoveBulletAction extends Action {
 	
 	MovableBullet bullet = null;
+	int frozencounter = 0;
 	
 	public MoveBulletAction(MovableBullet bullet, GraphicalInterface frame, int timer) {
 		super(frame, timer);
@@ -26,6 +23,17 @@ public class MoveBulletAction extends Action {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (bullet instanceof ShootableObject && ((ShootableObject)bullet).isFrozen())
+		{
+			frozencounter++;
+			if (frozencounter >= ((ShootableObject)bullet).getTotalFrozenTime())
+			{
+				((ShootableObject)bullet).setFrozen(false);
+				frozencounter = 0;
+			}
+			return;
+		}
 		
 		if (bullet == null)
 		{

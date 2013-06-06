@@ -1,16 +1,10 @@
 package gameengine;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
 
 import map.Mapping;
 import map.Zone;
 import players.Player;
-import towers.Tower;
-import towers.strategy.shooter.shootType.GunBullet;
 import window.GraphicalInterface;
 
 public class GameEngineRunnable implements Runnable {
