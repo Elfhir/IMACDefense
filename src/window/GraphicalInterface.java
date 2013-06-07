@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
@@ -37,9 +35,6 @@ import basis.Base;
 
 public class GraphicalInterface extends JFrame implements MouseListener
 {
-	/**
-	 * 
-	 */
 	ArrayList<Player> players;
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
@@ -169,13 +164,13 @@ public class GraphicalInterface extends JFrame implements MouseListener
 			}
 			
 			/*
-			 * Si le dernier objet sélectionné est une base du joueur, (! A IMPLEMENTER)
+			 * Si le dernier objet sélectionné est une base appartenant à un joueur humain,
 			 * le joueur a voulu faire de la base clickée la cible de la base sélectionnée.
 			 * On vérifie donc si :
 			 * 1 - l'objet clické est une base
 			 * 2 - l'objet sélectionné est une base
 			 */
-			else if (object instanceof Base && Player.getLastObjectSelected() instanceof Base)
+			else if (object instanceof Base && Player.getLastObjectSelected() instanceof Base && ((Base)Player.getLastObjectSelected()).getOwner() != null && ((Base)Player.getLastObjectSelected()).getOwner() instanceof HumanPlayer)
 			{
 				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
 				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);
