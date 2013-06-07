@@ -74,9 +74,16 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
         
+        ArrayList<Player> players = new ArrayList<Player>();
+        HumanPlayer humanplayer = new HumanPlayer (1, "Fifi", Player.PlayerColor.red);
+		players.add(humanplayer);
+		players.add(new ArtificialIntelligencePlayer (2, "Loulou", Player.PlayerColor.green));
+		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
+		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
+        
         //On prévient notre JFrame que notre JPanel sera son content pane
 		try {
-			this.pan = new PanMap (map, ihm);
+			this.pan = new PanMap (map, ihm, humanplayer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,14 +103,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	    pack ();
 	    this.setVisible(true);
 	    
-	    ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new HumanPlayer (1, "Fifi", Player.PlayerColor.red));
-		players.add(new ArtificialIntelligencePlayer (2, "Loulou", Player.PlayerColor.green));
-		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
-		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
-		
-		
-		/* Association des zones et des joueurs */
+	    /* Association des zones et des joueurs */
 		if (map != null && players != null)
 		{
 			ArrayList<Zone> zones = map.getZones();

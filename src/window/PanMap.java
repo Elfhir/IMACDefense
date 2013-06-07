@@ -6,6 +6,7 @@ import map.Mapping;
 import map.tiles.Buttress;
 import map.tiles.Tile;
 import players.Player;
+import players.types.HumanPlayer;
 import towers.Tower;
 import towers.strategy.shooter.shootType.*;
 import towers.towertypes.BombTower;
@@ -32,6 +33,7 @@ public class PanMap extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
 	private IHM ihm = null;
+	private HumanPlayer player;
 	
 	/*
 	 * Chargement des images
@@ -68,7 +70,7 @@ public class PanMap extends JPanel {
 		medicalBulletImage = null,
 		freezeBulletImage = null;
 	
-	public PanMap (Mapping map, IHM ihm) throws IOException
+	public PanMap (Mapping map, IHM ihm, HumanPlayer player) throws IOException
 	{
 		this.map = map;
 		this.ihm = ihm;
@@ -96,6 +98,8 @@ public class PanMap extends JPanel {
 		this.gunBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "gunbullet.png"));
 		this.medicalBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "medicalbullet.png"));
 		this.freezeBulletImage = ImageIO.read(new File(filepath + "shooting" + File.separator + "freezebullet.png"));
+	
+		this.player = player;
 	}
 	
 	@Override
@@ -120,6 +124,7 @@ public class PanMap extends JPanel {
 	
 	private void paintIHM (Graphics g)
 	{
+		paintPlayerInformationsIHM (g);
 		paintConstructIHM(g);
 	}
 	
@@ -415,11 +420,11 @@ public class PanMap extends JPanel {
 		}
 	}
 
-    public void paintPlayerInformationsIHM (Player player, Graphics g)
+    public void paintPlayerInformationsIHM (Graphics g)
     {
         if (player ==null)
             return;
-        //lez coordonnÃ©es en lesquelles le rectangle de couleur s'affiche resteront fixes
+        //les coordonnées en lesquelles le rectangle de couleur s'affiche resteront fixes
         int x=410;
         int y=5;
 
@@ -427,27 +432,28 @@ public class PanMap extends JPanel {
         Font fonte = new Font("Monospaced", Font.BOLD, 15);
         g.setFont(fonte);
 
-        g.drawRect(x, y, 130, 30);
-        //on rÃ©cupÃ¨re la couleur du joueur
+        //on récupère la couleur du joueur
         g.setColor(player.getColor());
         // rempli un rectangle avec la couleur courante, en l'occurence celle du joueur
         g.fillRect(x, y, 130, 30);
 
         // permet d'afficher le nom du joueur en dessous du rectangle de couleur
         g.drawString(player.getName(), 460, 50);
+        
+        String moneyText = "Argent:" + player.getMoney();
 
-
-        g.drawString("Argent:" + player.getMoney(), 430, 70);
-
-
-
+        g.setColor(Color.lightGray);
+        g.fillRect(430, 70 - g.getFontMetrics().getHeight()/2, g.getFontMetrics().stringWidth(moneyText), g.getFontMetrics().getHeight());
+        g.setColor(player.getColor());
+        g.drawString(moneyText, 430, 70);
     }
+    
 	private void paintBase (Base base, int coordX, int coordY, Graphics g)
 	{
 		if (base == null)
 			return;
 
-		/* On dï¿½termine la couleur de la base */
+		/* On détermine la couleur de la base */
 		Color color = Color.gray;
 		Player owner = base.getOwner();
 		if (owner != null && owner.getColor() != null)
@@ -460,10 +466,10 @@ public class PanMap extends JPanel {
 		/* On dessine un disque de cette couleur */
 	    g.fillOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
-	    /* On sï¿½lectionne la couleur blanche */
+	    /* On sélectionne la couleur blanche */
 	    g.setColor(Color.white);
 	    
-	    /* Si la base est sï¿½lectionnï¿½e par le joueur, alors on entoure la base de blanc. */
+	    /* Si la base est sélectionnée par le joueur, alors on entoure la base de blanc. */
 	    if (base.isSelected())
 	    	g.drawOval(coordX*Tile.getWidth(), coordY*Tile.getWidth(), base.getDiam()*Tile.getWidth(), base.getDiam()*Tile.getHeight());
 	    
@@ -478,31 +484,9 @@ public class PanMap extends JPanel {
 	    int coordXString = coordX*Tile.getWidth() + diamCircle/2 - textWidth/2;
 	    int coordYString = coordY*Tile.getHeight() + diamCircle/2 + textHeight/4;
 	    
-	    /* On ï¿½crit un texte en blanc sur le disque */
+	    /* On écrit un texte en blanc sur le disque */
 	    g.drawString(textToDraw, coordXString, coordYString);
 	}
-	
-	/*public void paintSelectedLine (Graphics g)
-	{
-		if (mousePosition == null)
-			return;
-		if (Player.getLastObjectSelected() != null && Player.getLastObjectSelected() instanceof Base)
-		{
-			/*
-			 *  On dï¿½finit les coordonnï¿½es du centre de l'objet.
-			 *  En effet, les coordonnï¿½es de l'objet sont toujours celles du coin supï¿½rieur gauche de l'image !
-			 */
-			/*SelectableObject objectselected = Player.getLastObjectSelected();
-			Point position = objectselected.getCoordInTiles();
-			int width = objectselected.getWidth();
-			int height = objectselected.getHeight();
-			double centerXinTiles = (width/2. + position.getX())*Tile.getWidth();
-			double centerYinTiles = (height/2. + position.getY())*Tile.getHeight();
-			
-			g.setColor(Color.gray);
-			g.drawLine((int)centerXinTiles, (int)centerYinTiles, (int)mousePosition.getX(), (int)mousePosition.getY());
-		}
-	}*/
 	
 	private void paintConstructIHM (Graphics g)
 	{
@@ -515,7 +499,6 @@ public class PanMap extends JPanel {
 			Point point = it.next();
 			Tower current = ihmTowers.get(point);
 			paintTower (current, (int)point.getX(), (int)point.getY(), g);
-            paintPlayerInformationsIHM (new Player (1, "Fifi" , Player.PlayerColor.red), g);
 		}
 	}
 }
