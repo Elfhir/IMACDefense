@@ -1,10 +1,11 @@
 package gameengine;
 
+import gameengine.GameEngine.IHMMode;
+
 import java.awt.event.ActionEvent;
 
 import map.Mapping;
 import towers.Tower;
-import towers.strategy.shooter.ShootableObject;
 
 public class TowerShootAction extends AnimationAction {
 	
@@ -14,7 +15,6 @@ public class TowerShootAction extends AnimationAction {
 
 	public TowerShootAction(Mapping map, GameEngine frame, int timer, Tower tower) {
 		super(frame, timer);
-		// TODO Auto-generated constructor stub
 		this.map = map;
 		this.tower = tower;
 	}
@@ -22,7 +22,7 @@ public class TowerShootAction extends AnimationAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (map == null || tower == null)
+		if (map == null || tower == null || frame.getIhmmode() != IHMMode.InGame)
 		{
 			this.timer.stop();
 			return;
@@ -53,24 +53,5 @@ public class TowerShootAction extends AnimationAction {
 			tower.setTarget(null);
 		}
 	}
-	
-	/*public static void main (String[] args)
-	{
-		Mapping map = new Mapping ("map1.xml");
-		SubmachineGunTower tower1 = new SubmachineGunTower();
-		BombTower tower2 = new BombTower();
-		
-		tower1.setCoordInTiles(new Point(0,0));
-		tower2.setCoordInTiles(new Point(10,10));
-		
-		tower1.setZone(new Zone (new Player(0, PlayerColor.red)));
-		tower2.setZone(new Zone (new Player(1, PlayerColor.blue)));
-		
-		map.setTower(tower1, 0, 0);
-		map.setTower(tower2, 10, 10);
-		
-		TowerShootAction tsa = new TowerShootAction(tower1, tower2, map, new GraphicalInterface(), 1);
-		tsa.run();
-	}*/
 
 }
