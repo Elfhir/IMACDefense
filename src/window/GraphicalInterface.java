@@ -16,18 +16,24 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 import players.Player;
+import players.PlayerRunnable;
 import players.SelectableObject;
+import players.types.ArtificialIntelligencePlayer;
 import players.types.HumanPlayer;
 import towers.Tower;
-import towers.strategy.shooter.shootType.GunBullet;
 import basis.Base;
 
 import agents.Agent;
 
 import map.Mapping;
+import map.Zone;
 import map.tiles.Buttress;
 import map.tiles.Tile;
 
@@ -36,6 +42,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	/**
 	 * 
 	 */
+	ArrayList<Player> players;
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
 	private PanMap pan = null;
@@ -78,7 +85,6 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		try {
 			this.pan = new PanMap (map, ihm);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.pan.setDoubleBuffered(true);
@@ -96,6 +102,33 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	    contentPane.add(this.pan);
 	    pack ();
 	    this.setVisible(true);
+	    
+	    ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new HumanPlayer (1, "Fifi", Player.PlayerColor.red));
+		players.add(new ArtificialIntelligencePlayer (2, "Loulou", Player.PlayerColor.green));
+		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
+		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
+		
+		SwingUtilities.invokeLater(new PlayerRunnable((ArtificialIntelligencePlayer)players.get(1), map));
+		
+		/* Association des zones et des joueurs */
+		if (map != null && players != null)
+		{
+			ArrayList<Zone> zones = map.getZones();
+			if (zones != null)
+			{
+				for (Zone zone:zones)
+				{
+					for (Player player:players)
+					{
+						if (zone.getPlayerId() == player.getId())
+						{
+							zone.setOwner(player);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public Mapping getMap() {
@@ -107,27 +140,17 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {};
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {};
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {};
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
-		// TODO Auto-generated method stub
 		Point mousepoint = new Point(e.getX(), e.getY());
 		// On vérifie si le joueur a cliqué sur un objet selectionnable.
 		SelectableObject object = HumanPlayer.whereDidIClick(mousepoint, map, ihm);
@@ -214,10 +237,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {};
 	
 	public void setTargetCursor ()
 	{

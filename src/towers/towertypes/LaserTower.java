@@ -1,10 +1,8 @@
 package towers.towertypes;
 
-import java.awt.Point;
 import java.io.File;
 
 import towers.Tower;
-import towers.strategy.shooter.Bomb;
 import towers.strategy.shooter.IncreasingHurt;
 
 public class LaserTower extends Tower {
@@ -24,7 +22,6 @@ public class LaserTower extends Tower {
 		this.setShooter(new IncreasingHurt(this));
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}

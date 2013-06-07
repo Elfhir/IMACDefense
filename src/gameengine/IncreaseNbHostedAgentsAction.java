@@ -18,7 +18,7 @@ public class IncreaseNbHostedAgentsAction extends Action {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {		
 		// TODO Auto-generated method stub
 		Hashtable<Point, Base> mapBasis = map.getBasis();
 		Set<Point> set = mapBasis.keySet();

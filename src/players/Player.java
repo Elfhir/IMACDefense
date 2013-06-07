@@ -169,7 +169,7 @@ public class Player {
 	public Tower construct (Class<? extends Tower> towerclass, Mapping map, Zone zone, int x, int y)
 	{
 		Tower tower;
-		/*try {
+		try {
 			tower = towerclass.newInstance();
 			if (this.canIConstruct(tower, map, x, y))
 			{
@@ -179,10 +179,13 @@ public class Player {
 				this.money -= tower.getPrice();
 				return tower;
 			}
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} */
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

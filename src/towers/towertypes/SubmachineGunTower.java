@@ -32,7 +32,6 @@ public class SubmachineGunTower extends Tower {
 		this.setShooter(new Hurt(this));
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}

@@ -1,10 +1,6 @@
 package towers.towertypes;
 
-import java.awt.Point;
-import java.io.File;
-
 import towers.Tower;
-import towers.strategy.shooter.Bomb;
 import towers.strategy.shooter.Heal;
 
 public class MedicalTower extends Tower {
@@ -22,7 +18,6 @@ public class MedicalTower extends Tower {
 		this.setShooter(new Heal(this));
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}

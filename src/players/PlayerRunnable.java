@@ -1,35 +1,32 @@
 package players;
 
+import map.Mapping;
+
+import players.types.ArtificialIntelligencePlayer;
+
 public class PlayerRunnable implements Runnable {
-	Player player = null;
+	ArtificialIntelligencePlayer player = null;
+	Mapping map = null;
 
 	public PlayerRunnable() {
 		// TODO Auto-generated constructor stub
-		this.player = new Player();
+		this.player = new ArtificialIntelligencePlayer();
 	}
 
-	public PlayerRunnable(Player player) {
+	public PlayerRunnable(ArtificialIntelligencePlayer player, Mapping map) {
 		super();
 		this.player = player;
+		this.map = map;
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		// Actions du joueur
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Player player = new Player (1, "Fifi", Player.PlayerColor.red);
-		Player player2 = new Player (2, "Loulou", Player.PlayerColor.blue);
-		Thread thread = new Thread (new PlayerRunnable(player));
-		Thread thread2 = new Thread (new PlayerRunnable(player2));
-		thread.start();
-		thread2.start();
+		/*
+		 *  Actions du joueur
+		 */
+		if (player != null)
+			player.play(map);
 	}
 
 }
