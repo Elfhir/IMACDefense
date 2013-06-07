@@ -122,6 +122,17 @@ public class Tower implements SelectableObject, ShootableObject {
 		this.zone = zone;
 	}
 	
+	/* Target */
+	
+	public void setTarget(ShootableObject target) {
+		this.target = target;
+	}
+
+	public ShootableObject getTarget() {
+		// TODO Auto-generated method stub
+		return target;
+	}
+	
 	/* ----- FROM SELECTABLEOBJECT INTERFACE ----- */
 
 	@Override
@@ -178,40 +189,7 @@ public class Tower implements SelectableObject, ShootableObject {
 		// TODO Auto-generated method stub
 		return (this.getLife() <= 0);
 	}
-
-	@Override
-	public void beAttacked(AttackingObject object) {
-		// TODO Auto-generated method stub
-		if (object instanceof Agent)
-			return;
-	}
-
-	public void setTarget(ShootableObject target) {
-		this.target = target;
-	}
-
-	public ShootableObject getTarget() {
-		// TODO Auto-generated method stub
-		return target;
-	}
-
-	public void calculateBestTarget(Mapping map) {
-		// TODO Auto-generated method stub
-		if (!map.getAgents().isEmpty())
-		{
-			this.target = map.getAgents().get(0);
-		}
-	}
-
-	@Override
-	public Player getOwner() {
-		if (this.zone != null && this.zone.getOwner() != null)
-		{
-			return this.zone.getOwner();
-		}
-		return null;
-	}
-
+	
 	@Override
 	public void setFrozen(boolean frozen) {
 		this.frozen = frozen;
@@ -231,7 +209,25 @@ public class Tower implements SelectableObject, ShootableObject {
 	public void setTotalFrozenTime(int frozentime) {
 		this.frozentime = frozentime;
 	}
+	
+	/* ----- FROM ATTACKABLEOBJECT INTERFACE ----- */
 
+	@Override
+	public void beAttacked(AttackingObject object) {
+		// TODO Auto-generated method stub
+		if (object instanceof Agent)
+			return;
+	}
+	
+	@Override
+	public Player getOwner() {
+		if (this.zone != null && this.zone.getOwner() != null)
+		{
+			return this.zone.getOwner();
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean isInHitBox(Point point) {
 		if (this.hitbox != null && this.hitbox.contains(point))
@@ -247,9 +243,19 @@ public class Tower implements SelectableObject, ShootableObject {
 		}
 		this.hitbox.setRect(coordInTiles.getX()*Tile.getWidth(), coordInTiles.getY()*Tile.getHeight(), getObjectWidth()*Tile.getWidth(), getObjectHeight()*Tile.getHeight());
 	}
-
+	
 	@Override
 	public Rectangle2D.Double getHitBox() {
 		return hitbox;
+	}
+	
+	/* ----- METHODES ----- */
+
+	public void calculateBestTarget(Mapping map) {
+		// TODO Auto-generated method stub
+		if (!map.getAgents().isEmpty())
+		{
+			this.target = map.getAgents().get(0);
+		}
 	}
 }
