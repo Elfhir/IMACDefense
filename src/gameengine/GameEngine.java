@@ -18,19 +18,14 @@ import javax.swing.JPanel;
 
 import map.Mapping;
 import map.Zone;
-import map.tiles.Buttress;
-import map.tiles.Tile;
 import players.Dispatcher;
 import players.Player;
-import players.SelectableObject;
 import players.types.ArtificialIntelligencePlayer;
 import players.types.HumanPlayer;
-import towers.Tower;
 import window.IHM;
+import window.IHMChooseLevel;
 import window.IHMMenu;
 import window.IHMinGame;
-import agents.Agent;
-import basis.Base;
 
 public class GameEngine extends JFrame implements MouseListener
 {
@@ -44,6 +39,7 @@ public class GameEngine extends JFrame implements MouseListener
 	public enum IHMMode
 	{
 		InitialMenu,
+		ChooseLevel,
 		InGame;
 	};
 	
@@ -59,8 +55,6 @@ public class GameEngine extends JFrame implements MouseListener
 	}
 
 	private void build(){
-		if (this.map == null)
-			return;
 		
 		// Icône de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "icon.gif");
@@ -84,8 +78,15 @@ public class GameEngine extends JFrame implements MouseListener
         	this.ihm = new IHMMenu(this);
         }
         
+        else if (ihmmode == IHMMode.ChooseLevel)
+        {
+        	this.ihm = new IHMChooseLevel(this);
+        }
+        
         else if (ihmmode == IHMMode.InGame)
         {
+        	if (this.map == null)
+        		return;
         	this.ihm = new IHMinGame(this, map);
 	        players = new ArrayList<Player>();
 	        HumanPlayer humanplayer = new HumanPlayer (1, "Fifi", Player.PlayerColor.red);
@@ -191,5 +192,9 @@ public class GameEngine extends JFrame implements MouseListener
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void setMap(Mapping map) {
+		this.map = map;
 	}
 }

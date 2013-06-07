@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map width="20" height="20" name="Le désert">
+	<buttress>
+		<zone player="1">
+			<tower type="laser" x="0" y="0" />
+			<base capacity="10" x="2" y="3" />
+			<group width="5" height="3" x="5" y="0" />
+			<group width="3" height="2" x="2" y="0" />
+			<group width="1" height="2" x="10" y="1" />
+			<group width="1" height="2" x="11" y="2" />
+			<group width="4" height="3" x="0" y="6" />
+			<group width="2" height="1" x="0" y="5" />
+			<tile x="1" y="0" />
+			<tile x="9" y="0" />
+			<tile x="0" y="9" />
+			<tile x="3" y="5" />
+		</zone>
+		<zone player="1">
+			<base capacity="5" x="6" y="5" />
+			<group width="2" height="2" x="4" y="6" />
+			<group width="2" height="1" x="6" y="3" />
+			<tile x="6" y="7" />
+		</zone>
+		<zone player="2">
+			<tower type="medical" x="1" y="0" />
+			<base capacity="10" x="4" y="14" />
+			<group width="2" height="5" x="4" y="8" />
+			<group width="3" height="2" x="1" y="9" />
+			<group width="1" height="3" x="0" y="10" />
+			<group width="3" height="3" x="7" y="17" />
+			<group width="1" height="2" x="6" y="18" />
+			<group width="2" height="2" x="9" y="15" />
+			<group width="1" height="2" x="8" y="15" />
+			<tile x="1" y="11" />
+			<tile x="3" y="11" />
+		</zone>
+		<zone player="2">
+			<base capacity="5" x="7" y="12" />
+			<group width="2" height="2" x="9" y="13" />
+			<group width="2" height="2" x="6" y="9" />
+			<tile x="10" y="12" />
+			<tile x="8" y="14" />
+			<tile x="6" y="8" />
+			<tile x="8" y="10" />
+		</zone>
+		<zone player="3">
+			<base capacity="10" x="16" y="14" />
+			<group width="3" height="5" x="11" y="15" />
+			<group width="1" height="3" x="10" y="17" />
+			<group width="2" height="4" x="14" y="16" />
+			<group width="2" height="2" x="16" y="18" />
+			<tile x="14" y="15" />
+			<tile x="18" y="19" />
+			<tile x="19" y="13" />
+		</zone>
+		<zone player="3">
+			<base capacity="5" x="15" y="12" />
+			<group width="2" height="1" x="12" y="11" />
+			<group width="3" height="3" x="11" y="12" />
+			<group width="2" height="3" x="18" y="10" />
+		</zone>
+		<zone player="4">
+			<base capacity="10" x="18" y="0" />
+			<group width="5" height="4" x="15" y="6" />
+			<group width="2" height="2" x="18" y="4" />
+			<group width="1" height="2" x="14" y="6" />
+			<group width="2" height="1" x="18" y="3" />
+			<group width="6" height="2" x="11" y="0" />
+			<tile x="10" y="0" />
+		</zone>
+		<zone player="4">
+			<base capacity="5" x="15" y="3" />
+			<group width="1" height="2" x="17" y="4" />
+			<group width="4" height="1" x="12" y="2" />
+			<group width="2" height="1" x="14" y="1" />
+			<tile x="16" y="5" />
+			<tile x="12" y="3" />
+			<tile x="14" y="3" />
+		</zone>
+	</buttress>
+	<mountain>
+		<group width="2" height="1" x="0" y="15" />
+		<group width="3" height="4" x="0" y="16" />
+		<group width="1" height="4" x="0" y="0" />
+		<group width="1" height="2" x="1" y="1" />
+		<group width="2" height="2" x="18" y="16" />
+		<tile x="3" y="19" />
+		<tile x="19" y="15" />
+	</mountain>
+	<neutralbasis>
+		<base capacity="10" x="10" y="5" />
+		<base capacity="15" x="10" y="8" />
+		<base capacity="5" x="8" y="4" />
+		<base capacity="5" x="8" y="7" />
+		<base capacity="5" x="13" y="5" />
+	</neutralbasis>
+</map>

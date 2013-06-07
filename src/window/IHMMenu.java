@@ -26,7 +26,7 @@ public class IHMMenu implements IHM {
 	    
 	    JButton buttonCreateGame = new JButton("Nouvelle partie");
 	    buttonCreateGame.setBounds((int)(panDimension.getWidth()/2 - buttonDimension.getWidth()/2), 150, (int)buttonDimension.getWidth(), (int)buttonDimension.getHeight());
-	    buttonCreateGame.addActionListener(new ChangeIHMModeAction(window, GameEngine.IHMMode.InGame));
+	    buttonCreateGame.addActionListener(new ChangeIHMModeAction(window, GameEngine.IHMMode.ChooseLevel, null));
 	    
 	    JButton buttonOptions = new JButton("Options de jeu");
 	    buttonOptions.setBounds((int)(panDimension.getWidth()/2 - buttonDimension.getWidth()/2), 190, (int)buttonDimension.getWidth(), (int)buttonDimension.getHeight());
