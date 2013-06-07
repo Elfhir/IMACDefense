@@ -132,11 +132,6 @@ public class Base implements SelectableObject, AttackableObject {
 	 * Methodes
 	 */
 	
-	public Base chooseTarget(Base base) { //choisir une cible
-		
-		return base;
-	}
-	
 	public Agent sendAgent (Mapping map)
 	{
 		/* La base ne peut envoyer des agents attaquer si elle n'appartient à personne. */
@@ -154,6 +149,7 @@ public class Base implements SelectableObject, AttackableObject {
 		/* On n'envoie pas d'agents attaquer tant qu'il n'y a pas de cible choisie. */
 		if (this.target == null)
 		{
+			System.out.println("no target");
 			return null;
 		}
 		

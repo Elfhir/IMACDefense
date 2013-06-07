@@ -1,14 +1,22 @@
 package players.types;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
+
+import basis.Base;
 
 import map.Mapping;
-
+import map.Zone;
 import players.Player;
 import players.types.aiStrategy.AIStrategy;
 import players.types.aiStrategy.ExplorerStrategy;
 import players.types.aiStrategy.MixedStrategy;
 import players.types.aiStrategy.OffensiveStrategy;
+import window.GraphicalInterface;
 
 public class ArtificialIntelligencePlayer extends Player {
 	
@@ -21,12 +29,25 @@ public class ArtificialIntelligencePlayer extends Player {
 		super(id, name, color);
 		this.setRandomStrategy();
 	}
+	
+	public ArrayList<Zone> getMyZones (Mapping map)
+	{
+		ArrayList<Zone> zones = new ArrayList<Zone>();
+		for (Zone zone : map.getZones())
+		{
+			if (zone != null && zone.getOwner() != null && zone.getOwner().equals(this))
+			{
+				zones.add (zone);
+			}
+		}
+		return zones;
+	}
 
 	public void setRandomStrategy ()
 	{
 		Random r = new Random();
 		int randomvalue = r.nextInt(2);
-		/*switch (randomvalue)
+		switch (randomvalue)
 		{
 			case 1 :
 			{
@@ -43,38 +64,37 @@ public class ArtificialIntelligencePlayer extends Player {
 				this.strategy = new MixedStrategy(this);
 				break;
 			}
-		}*/
-		this.strategy = new ExplorerStrategy(this);
+		}
 	}
 	
-	public void play (Mapping map)
+	public synchronized void play (Mapping map, GraphicalInterface frame)
 	{
 		/*  On choisit au hasard une action.
 		 *  
-		 *  1/3 de chances de ne rien faire.
-		 *  1/3 de chances de construire une tour.
-		 *  1/3 de chances de faire bouger des agents.
+		 *  1/4 de chances de ne rien faire.
+		 *  1/4 de chances de construire une tour.
+		 *  1/2 de chances de faire bouger des agents.
 		 */
 		
 		Random r = new Random();
-		int randomvalue = 1 + r.nextInt(2);
+		int randomvalue = r.nextInt(4);
 		
-		/*switch (randomvalue)
+		switch (randomvalue)
 		{
 			case 1:
 			{
-				this.strategy.constructTower(map);
+				this.strategy.constructTower(map, frame);
 				break;
 			}
 			case 2 :
 			{
-				this.strategy.moveAgents();
 				break;
 			}
 			default :
+			{
+				this.strategy.moveAgents(map, frame);
 				break;
-		}*/
-		
-		this.strategy.constructTower(map);
+			}
+		}
 	}
 }

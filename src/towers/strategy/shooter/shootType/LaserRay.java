@@ -40,7 +40,6 @@ public class LaserRay extends Projectile {
 			if (currentTower != null && ray.intersects(currentTower.getHitBox()))
 			{
 				this.setTarget(currentTower);
-				System.out.println("why");
 				return;
 			}
 		}

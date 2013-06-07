@@ -22,20 +22,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import players.Player;
-import players.PlayerRunnable;
-import players.SelectableObject;
-import players.types.ArtificialIntelligencePlayer;
-import players.types.HumanPlayer;
-import towers.Tower;
-import basis.Base;
-
-import agents.Agent;
-
 import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
 import map.tiles.Tile;
+import players.Dispatcher;
+import players.Player;
+import players.SelectableObject;
+import players.types.ArtificialIntelligencePlayer;
+import players.types.HumanPlayer;
+import towers.Tower;
+import agents.Agent;
+import basis.Base;
 
 public class GraphicalInterface extends JFrame implements MouseListener
 {
@@ -109,7 +107,6 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
 		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
 		
-		SwingUtilities.invokeLater(new PlayerRunnable((ArtificialIntelligencePlayer)players.get(1), map));
 		
 		/* Association des zones et des joueurs */
 		if (map != null && players != null)
@@ -129,6 +126,9 @@ public class GraphicalInterface extends JFrame implements MouseListener
 				}
 			}
 		}
+		
+		Dispatcher dispatcher = new Dispatcher(players, map, this, 5000);
+		dispatcher.run();
 	}
 
 	public Mapping getMap() {
