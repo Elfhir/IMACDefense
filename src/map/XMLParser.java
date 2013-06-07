@@ -111,21 +111,6 @@ public class XMLParser {
 		else
 		{
 			zone = null;
-			
-			/* On r�cup�re l'�l�ment parent � la balise tile */
-			Element parent = tileElement.getParentElement();
-			
-			/*switch (parent.getName())
-			{
-				case "mountain" :
-				{
-					return new Mountain (new Point(x, y));
-				}
-				default :
-				{
-					break;
-				}
-			} */
 		}
 		return new Field(new Point(x, y));
 	}

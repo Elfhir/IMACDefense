@@ -1,6 +1,7 @@
 package players.types;
 
-import basis.Base;
+import java.awt.Point;
+
 import map.Mapping;
 import map.tiles.Buttress;
 import map.tiles.Tile;
@@ -8,12 +9,7 @@ import players.Player;
 import players.SelectableObject;
 import towers.Tower;
 import window.IHMinGame;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
+import basis.Base;
 
 public class HumanPlayer extends Player {
 	

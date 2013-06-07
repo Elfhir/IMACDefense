@@ -2,13 +2,8 @@ package window;
 
 import gameengine.GameEngine;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
 
 public class IHMMenu implements IHM {
 	
@@ -19,7 +14,6 @@ public class IHMMenu implements IHM {
 		this.window = window;
 		
 		Dimension panDimension = new Dimension(550, 400);
-		Dimension buttonDimension = new Dimension(200, 30);
 	    
 	    window.setPan(new PanInitialMenu(window));
 		

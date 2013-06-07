@@ -2,14 +2,8 @@ package players.types;
 
 import gameengine.GameEngine;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
-
-import basis.Base;
 
 import map.Mapping;
 import map.Zone;

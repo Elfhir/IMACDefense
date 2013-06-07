@@ -1,10 +1,8 @@
 package towers.towertypes;
 
-import java.awt.Point;
 import java.io.File;
 
 import towers.Tower;
-import towers.strategy.shooter.Bomb;
 import towers.strategy.shooter.Hurt;
 
 public class SubmachineGunTower extends Tower {

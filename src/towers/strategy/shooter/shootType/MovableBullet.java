@@ -2,8 +2,6 @@ package towers.strategy.shooter.shootType;
 
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
-
 import map.Mapping;
 import map.tiles.Tile;
 import players.Player;
