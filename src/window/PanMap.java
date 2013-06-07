@@ -77,12 +77,12 @@ public class PanMap extends JPanel {
 		
 		String filepath = System.getProperty("user.dir") + File.separator + "img" + File.separator;
 		
-		this.fieldAndMountainTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "terrain.png"));
-		this.buttressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttress.png"));
-		this.redButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressred.png"));
-		this.greenButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressgreen.png"));
-		this.yellowButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressyellow.png"));
-		this.blueButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + "buttressblue.png"));
+		this.fieldAndMountainTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "terrain.png"));
+		this.buttressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "buttress.png"));
+		this.redButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "buttressred.png"));
+		this.greenButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "buttressgreen.png"));
+		this.yellowButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "buttressyellow.png"));
+		this.blueButtressTileImage = ImageIO.read(new File(filepath + "tileset" + File.separator + map.getMapType() + File.separator + "buttressblue.png"));
 
 		this.redAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentred.png"));
 		this.greenAgentImage = ImageIO.read(new File(filepath + "agents" + File.separator + "agentgreen.png"));

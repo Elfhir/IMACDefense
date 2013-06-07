@@ -51,6 +51,11 @@ public class XMLParser {
 	   return racine.getAttributeValue("name");
 	}
 	
+	public String getMapType ()
+	{
+	   return racine.getAttributeValue("type");
+	}
+	
 	public int getMapWidth ()
 	{
 		return Integer.parseInt(racine.getAttributeValue("width"));

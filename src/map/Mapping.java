@@ -21,6 +21,7 @@ import basis.Base;
 public class Mapping {
 
 	private String name = ""; // Titre de la map
+	private MapType maptype = MapType.sand;
 	private int width = 20; // Largeur de la map en tiles
 	private int height = 20; // Hauteur de la map en tiles
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>(); // Tableau de tiles à 2 dimensions
@@ -29,6 +30,23 @@ public class Mapping {
 	private Hashtable<Point, Base> basis = new Hashtable<Point, Base>();
 	private ArrayList<Agent> agents = new ArrayList<Agent>();
 	private ArrayList<Projectile> bullets = new ArrayList<Projectile>();
+	
+	public enum MapType
+	{
+		snow,
+		sand;
+		
+		public static MapType stringToMapType (String string)
+		{
+			switch (string)
+			{
+				case "snow" :
+					return snow;
+				default :
+					return sand;
+			}
+		}
+	}
 	
 	/* ----- CONSTRUCTEURS ----- */
 	
@@ -47,6 +65,8 @@ public class Mapping {
 		
 		/* Les paramètres sont transformés en attributs. */
 		this.name = name;
+		this.maptype = MapType.sand;
+		
 		this.width = widthTiles;
 		this.height = heightTiles;
 		
@@ -159,6 +179,8 @@ public class Mapping {
 		/* --- INFORMATIONS DE LA MAP --- */		
 		/* On récupère les informations de la map : nom, largeur, hauteur */
 		this.name = parser.getMapName();
+		this.maptype = MapType.stringToMapType(parser.getMapType());
+		
 		this.width = parser.getMapWidth();
 		this.height = parser.getMapHeight();
 		
@@ -329,5 +351,9 @@ public class Mapping {
 		Collection<Base> values = basis.values();
 		Object[] tempbasis = values.toArray();
 		return (Base)tempbasis[randomindex];
+	}
+
+	public MapType getMapType() {
+		return maptype;
 	}
 }

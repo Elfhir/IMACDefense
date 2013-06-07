@@ -23,7 +23,6 @@ public class ChangeIHMModeAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (map != null)
 			window.setMap(map);
 		if (window != null && mode != null)
