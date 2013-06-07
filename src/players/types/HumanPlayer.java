@@ -10,6 +10,10 @@ import towers.Tower;
 import window.IHM;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 public class HumanPlayer extends Player {
 	

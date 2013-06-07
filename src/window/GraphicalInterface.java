@@ -20,28 +20,21 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import players.Player;
-import players.PlayerRunnable;
-import players.SelectableObject;
-import players.types.ArtificialIntelligencePlayer;
-import players.types.HumanPlayer;
-import towers.Tower;
-import basis.Base;
-
-import agents.Agent;
-
 import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
 import map.tiles.Tile;
+import players.Dispatcher;
+import players.Player;
+import players.SelectableObject;
+import players.types.ArtificialIntelligencePlayer;
+import players.types.HumanPlayer;
+import towers.Tower;
+import agents.Agent;
+import basis.Base;
 
 public class GraphicalInterface extends JFrame implements MouseListener
 {
-	/**
-	 * 
-	 */
 	ArrayList<Player> players;
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
@@ -81,9 +74,16 @@ public class GraphicalInterface extends JFrame implements MouseListener
 		Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
         
+        ArrayList<Player> players = new ArrayList<Player>();
+        HumanPlayer humanplayer = new HumanPlayer (1, "Fifi", Player.PlayerColor.red);
+		players.add(humanplayer);
+		players.add(new ArtificialIntelligencePlayer (2, "Loulou", Player.PlayerColor.green));
+		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
+		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
+        
         //On prévient notre JFrame que notre JPanel sera son content pane
 		try {
-			this.pan = new PanMap (map, ihm);
+			this.pan = new PanMap (map, ihm, humanplayer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,15 +103,7 @@ public class GraphicalInterface extends JFrame implements MouseListener
 	    pack ();
 	    this.setVisible(true);
 	    
-	    ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new HumanPlayer (1, "Fifi", Player.PlayerColor.red));
-		players.add(new ArtificialIntelligencePlayer (2, "Loulou", Player.PlayerColor.green));
-		players.add(new ArtificialIntelligencePlayer (3, "Riri", Player.PlayerColor.yellow));
-		players.add(new ArtificialIntelligencePlayer (4, "Donald", Player.PlayerColor.blue));
-		
-		SwingUtilities.invokeLater(new PlayerRunnable((ArtificialIntelligencePlayer)players.get(1), map));
-		
-		/* Association des zones et des joueurs */
+	    /* Association des zones et des joueurs */
 		if (map != null && players != null)
 		{
 			ArrayList<Zone> zones = map.getZones();
@@ -129,6 +121,9 @@ public class GraphicalInterface extends JFrame implements MouseListener
 				}
 			}
 		}
+		
+		Dispatcher dispatcher = new Dispatcher(players, map, this, 5000);
+		dispatcher.run();
 	}
 
 	public Mapping getMap() {
@@ -169,13 +164,13 @@ public class GraphicalInterface extends JFrame implements MouseListener
 			}
 			
 			/*
-			 * Si le dernier objet sélectionné est une base du joueur, (! A IMPLEMENTER)
+			 * Si le dernier objet sélectionné est une base appartenant à un joueur humain,
 			 * le joueur a voulu faire de la base clickée la cible de la base sélectionnée.
 			 * On vérifie donc si :
 			 * 1 - l'objet clické est une base
 			 * 2 - l'objet sélectionné est une base
 			 */
-			else if (object instanceof Base && Player.getLastObjectSelected() instanceof Base)
+			else if (object instanceof Base && Player.getLastObjectSelected() instanceof Base && ((Base)Player.getLastObjectSelected()).getOwner() != null && ((Base)Player.getLastObjectSelected()).getOwner() instanceof HumanPlayer)
 			{
 				((Base) Player.getLastObjectSelected()).setTarget ((Base) object);
 				Agent agent = ((Base) Player.getLastObjectSelected()).sendAgent(map);

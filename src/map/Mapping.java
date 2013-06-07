@@ -2,8 +2,11 @@ package map;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Random;
 
 import map.tiles.Buttress;
 import map.tiles.Field;
@@ -317,5 +320,14 @@ public class Mapping {
 	public void removeBullet (Projectile bullet)
 	{
 		this.bullets.remove(bullet);
+	}
+	
+	public Base getRandomBase ()
+	{
+		Random r = new Random();
+		int randomindex = r.nextInt(basis.size()-1);
+		Collection<Base> values = basis.values();
+		Object[] tempbasis = values.toArray();
+		return (Base)tempbasis[randomindex];
 	}
 }

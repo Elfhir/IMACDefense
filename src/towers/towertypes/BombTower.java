@@ -1,6 +1,5 @@
 package towers.towertypes;
 
-import java.awt.Point;
 import java.io.File;
 
 import towers.Tower;

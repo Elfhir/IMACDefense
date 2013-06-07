@@ -1,13 +1,19 @@
 package players;
 
+import java.awt.Color;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+
+import basis.Base;
+
 import map.Mapping;
 import map.Zone;
 import map.tiles.Buttress;
 import map.tiles.Tile;
 import towers.Tower;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 public class Player {
 	
@@ -17,6 +23,8 @@ public class Player {
 	private int money = 5000;
 	private PlayerColor color = PlayerColor.red;
     private String name="Fifi";
+    
+    private boolean lost = false;
 	
 	public enum PlayerColor
 	{
@@ -187,5 +195,33 @@ public class Player {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean hasLost() {
+		return lost;
+	}
+
+	public void setLost(boolean lost) {
+		this.lost = lost;
+	}
+	
+	public ArrayList<Base> getMyBasis (Mapping map)
+	{
+		ArrayList<Base> basis = new ArrayList<Base>();
+		
+		Hashtable<Point, Base> mapBasis = map.getBasis();
+		Set<Point> set = mapBasis.keySet();
+		Iterator<Point> it = set.iterator();
+
+		while (it.hasNext())
+		{
+			Point currentPoint = it.next();
+			Base currentBase = mapBasis.get(currentPoint);
+			if (currentBase != null && currentBase.getOwner() != null && currentBase.getOwner().equals(this))
+			{
+				basis.add(currentBase);
+			}
+		}
+		return basis;
 	}
 }
