@@ -22,6 +22,12 @@ public class TowerShootAction extends AnimationAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		if (map == null || tower == null)
+		{
+			this.timer.stop();
+			return;
+		}
+		
 		if (tower.isFrozen())
 		{
 			frozencounter++;

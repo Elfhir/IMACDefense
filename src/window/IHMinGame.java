@@ -4,7 +4,9 @@ import gameengine.AnimationAction;
 import gameengine.GameEngine;
 import gameengine.MoveBulletAction;
 import gameengine.TowerShootAction;
+import gameengine.GameEngine.IHMMode;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -76,9 +78,19 @@ public class IHMinGame implements IHM {
 			
 			this.pan.setLayout(null);
 			
-			JButton buttonConstruct = new JButton("Construire");
-		    buttonConstruct.setBounds(map.getWidth()*Tile.getWidth(), 100, ihmsize, 30);
-		    pan.add(buttonConstruct);
+			/*JButton buttonConstruct = new JButton("Construire");
+		    buttonConstruct.setBounds(map.getWidth()*Tile.getWidth(), 340, ihmsize, 30);
+		    buttonConstruct.setBackground(Color.darkGray);
+		    buttonConstruct.setForeground(Color.white);
+		    pan.add(buttonConstruct);*/
+		    
+		    JButton buttonExit = new JButton("Menu Initial");
+		    buttonExit.setBounds(map.getWidth()*Tile.getWidth(), 370, ihmsize, 30);
+		    buttonExit.addActionListener(new ChangeIHMModeAction(window, GameEngine.IHMMode.InitialMenu, null));
+		    buttonExit.setBackground(Color.darkGray);
+		    buttonExit.setForeground(Color.white);
+		    pan.add(buttonExit);
+		    
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

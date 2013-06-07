@@ -23,10 +23,11 @@ public class ChangeIHMModeAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (map != null)
-			window.setMap(map);
+		window.setMap(map);
 		if (window != null && mode != null)
+		{
 			window.setIHMMode(mode);
+		}
 	}
 
 }

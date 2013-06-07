@@ -105,11 +105,20 @@ public class PanMap extends JPanel {
 	@Override
 	public void paintComponent (Graphics g)
 	{
+		paintInterfaceBackground(g);
 		if (this.map != null)
 		{
 			paintMap (g);
 			paintIHM(g);
 		}
+	}
+	
+	public void paintInterfaceBackground (Graphics g)
+	{
+		int width = (int) this.getWidth();
+		int height = (int) this.getHeight();
+		g.setColor(Color.darkGray);
+		g.fillRect(0, 0, width, height);
 	}
 	
 	// Dessine toute la map
@@ -438,13 +447,14 @@ public class PanMap extends JPanel {
         g.fillRect(x, y, 130, 30);
 
         // permet d'afficher le nom du joueur en dessous du rectangle de couleur
+        g.setColor(Color.white);
         g.drawString(player.getName(), 460, 50);
         
         String moneyText = "Argent:" + player.getMoney();
 
-        g.setColor(Color.lightGray);
+        g.setColor(Color.darkGray);
         g.fillRect(430, 70 - g.getFontMetrics().getHeight()/2, g.getFontMetrics().stringWidth(moneyText), g.getFontMetrics().getHeight());
-        g.setColor(player.getColor());
+        g.setColor(Color.white);
         g.drawString(moneyText, 430, 70);
     }
     

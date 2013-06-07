@@ -35,6 +35,8 @@ public class GameEngine extends JFrame implements MouseListener
 	private JPanel pan = null;
 	private IHM ihm = null;
 	private IHMMode ihmmode = IHMMode.InitialMenu;
+	private Dispatcher dispatcher;
+	private IncreaseNbHostedAgentsAction increaseagentsaction;
 	
 	public enum IHMMode
 	{
@@ -62,7 +64,7 @@ public class GameEngine extends JFrame implements MouseListener
 		
 		this.setTargetCursor();
 	
-		this.setTitle("IMACDefense - " + map.getName()); // On donne un titre à l'application
+		this.setTitle("IMACDefense"); // On donne un titre à l'application
 		//this.setSize(map.getWidth()*Tile.getWidth() + 6, map.getHeight()*Tile.getHeight() + 28); // On donne une taille à notre fenêtre
 		
 		this.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
@@ -87,6 +89,8 @@ public class GameEngine extends JFrame implements MouseListener
         {
         	if (this.map == null)
         		return;
+        	
+        	this.setTitle("IMACDefense - " + map.getName());
         	this.ihm = new IHMinGame(this, map);
 	        players = new ArrayList<Player>();
 	        HumanPlayer humanplayer = new HumanPlayer (1, "Fifi", Player.PlayerColor.red);
@@ -116,14 +120,17 @@ public class GameEngine extends JFrame implements MouseListener
 				}
 			}
 			
-			Dispatcher dispatcher = new Dispatcher(players, map, this, 5000);
+			dispatcher = new Dispatcher(players, map, this, 5000);
 			dispatcher.run();
-			IncreaseNbHostedAgentsAction action = new IncreaseNbHostedAgentsAction(this, 5000);
-			action.run();
+			increaseagentsaction = new IncreaseNbHostedAgentsAction(this, 5000);
+			increaseagentsaction.run();
         }
 	    
 		if (this.pan != null)
+		{
+			contentPane.removeAll();
 			contentPane.add(this.pan);
+		}
 	    pack ();
 	    this.setVisible(true);
 	}
@@ -140,7 +147,7 @@ public class GameEngine extends JFrame implements MouseListener
 	{
 		// Curseur Cible
 		Image cursorImage = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + File.separator + "img" + File.separator + "cursor.png");
-		// On récupère la dimension qu'aura la curseur à l'écran
+		// On récupère la dimension qu'aura le curseur à l'écran
 		Dimension cursorDimension = Toolkit.getDefaultToolkit().getBestCursorSize(15, 15);
 		// Le curseur est en forme de croix (cible), on veut donc que le "hotspot" se situe au centre du curseur, donc on divise les dimensions récupérées par 2.
 		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point((int)cursorDimension.getWidth()/2, (int)cursorDimension.getHeight()/2), "Cursor");
@@ -149,6 +156,7 @@ public class GameEngine extends JFrame implements MouseListener
 
 	public void setPan(JPanel pan) {
 		this.pan = pan;
+		this.pan.repaint();
 	}
 
 	public ArrayList<Player> getPlayers() {
@@ -159,9 +167,16 @@ public class GameEngine extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 		if (this.ihmmode == mode)
 			return;
+		
 		this.ihmmode = mode;
+		if (!this.ihmmode.equals(IHMMode.InGame) && dispatcher != null)
+		{
+			dispatcher.timer.stop();
+			increaseagentsaction.timer.stop();
+		}
 		this.pan.removeAll();
 		this.build();
+		this.pan.repaint();
 	}
 
 	@Override
@@ -196,5 +211,9 @@ public class GameEngine extends JFrame implements MouseListener
 
 	public void setMap(Mapping map) {
 		this.map = map;
+	}
+
+	public IHMMode getIhmmode() {
+		return ihmmode;
 	}
 }
