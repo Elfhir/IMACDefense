@@ -1,6 +1,7 @@
 package players.types.aiStrategy;
 
-import gameengine.Action;
+import gameengine.AnimationAction;
+import gameengine.GameEngine;
 import gameengine.MoveBulletAction;
 import gameengine.TowerShootAction;
 
@@ -20,7 +21,6 @@ import towers.towertypes.FreezeTower;
 import towers.towertypes.LaserTower;
 import towers.towertypes.MedicalTower;
 import towers.towertypes.SubmachineGunTower;
-import window.GraphicalInterface;
 
 public class AIStrategy {
 	
@@ -85,7 +85,7 @@ public class AIStrategy {
 		this.player = player;
 	}
 	
-	public synchronized void constructTower(Mapping map, GraphicalInterface frame) {
+	public synchronized void constructTower(Mapping map, GameEngine frame) {
 		/*
 		 * Les tours sont construites près des bases amies et loin si possible des tours ennemies.
 		 */
@@ -145,7 +145,7 @@ public class AIStrategy {
 		return TowerProbability.getRandomTowerProbability();
 	}
 
-	public synchronized void moveAgents(Mapping map, GraphicalInterface frame) {
+	public synchronized void moveAgents(Mapping map, GameEngine frame) {
 		ArrayList<Base> basis = player.getMyBasis(map);
 		if (basis.isEmpty() || basis.size() == 0)
 			return;
@@ -170,7 +170,7 @@ public class AIStrategy {
 		
 		currentBase.setTarget(targetBase);
 		Agent agent = currentBase.sendAgent(map);
-		Action action = new MoveBulletAction(agent, frame, 30);
+		AnimationAction action = new MoveBulletAction(agent, frame, 30);
 		action.run();
 	}
 	

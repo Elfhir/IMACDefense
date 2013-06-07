@@ -32,7 +32,7 @@ public class PanMap extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Mapping map = null;
-	private IHM ihm = null;
+	private IHMinGame ihm = null;
 	private HumanPlayer player;
 	
 	/*
@@ -70,7 +70,7 @@ public class PanMap extends JPanel {
 		medicalBulletImage = null,
 		freezeBulletImage = null;
 	
-	public PanMap (Mapping map, IHM ihm, HumanPlayer player) throws IOException
+	public PanMap (Mapping map, IHMinGame ihm, HumanPlayer player) throws IOException
 	{
 		this.map = map;
 		this.ihm = ihm;

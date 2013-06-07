@@ -1,11 +1,10 @@
 package gameengine;
 
 import map.Mapping;
-import window.GraphicalInterface;
 
 public class GameEngineRunnable implements Runnable {
 	
-	private static GraphicalInterface window = null;
+	private static GameEngine window = null;
 	Mapping map = null;
 
 	public GameEngineRunnable(Mapping map) {
@@ -18,17 +17,15 @@ public class GameEngineRunnable implements Runnable {
 			return;
 
 		/* On crée une nouvelle instance de notre JDialog */
-		GameEngineRunnable.setWindow (new GraphicalInterface(map));
+		GameEngineRunnable.setWindow (new GameEngine(map));
 		window.getContentPane().addMouseListener(window);
-		IncreaseNbHostedAgentsAction action = new IncreaseNbHostedAgentsAction(window, 5000);
-		action.run();
 	}
 
-	public static GraphicalInterface getWindow() {
+	public static GameEngine getWindow() {
 		return window;
 	}
 
-	public static void setWindow(GraphicalInterface window) {
+	public static void setWindow(GameEngine window) {
 		GameEngineRunnable.window = window;
 	}
 }

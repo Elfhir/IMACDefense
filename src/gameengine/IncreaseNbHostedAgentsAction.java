@@ -8,11 +8,10 @@ import java.util.Set;
 
 import basis.Base;
 
-import window.GraphicalInterface;
 
-public class IncreaseNbHostedAgentsAction extends Action {
+public class IncreaseNbHostedAgentsAction extends AnimationAction {
 
-	public IncreaseNbHostedAgentsAction(GraphicalInterface frame, int timer) {
+	public IncreaseNbHostedAgentsAction(GameEngine frame, int timer) {
 		super(frame, timer);
 		// TODO Auto-generated constructor stub
 	}

@@ -1,21 +1,21 @@
 package players;
 
+import gameengine.GameEngine;
 import map.Mapping;
 
 import players.types.ArtificialIntelligencePlayer;
-import window.GraphicalInterface;
 
 public class PlayerRunnable implements Runnable {
 	ArtificialIntelligencePlayer player = null;
 	Mapping map;
-	GraphicalInterface frame;
+	GameEngine frame;
 
 	public PlayerRunnable() {
 		// TODO Auto-generated constructor stub
 		this.player = new ArtificialIntelligencePlayer();
 	}
 
-	public PlayerRunnable(ArtificialIntelligencePlayer player, Mapping map, GraphicalInterface frame) {
+	public PlayerRunnable(ArtificialIntelligencePlayer player, Mapping map, GameEngine frame) {
 		super();
 		this.player = player;
 		this.map = map;

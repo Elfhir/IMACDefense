@@ -7,7 +7,7 @@ import map.tiles.Tile;
 import players.Player;
 import players.SelectableObject;
 import towers.Tower;
-import window.IHM;
+import window.IHMinGame;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class HumanPlayer extends Player {
 	 */
 	
 	// Si l'object cliqué est sélectionnable, retourne cet objet
-	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map, IHM ihm)
+	public static SelectableObject whereDidIClick (Point mousepoint, Mapping map, IHMinGame ihm)
 	{
 		/* Les coordonnï¿½es clickï¿½es par la souris ne sont pas en nombre de tiles,
 		 * mais plutï¿½t les coordonnï¿½es rï¿½elles dans la fenï¿½tre.

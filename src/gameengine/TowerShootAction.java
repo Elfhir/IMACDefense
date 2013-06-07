@@ -5,15 +5,14 @@ import java.awt.event.ActionEvent;
 import map.Mapping;
 import towers.Tower;
 import towers.strategy.shooter.ShootableObject;
-import window.GraphicalInterface;
 
-public class TowerShootAction extends Action {
+public class TowerShootAction extends AnimationAction {
 	
 	Mapping map;
 	Tower tower;
 	int frozencounter;
 
-	public TowerShootAction(Mapping map, GraphicalInterface frame, int timer, Tower tower) {
+	public TowerShootAction(Mapping map, GameEngine frame, int timer, Tower tower) {
 		super(frame, timer);
 		// TODO Auto-generated constructor stub
 		this.map = map;

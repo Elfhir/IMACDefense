@@ -1,5 +1,7 @@
 package players.types;
 
+import gameengine.GameEngine;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -16,7 +18,6 @@ import players.types.aiStrategy.AIStrategy;
 import players.types.aiStrategy.ExplorerStrategy;
 import players.types.aiStrategy.MixedStrategy;
 import players.types.aiStrategy.OffensiveStrategy;
-import window.GraphicalInterface;
 
 public class ArtificialIntelligencePlayer extends Player {
 	
@@ -67,7 +68,7 @@ public class ArtificialIntelligencePlayer extends Player {
 		}
 	}
 	
-	public synchronized void play (Mapping map, GraphicalInterface frame)
+	public synchronized void play (Mapping map, GameEngine frame)
 	{
 		/*  On choisit au hasard une action.
 		 *  

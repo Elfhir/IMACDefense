@@ -1,6 +1,7 @@
 package players;
 
-import gameengine.Action;
+import gameengine.AnimationAction;
+import gameengine.GameEngine;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -11,15 +12,14 @@ import javax.swing.SwingUtilities;
 import map.Mapping;
 
 import players.types.ArtificialIntelligencePlayer;
-import window.GraphicalInterface;
 
-public class Dispatcher extends Action {
+public class Dispatcher extends AnimationAction {
 	
 	ArrayList<Player> players;
 	Mapping map;
-	GraphicalInterface frame;
+	GameEngine frame;
 
-	public Dispatcher(ArrayList<Player> players, Mapping map, GraphicalInterface frame, int timer) {
+	public Dispatcher(ArrayList<Player> players, Mapping map, GameEngine frame, int timer) {
 		super(frame, timer);
 		this.players = players;
 		this.map = map;

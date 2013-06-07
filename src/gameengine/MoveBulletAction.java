@@ -10,14 +10,13 @@ import towers.Tower;
 import towers.strategy.shooter.ShootableObject;
 import towers.strategy.shooter.shootType.MovableBullet;
 import towers.strategy.shooter.shootType.Projectile;
-import window.GraphicalInterface;
 
-public class MoveBulletAction extends Action {
+public class MoveBulletAction extends AnimationAction {
 	
 	MovableBullet bullet = null;
 	int frozencounter = 0;
 	
-	public MoveBulletAction(MovableBullet bullet, GraphicalInterface frame, int timer) {
+	public MoveBulletAction(MovableBullet bullet, GameEngine frame, int timer) {
 		super(frame, timer);
 		this.bullet = bullet;
 	}
