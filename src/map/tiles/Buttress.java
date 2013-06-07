@@ -50,7 +50,13 @@ public class Buttress extends Tile {
 	public Buttress(Zone zone, Point point) {
 		// TODO Auto-generated constructor stub
 		super(point);
+		this.setZone (zone);
+	}
+
+	public void setZone(Zone zone) {
 		this.zone = zone;
+		if (zone != null)
+			zone.addButtressTile(this);
 	}
 
 	public Zone getZone() {

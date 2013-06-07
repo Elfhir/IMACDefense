@@ -23,7 +23,6 @@ public class BombTower extends Tower {
 		this.setShooter(new Bomb());
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}

@@ -24,7 +24,6 @@ public class FreezeTower extends Tower {
 		this.setShooter(new Freeze(this));
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}

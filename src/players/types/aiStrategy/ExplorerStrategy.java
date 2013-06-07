@@ -1,13 +1,19 @@
 package players.types.aiStrategy;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.Random;
 
 import map.Mapping;
+import map.Zone;
+import map.tiles.Buttress;
+import players.types.ArtificialIntelligencePlayer;
 import towers.Tower;
-import towers.towertypes.*;
+import towers.towertypes.BombTower;
+import towers.towertypes.FreezeTower;
+import towers.towertypes.LaserTower;
+import towers.towertypes.MedicalTower;
+import towers.towertypes.SubmachineGunTower;
 
 public class ExplorerStrategy implements AIStrategy {
 	
@@ -16,6 +22,8 @@ public class ExplorerStrategy implements AIStrategy {
 	 * et n'attaquer un ennemi que lorsqu'il s'attaque au joueur.
 	 * Les tours sont construites pour protéger les bases.
 	 */
+	
+	private ArtificialIntelligencePlayer player;
 	
 	private enum TowerProbability
 	{
@@ -36,16 +44,18 @@ public class ExplorerStrategy implements AIStrategy {
 		pSubMachineGunTower(SubmachineGunTower.class, 15);
 		
 		private Class<? extends Tower> towerclass;
-		private int probability;
 		private static int totalCummulatedProbability;
 		private int cummulatedProbability;
 		
 		private TowerProbability (Class<? extends Tower> towerclass, int probability)
 		{
 			this.towerclass = towerclass;
-			this.probability = probability;
 			TowerProbability.increaseTotalCummulatedProbability(probability);
 			this.cummulatedProbability = TowerProbability.getTotalCummulatedProbability();
+		}
+
+		public Class<? extends Tower> getTowerclass() {
+			return towerclass;
 		}
 
 		private static void increaseTotalCummulatedProbability(int totalCummulatedProbability) {
@@ -80,29 +90,58 @@ public class ExplorerStrategy implements AIStrategy {
 		}
 	}
 
-	public ExplorerStrategy() {
-		// TODO Auto-generated constructor stub
+	public ExplorerStrategy(ArtificialIntelligencePlayer player) {
+		this.player = player;
 	}
 
 	@Override
 	public void constructTower(Mapping map) {
 		/*
 		 * Les tours sont construites près des bases amies et loin si possible des tours ennemies.
-		 * 
-		 * 
-		 * Si pas assez d'argent pour construire la tour choisie, choisira une tour plus "côtée" et moins chère.
-		 * Si pas assez d'argent encore, choisira une tour moins "côtée" et moins chère.
 		 */
 		
 		/*
-		 * Génération d'un nombre aléatoire
+		 * Choix d'une tour au hasard
 		 */
+		
+		TowerProbability towerp = TowerProbability.getRandomTowerProbability();
+		
+		ArrayList<Zone> zones = map.getZones();
+		Iterator<Zone> it = zones.iterator();
+		
+		while (it.hasNext())
+		{
+			Zone currentZone = it.next();
+			if (currentZone != null && currentZone.getOwner() != null && currentZone.getOwner().equals(player))
+			{
+				/*
+				 *  On cherche jusqu'à dix fois où on pourrait construire, si au bout des 10 fois on n'a pas réussi à trouver, on laisse tomber.
+				 */
+				int counter = 0;
+				while (counter < 10)
+				{
+					Buttress currentbuttress = currentZone.selectRandomButtressTile();
+					try {
+						if (currentbuttress != null && currentbuttress.getCoordsInMap() != null && player.canIConstruct(towerp.getTowerclass().newInstance(), map, (int)currentbuttress.getCoordsInMap().getX(), (int)currentbuttress.getCoordsInMap().getY()))
+						{
+							player.construct(towerp.getTowerclass(), map, currentZone, (int)currentbuttress.getCoordsInMap().getX(), (int)currentbuttress.getCoordsInMap().getY());
+							return;
+						}
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					counter++;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void moveAgents() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
