@@ -3,7 +3,10 @@ package gameengine;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
+import agents.Agent;
+
 import map.tiles.Tile;
+import towers.Tower;
 import towers.strategy.shooter.ShootableObject;
 import towers.strategy.shooter.shootType.MovableBullet;
 import towers.strategy.shooter.shootType.Projectile;
@@ -78,6 +81,22 @@ public class MoveBulletAction extends Action {
 				if (bullet.getTarget() instanceof ShootableObject && ((ShootableObject) bullet.getTarget()).getLife() <= 0)
 				{
 					((ShootableObject) bullet.getTarget()).destruct(map);
+					
+					if (bullet.getOwnerPlayer() != null)
+					{
+						int money = bullet.getOwnerPlayer().getMoney();
+						
+						// Si la cible est détruite, s'il s'agit d'une tour on gagne 300
+						if (bullet.getTarget() instanceof Tower)
+						{
+							bullet.getOwnerPlayer().setMoney(money + 300);
+						}
+						// S'il s'agit d'un agent on gagne 100
+						else if (bullet.getTarget() instanceof Agent)
+						{
+							bullet.getOwnerPlayer().setMoney(money + 100);
+						}
+					}
 				}
 				
 				pan.repaint();

@@ -175,11 +175,15 @@ public class Base implements SelectableObject, AttackableObject {
 			{
 				this.decreaseNbHostedAgents(((Agent) agent).getForce());
 			}
+			
+			/* Changement de propriétaire */
 			else if (this.nbHostedAgents < ((Agent) agent).getForce())
 			{
 				int newNbHostedAgents = ((Agent) agent).getForce () - this.nbHostedAgents;
 				this.setOwner(((Agent) agent).getOwnerPlayer());
 				this.setNbHostedAgents(newNbHostedAgents);
+				if (this.owner != null)
+					this.owner.setMoney(this.owner.getMoney() + 200);
 			}
 		}
 	}
